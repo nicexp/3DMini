@@ -33,6 +33,15 @@
     <ClCompile Include="3DRenderlist.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="3DLight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLib1.h">
@@ -48,6 +57,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="3DRenderlist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLight.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DShader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLog.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,12 +3,8 @@
 
 #include "3DLib1.h"
 
-class Camera
+typedef struct CAM4DV1_TYP
 {
-public:
-	Camera();
-	~Camera();
-//field
 	int state;
 	int attr;
 
@@ -40,30 +36,30 @@ public:
 	MATRIX4X4 mcam; //相机变换矩阵
 	MATRIX4X4 mper; //透视变换矩阵
 	MATRIX4X4 mscr; //屏幕变换矩阵
+}CAM4DV1, *CAM4DV1_PTR;
 
-//method:
-	//初始化相机
-	void InitCamera(int cam_attr,//相机属性
-		POINT4D_PTR cam_pos,//相机位置
-		VECTOR4D_PTR cam_dir,//相机朝向
-		POINT4D_PTR cam_target, //uvn相机初始目标位置
-		float near_clip_z,//近裁剪面
-		float far_clip_z,//远裁剪面
-		float fov,//视野
-		float viewport_width,//视口宽度
-		float viewport_height);
-	//构建欧拉相机矩阵
-	void BuildMatrixCamEuler();
-	//构建UVN相机矩阵(简单/球形)
-	void BuildMatrixCamUVN(int mode);
-	//构建透视变换矩阵
-	void BuildCameraToPerspectMatrix();
-	//构建屏幕变换矩阵
-	void BuildPerspectToScreenMatrix();
-	//初始化相关矩阵
-	void InitTransMatrix();
-	//相机轨迹1
-	void BuildCameraPosAndDir(float distance, float view_angle);
-};
+
+void InitCamera(CAM4DV1_PTR cam,
+	int cam_attr,//相机属性
+	POINT4D_PTR cam_pos,//相机位置
+	VECTOR4D_PTR cam_dir,//相机朝向
+	POINT4D_PTR cam_target, //uvn相机初始目标位置
+	float near_clip_z,//近裁剪面
+	float far_clip_z,//远裁剪面
+	float fov,//视野
+	float viewport_width,//视口宽度
+	float viewport_height);
+//构建欧拉相机矩阵
+void BuildMatrixCamEuler(CAM4DV1_PTR cam);
+//构建UVN相机矩阵(简单/球形)
+void BuildMatrixCamUVN(CAM4DV1_PTR cam, int mode);
+//构建透视变换矩阵
+void BuildCameraToPerspectMatrix(CAM4DV1_PTR cam);
+//构建屏幕变换矩阵
+void BuildPerspectToScreenMatrix(CAM4DV1_PTR cam);
+//初始化相关矩阵
+void InitTransMatrix(CAM4DV1_PTR cam);
+//相机轨迹1
+void BuildCameraPosAndDir(CAM4DV1_PTR cam, float distance, float view_angle);
 
 #endif

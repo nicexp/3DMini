@@ -10,6 +10,9 @@
 
 #define PI 3.141592653598
 
+#define WINDOW_WIDTH      1200  // size of window
+#define WINDOW_HEIGHT     900
+
 #define CULL_OBJECT_X_PLANE           0x0001
 #define CULL_OBJECT_Y_PLANE           0x0002
 #define CULL_OBJECT_Z_PLANE           0x0004
@@ -18,6 +21,25 @@
 #define POLY4DV1_STATE_ACTIVE             0x0001
 #define POLY4DV1_STATE_CLIPPED            0x0002
 #define POLY4DV1_STATE_BACKFACE           0x0004
+
+#define POLY4DV2_STATE_ACTIVE             0x0001
+#define POLY4DV2_STATE_CLIPPED            0x0002
+#define POLY4DV2_STATE_BACKFACE           0x0004
+#define POLY4DV2_STATE_LIT                0x0008
+
+#define POLY4DV2_ATTR_SHAD_MODE_FLAT	0x0040
+#define POLY4DV2_ATTR_SHAD_MODE_GOURAUD	0x0080
+
+#define EPSILON_E3 (float)(1E-3) 
+#define EPSILON_E4 (float)(1E-4) 
+#define EPSILON_E5 (float)(1E-5)
+#define EPSILON_E6 (float)(1E-6)
+
+#define SWAP(a,b,t) {t=a; a=b; b=t;}
+#define FCMP(a, b) (fabs((a)-(b)) < EPSILON_E3 ? 1 : 0)
+
+#define _RGB565FROM16BIT(RGB, r, g, b) {*r = (((RGB)>>11) & 0x1f);*g = (((RGB)>>5) & 0x3f);*b = ((RGB) & 0x1f);}
+#define _RGB16BIT565(r, g, b) ((b&0x1f) + ((g&0x3f)<<5) + ((b&0x1f)<<11))
 
 //点和向量二维
 typedef struct VECTOR2D_TYP
@@ -58,6 +80,31 @@ typedef struct VECTOR4D_TYP
 	};
 } VECTOR4D, POINT4D, *VECTOR4D_PTR, *POINT4D_PTR;
 
+//顶点数据结构
+typedef struct VERTEX4DTV1_TYP
+{
+	union
+	{
+		float M[12];//数组方式存储
+		struct
+		{
+			float x, y, z, w;//顶点
+			float nx, ny, nz, nw; //法线
+			float u0, v0;//纹理坐标
+			float i;//经过光处理后的顶点颜色
+			int attr;//属性
+		};
+		struct
+		{
+			POINT4D v;//顶点
+			VECTOR4D n;//法线
+			POINT2D t;//纹理坐标
+			float i;//光处理后颜色
+			int attr;//属性
+		};
+	};
+} VERTEX4DTV1, *VERTEX4DTV1_PTR;
+
 //4x4矩阵
 typedef struct MATRIX4X4_TYP
 {
@@ -97,6 +144,56 @@ typedef struct POLYF4DV1_TYP
 	POLYF4DV1_TYP *pre;
 } POLYF4DV1, *POLYF4DV1_PTR;
 
+//多边形结构2
+typedef struct POLY4DV2_TYP
+{
+	int state;//状态
+	int attr;//属性
+	int color;//颜色
+
+	int lit_color[3];//存储光处理后的颜色
+	int mati;//-1表示没有材质
+
+	VERTEX4DTV1_PTR vlist;//顶点列表
+	POINT2D_PTR tlist;//纹理坐标列表
+	int vert[3];//顶点索引
+	int text[3];//纹理坐标索引
+	float nlength;//法线长度
+}POLY4DV2, *POLY4DV2_PTR;
+
+//自包含多边形结构2
+typedef struct POLYF4DV2_TYP
+{
+	int state;//状态
+	int attr;//属性
+	int color;//颜色
+	int lit_color[3];//光照处理后的颜色
+
+	int mati;//-1表示没有材质
+	float nlength;//法线长度
+	VECTOR4D normal;//多边形法线
+	float avg_z;//平均z值用于简单排序
+	VERTEX4DTV1 vlist[3];//顶点
+	VERTEX4DTV1 tvlist[3];//变换后的顶点
+
+	POLYF4DV2_TYP* next;//下一个多边形指针
+	POLYF4DV2_TYP* pre;//前一个多边形指针
+}POLYF4DV2, *POLYF4DV2_PTR;
+
+//RGBA值
+typedef struct RGBAV1_TYP
+{
+	union
+	{
+		int rgba;
+		unsigned char rgba_M[4];
+		struct
+		{
+			unsigned char r, g, b, a;
+		};
+	};
+}RGBAV1, *RGBAV1_PTR;
+
 //物体矩阵转换类型
 enum
 {
@@ -135,6 +232,7 @@ void VECTOR4D_SUB(VECTOR4D_PTR va, VECTOR4D_PTR vb, VECTOR4D_PTR vc);
 float VECTOR4D_DOT(VECTOR4D_PTR va, VECTOR4D_PTR vb);
 void VECTOR4D_CROSS(VECTOR4D_PTR va, VECTOR4D_PTR vb, VECTOR4D_PTR vc);
 void VECTOR4D_Normalize(VECTOR4D_PTR va);
+float VECTOR4D_Length(VECTOR4D_PTR va);
 void VECTOR4D_COPY(VECTOR4D_PTR res, VECTOR4D_PTR src);
 void VECTOR4D_DIV_BY_W(VECTOR4D_PTR va);
 void Mat_IDENTITY_4X4(MATRIX4X4_PTR ma);
@@ -145,4 +243,17 @@ void Mat_Init_4X4(MATRIX4X4_PTR ma,
 	float m10, float m11, float m12, float m13,
 	float m20, float m21, float m22, float m23,
 	float m30, float m31, float m32, float m33);
+
+unsigned short RGB16BIT565(int r, int g, int b);
+
+//辅助函数
+inline void VERTEX4DTV1_COPY(VERTEX4DTV1_PTR vdst, VERTEX4DTV1_PTR vsrc)
+{
+	*vdst = *vsrc;
+}
+
+inline void VERTEX4DTV1_INIT(VERTEX4DTV1_PTR vdst, VERTEX4DTV1_PTR vsrc)
+{
+	*vdst = *vsrc;
+}
 #endif

@@ -46,6 +46,12 @@ void VECTOR4D_Normalize(VECTOR4D_PTR va)
 	va->z = va->z *length_inv;
 }
 
+//向量长度
+float VECTOR4D_Length(VECTOR4D_PTR va)
+{
+	return sqrtf(va->x*va->x + va->y*va->y + va->z*va->z);
+}
+
 //向量其次坐标
 void VECTOR4D_DIV_BY_W(VECTOR4D_PTR va)
 {
@@ -125,6 +131,12 @@ void Mat_Mul_4X4(MATRIX4X4_PTR ma, MATRIX4X4_PTR mb, MATRIX4X4_PTR mc)
 			mc->M[row][col] = tmp;
 		}
 	}
+}
+
+unsigned short RGB16BIT565(int r, int g, int b)
+{
+	r >>= 3; g >>= 2; b >>= 3;
+	return _RGB16BIT565((r), (g), (b));
 }
 
 //相机欧拉角度转换

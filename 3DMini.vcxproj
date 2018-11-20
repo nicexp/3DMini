@@ -44,6 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,16 +67,22 @@
   <ItemGroup>
     <ClCompile Include="3DCamera.cpp" />
     <ClCompile Include="3DLib1.cpp" />
+    <ClCompile Include="3DLight.cpp" />
+    <ClCompile Include="3DLog.cpp" />
     <ClCompile Include="3DObject.cpp" />
     <ClCompile Include="3DRenderlist.cpp" />
+    <ClCompile Include="3DShader.cpp" />
     <ClCompile Include="3DTool.cpp" />
     <ClCompile Include="win_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DCamera.h" />
     <ClInclude Include="3DLib1.h" />
+    <ClInclude Include="3DLight.h" />
+    <ClInclude Include="3DLog.h" />
     <ClInclude Include="3DObject.h" />
     <ClInclude Include="3DRenderlist.h" />
+    <ClInclude Include="3DShader.h" />
     <ClInclude Include="3DTool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
