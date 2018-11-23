@@ -11,13 +11,6 @@
 #define OBJECT4DV1_STATE_VISIBLE          0x0002 
 #define OBJECT4DV1_STATE_CULLED           0x0004
 
-#define OBJECT4DV2_STATE_ACTIVE           0x0001
-#define OBJECT4DV2_STATE_VISIBLE          0x0002 
-#define OBJECT4DV2_STATE_CULLED           0x0004
-
-#define OBJECT4DV2_MAX_VERTICES 4096
-#define OBJECT4DV2_MAX_POLYS 8192
-
 typedef struct OBJECT4DV1_TYP
 {
 	int id;
@@ -41,33 +34,6 @@ typedef struct OBJECT4DV1_TYP
 	POLY4DV1 plist[128];
 }OBJECT4DV1, *OBJECT4DV1_PTR;
 
-//物体版本2
-typedef struct OBJECT4DV2_TYP
-{
-	int id;
-	char name[64];
-	int state;
-	int attr;
-	float avg_radius;
-	float max_radius;
-
-	POINT4D world_pos;
-
-	VECTOR4D dir; //物体在局部坐标下的旋转角度
-	VECTOR4D ux, uy, uz; //记录物体朝向的坐标轴
-
-	int num_vertices; //物体顶点数
-	VERTEX4DTV1 vlist_local[64];//顶点
-	VERTEX4DTV1 vlist_trans[64];//转换后的顶点
-	//指向顶点列表的开头
-	VERTEX4DTV1_PTR head_vlist_local;
-	VERTEX4DTV1_PTR head_vlist_trans;
-	//纹理坐标
-	POINT2D tlist[3 * 12];
-	int num_polys;//多边形面数
-	POLY4DV2 plist[128];//多边形
-}OBJECT4DV2, *OBJECT4DV2_PTR;
-
 void InitObject(OBJECT4DV1_PTR obj);
 //局部坐标转换为世界坐标
 void ModelToWorldObj(OBJECT4DV1_PTR obj);
@@ -89,10 +55,5 @@ void Object3DLine(OBJECT4DV1_PTR obj, CAM4DV1_PTR cam);
 int CullObj(OBJECT4DV1_PTR obj, CAM4DV1_PTR cam, int cull_flags);
 //重置物体状态
 void ResetObjState(OBJECT4DV1_PTR obj);
-//version2
-//计算物体顶点法线用于光照计算
-void ComputeObject2VertexNormals(OBJECT4DV2_PTR obj);
-//计算物体平面法线
-void ComputeObject2PolyNormals(OBJECT4DV2_PTR obj);
 
 #endif

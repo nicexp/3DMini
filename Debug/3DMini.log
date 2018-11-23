@@ -1,38 +1,37 @@
-﻿生成启动时间为 2018/11/19 21:32:35。
+﻿生成启动时间为 2018/11/23 17:51:46。
      1>项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt win_main.cpp
-         win_main.cpp
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(25): warning C4305: “初始化”: 从“double”到“float”截断
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(76): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(83): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(90): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(97): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(219): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(221): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(242): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(243): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(244): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(245): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(276): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(277): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(278): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(279): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(268): warning C4101: “v1”: 未引用的局部变量
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(268): warning C4101: “v0”: 未引用的局部变量
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DView.cpp
+         3DView.cpp
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(29): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(31): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(52): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(53): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(54): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(55): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(93): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(94): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(95): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(96): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(85): warning C4101: “v1”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(85): warning C4101: “v0”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(150): warning C4101: “v1”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dview.cpp(150): warning C4101: “v0”: 未引用的局部变量
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyProjects\3DMini\Debug\3DMini.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyProjects\3DMini\Debug\3DMini.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyProjects\3DMini\Debug\3DMini.lib" /MACHINE:X86 Debug\3DCamera.obj
          Debug\3DLib1.obj
          Debug\3DLight.obj
          Debug\3DLog.obj
          Debug\3DObject.obj
+         Debug\3DObject2.obj
          Debug\3DRenderlist.obj
          Debug\3DShader.obj
          Debug\3DTool.obj
+         Debug\3DView.obj
          Debug\win_main.obj
          3DMini.vcxproj -> E:\MyProjects\3DMini\Debug\3DMini.exe
      1>已完成生成项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:01.53
+已用时间 00:00:00.92

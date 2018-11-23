@@ -57,6 +57,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -70,9 +71,11 @@
     <ClCompile Include="3DLight.cpp" />
     <ClCompile Include="3DLog.cpp" />
     <ClCompile Include="3DObject.cpp" />
+    <ClCompile Include="3DObject2.cpp" />
     <ClCompile Include="3DRenderlist.cpp" />
     <ClCompile Include="3DShader.cpp" />
     <ClCompile Include="3DTool.cpp" />
+    <ClCompile Include="3DView.cpp" />
     <ClCompile Include="win_main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -81,9 +84,11 @@
     <ClInclude Include="3DLight.h" />
     <ClInclude Include="3DLog.h" />
     <ClInclude Include="3DObject.h" />
+    <ClInclude Include="3DObject2.h" />
     <ClInclude Include="3DRenderlist.h" />
     <ClInclude Include="3DShader.h" />
     <ClInclude Include="3DTool.h" />
+    <ClInclude Include="3DView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

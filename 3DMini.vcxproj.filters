@@ -42,6 +42,12 @@
     <ClCompile Include="3DLog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="3DObject2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLib1.h">
@@ -66,6 +72,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="3DLog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DObject2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DView.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

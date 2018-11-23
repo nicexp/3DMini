@@ -1,35 +1,26 @@
 #include <iostream>
 using namespace std;
 
-#include <windows.h>
-#include "3DLib1.h"
-#include "3DTool.h"
-#include "3DCamera.h"
-#include "3DObject.h"
-#include "3DRenderlist.h"
-#include "3DLog.h"
+#include "3DView.h"
 
 #define WINDOW_CLASS_NAME "WIN3DCLASS"  // class name
 #define WINDOW_TITLE      "3DMini"
 
 #define CAMERA_DISTANCE 1750
-#define NUM_OBJECTS 16
-#define OBJECT_SPACING  250
-#define CAMERA_SPEED 10
+#define CAMERA_SPEED 20
 
 static CAM4DV1 cam;
 static OBJECT4DV1 obj;
+static OBJECT4DV2 obj2;
 static RENDERLIST4DV1 renderlist;
+static LIGHTV1 lights[MAX_LIGHTS];
 
-static POINT4D cam_pos = { 0, 0, 0, 1 };
-static VECTOR4D cam_dir = { PI / 2, PI, 0, 1 };
-
+static POINT4D cam_pos = { -600, 0, 0, 1 };
+static VECTOR4D cam_dir = { PI / 2, 0, 0, 1 };
+static VECTOR4D world_pos = { -125, 0, -125, 1 };
+ 
 static float view_angle_x = 90;
-static float view_angle_y = 180;
-
-void RenderlistView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj, RENDERLIST4DV1_PTR renderlist, HDC* hdc);
-void ObjectView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj, HDC* hdc);
-void SetCameraPos(POINT4D_PTR cam_pos, CAM4DV1_PTR cam, int direct, int speed);
+static float view_angle_y = 0;
 
 LRESULT CALLBACK WndProc(HWND hwnd,
 	UINT message,
@@ -53,13 +44,14 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 						 hPenSolid = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 						 hPenOld = (HPEN)SelectObject(hdc, hPenSolid);
 						 char buff[255] = {0};
-						 sprintf_s(buff, "cam_pos:（%f|%f|%f) cam_dir:（%f|%f|%f) (%f)\0", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z, view_angle_y/180*PI);
+						 sprintf_s(buff, "cam_pos:（%f|%f|%f) cam_dir:（%f|%f|%f) (%f)\0", cam_pos.x, cam_pos.y, cam_pos.z, cam_dir.x, cam_dir.y, cam_dir.z, view_angle_y / 180 * PI);
 						 TextOutA(hdc, 0, 0, buff, strlen(buff));
-						 DEBUG_LOG("cam_pos:（%f|%f|%f) cam_dir:（%f|%f|%f) (%f)\0", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z, view_angle_y / 180 * PI);
-						 //物体
+						 //物体1(线框)
 						 //ObjectView(&cam_pos, &cam_dir, &cam, &obj, &hdc);
+						 //物体2(填充线)
+						 ObjectView2(&cam_pos, &cam_dir, &cam, &obj2, lights, &hdc);
 						 //渲染列表
-						 RenderlistView(&cam_pos, &cam_dir, &cam, &obj, &renderlist, &hdc);
+						 //RenderlistView(&cam_pos, &cam_dir, &cam, &obj, &renderlist, &hdc);
 
 						 SelectObject(hdc, hPenOld);
 						 DeleteObject(hPenSolid);
@@ -71,15 +63,15 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 						   switch (wParam)
 						   {
 						   case VK_RIGHT:
-							   if ((view_angle_y += 1) >= 360)
-								   view_angle_y = 0;
+							   if ((view_angle_y -= 1) <= 0)
+								   view_angle_y = 360;
 							   cam_dir.y = view_angle_y / 180 * PI;
 
 							   SendMessage(hwnd, WM_PAINT, 0, 0);
 							   break;
 						   case VK_LEFT:
-							   if ((view_angle_y -= 1) <= 0)
-								   view_angle_y = 360;
+							   if ((view_angle_y += 1) >= 360)
+								   view_angle_y = 0;
 							   cam_dir.y = view_angle_y / 180 * PI;
 
 							   SendMessage(hwnd, WM_PAINT, 0, 0);
@@ -192,114 +184,4 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	}
 
 	return msg.wParam;
-}
-//渲染列表绘制
-void RenderlistView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam,OBJECT4DV1_PTR obj, RENDERLIST4DV1_PTR renderlist, HDC* hdc)
-{
-	//初始化相机
-	InitCamera(cam,
-		CAMERA_UVN,
-		cam_pos,
-		cam_dir,
-		NULL,
-		20, 8000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
-	//初始化变换矩阵
-	InitTransMatrix(cam);
-	//重置渲染列表
-	ResetRenderlist(renderlist);
-	//初始化物体
-	InitObject(obj);
-	//加入渲染列表
-	for (int x = -NUM_OBJECTS / 2; x < NUM_OBJECTS / 2; x++)
-	{
-		for (int z = -NUM_OBJECTS / 2; z < NUM_OBJECTS / 2; z++)
-		{
-			ResetObjState(obj);
-
-			obj->world_pos.x = x * OBJECT_SPACING + OBJECT_SPACING / 2;
-			obj->world_pos.y = 0;
-			obj->world_pos.z = z * OBJECT_SPACING + OBJECT_SPACING / 2;
-
-
-			if (!(CullObj(obj,cam, CULL_OBJECT_XYZ_PLANES)))
-			{
-				ModelToWorldObj(obj);
-				InsertObjToRenderlist(renderlist, obj, 0);
-			}
-		}
-	}
-	//构建3d流水线
-	Renderlist3DLine(renderlist, cam);
-	//描绘
-	for (int poly = 0; poly < renderlist->num_polys; poly++)
-	{
-		POLYF4DV1_PTR cur_poly = renderlist->poly_ptrs[poly];
-
-		if ((cur_poly->state & POLY4DV1_STATE_BACKFACE)
-			|| (cur_poly->state & POLY4DV1_STATE_CLIPPED))
-			continue;
-		DEBUG_LOG("%f,%f", cur_poly->tvlist[0].x, cur_poly->tvlist[0].y);
-		MoveToEx(*hdc, cur_poly->tvlist[0].x, cur_poly->tvlist[0].y, NULL);
-		LineTo(*hdc, cur_poly->tvlist[1].x, cur_poly->tvlist[1].y);
-		LineTo(*hdc, cur_poly->tvlist[2].x, cur_poly->tvlist[2].y);
-		LineTo(*hdc, cur_poly->tvlist[0].x, cur_poly->tvlist[0].y);
-	}
-}
-
-//物体绘制
-void ObjectView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj, HDC* hdc)
-{
-	//初始化相机
-	InitCamera(cam,
-		CAMERA_UVN,
-		cam_pos,
-		cam_dir,
-		NULL,
-		20, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
-	//初始化变换矩阵
-	InitTransMatrix(cam);
-	//初始化物体
-	InitObject(obj);
-	ResetObjState(obj);
-	//构建3D流水线
-	Object3DLine(obj, cam);
-
-	//描绘
-	int v0, v1, v2 = 0;
-	for (int poly = 0; poly < obj->num_polys; poly++)
-	{
-		POLY4DV1_PTR cur_poly = &obj->plist[poly];
-
-		if (obj->plist[poly].state & POLY4DV1_STATE_BACKFACE)
-			continue;
-
-		MoveToEx(*hdc, cur_poly->vlist[cur_poly->vert[0]].x, cur_poly->vlist[cur_poly->vert[0]].y, NULL);
-		LineTo(*hdc, cur_poly->vlist[cur_poly->vert[1]].x, cur_poly->vlist[cur_poly->vert[1]].y);
-		LineTo(*hdc, cur_poly->vlist[cur_poly->vert[2]].x, cur_poly->vlist[cur_poly->vert[2]].y);
-		LineTo(*hdc, cur_poly->vlist[cur_poly->vert[0]].x, cur_poly->vlist[cur_poly->vert[0]].y);
-	}
-}
-//设置相机位置
-void SetCameraPos(POINT4D_PTR cam_pos, CAM4DV1_PTR cam, int direct, int speed)
-{
-	if (direct == DIRECT_FRONT)
-	{
-		cam_pos->x += cam->n.x * speed;
-		cam_pos->z += cam->n.z * speed;
-	}
-	else if(direct == DIRECT_AFTER)
-	{
-		cam_pos->x += cam->n.x * -speed;
-		cam_pos->z += cam->n.z * -speed;
-	}
-	else if (direct == DIRECT_LEFT)
-	{
-		cam_pos->x += cam->u.x * -speed;
-		cam_pos->z += cam->u.z * -speed;
-	}
-	else if (direct == DIRECT_RIGHT)
-	{
-		cam_pos->x += cam->u.x * speed;
-		cam_pos->z += cam->u.z * speed;
-	}
 }

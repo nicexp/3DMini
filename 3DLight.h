@@ -14,6 +14,17 @@
 
 #define MAX_LIGHTS 8
 
+static RGBAV1 invalid_light = { 0, 0, 0, 0 }; //无效光
+static RGBAV1 ambient = { 80, 80, 80, 0 };	//环境光强度
+static RGBAV1 infinite_diffuse = { 0, 0, 255, 0 }; //直射光散射强度
+static RGBAV1 point_diffuse = { 255, 0, 0, 0 }; //点光源散射强度
+static RGBAV1 spot_diffuse = { 0, 255, 0, 0 }; //聚光灯散射强度
+
+static VECTOR4D infinite_dir = { -1, 1, -1, 1 }; //直射光方向
+static VECTOR4D point_pos = {-500, 500, 500, 1}; //点光源位置
+static VECTOR4D spot_pos = { 500, 500, 500, 1 }; //聚光灯位置
+static VECTOR4D spot_dir = { 1, 1, 1, 1 }; //聚光灯方向
+
 typedef struct LIGHTV1_TYP
 {
 	int state;
@@ -32,4 +43,18 @@ typedef struct LIGHTV1_TYP
 	float pf;//聚光灯指数因子
 }LIGHTV1, *LIGHTV1_PTR;
 
+int InitLight(LIGHTV1_PTR lights, //光源列表
+	int index,	//光源索引
+	int state,	//状态
+	int attr,
+	RGBAV1 c_ambient,//环境光强度
+	RGBAV1 c_diffuse,//散色光强度
+	RGBAV1 c_specular,//镜面反射光强度
+	POINT4D_PTR pos,
+	VECTOR4D_PTR dir,
+	float kc, float kl, float kq,
+	float spot_inner, float spot_outer,
+	float pf);
+//追加环境光
+void InitAllLight(LIGHTV1_PTR lights);
 #endif

@@ -10,8 +10,8 @@
 
 #define PI 3.141592653598
 
-#define WINDOW_WIDTH      1200  // size of window
-#define WINDOW_HEIGHT     900
+#define WINDOW_WIDTH      800  // size of window
+#define WINDOW_HEIGHT     600
 
 #define CULL_OBJECT_X_PLANE           0x0001
 #define CULL_OBJECT_Y_PLANE           0x0002
@@ -39,8 +39,8 @@
 #define FCMP(a, b) (fabs((a)-(b)) < EPSILON_E3 ? 1 : 0)
 
 #define _RGB565FROM16BIT(RGB, r, g, b) {*r = (((RGB)>>11) & 0x1f);*g = (((RGB)>>5) & 0x3f);*b = ((RGB) & 0x1f);}
-#define _RGB16BIT565(r, g, b) ((b&0x1f) + ((g&0x3f)<<5) + ((b&0x1f)<<11))
-
+#define _RGB16BIT565(r, g, b) ((b&0x1f) + ((g&0x3f)<<5) + ((r&0x1f)<<11))
+#define _RGBA32BIT(r, g, b ,a) (((r & 0xff) << 24) +((g & 0xff) << 16) + ((b & 0xff) << 8) + ((a & 0xff)))
 //点和向量二维
 typedef struct VECTOR2D_TYP
 {
@@ -185,7 +185,6 @@ typedef struct RGBAV1_TYP
 {
 	union
 	{
-		int rgba;
 		unsigned char rgba_M[4];
 		struct
 		{
