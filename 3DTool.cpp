@@ -30,3 +30,20 @@ void WriteLine2D(int xa, int ya, int xb, int yb, COLORREF c, HDC hdc)
 		SetPixel(hdc, x, y, c);
 	}
 }
+//È¡µÃÖ¡ÂÊ
+float GetFPS()
+{
+	static float  fps = 0;
+	static int    frameCount = 0;
+	static float  currentTime;
+	static float  lastTime = timeGetTime()*0.001f;
+	frameCount++;
+	currentTime = timeGetTime()*0.001f;
+	if (currentTime - lastTime >= 1.0f)
+	{
+		fps = (float)frameCount / (currentTime - lastTime);
+		lastTime = currentTime; 
+		frameCount = 0;
+	}
+	return fps;
+}

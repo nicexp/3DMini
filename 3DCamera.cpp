@@ -162,7 +162,7 @@ void InitTransMatrix(CAM4DV1_PTR cam)
 	if (cam->attr == CAMERA_EULER)
 		BuildMatrixCamEuler(cam);
 	else
-		BuildMatrixCamUVN(cam,UVN_SPHERICAL);
+		BuildMatrixCamUVN(cam,UVN_SIMPLE);
 
 	BuildCameraToPerspectMatrix(cam);
 	BuildPerspectToScreenMatrix(cam);

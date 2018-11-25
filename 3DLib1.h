@@ -10,9 +10,6 @@
 
 #define PI 3.141592653598
 
-#define WINDOW_WIDTH      800  // size of window
-#define WINDOW_HEIGHT     600
-
 #define CULL_OBJECT_X_PLANE           0x0001
 #define CULL_OBJECT_Y_PLANE           0x0002
 #define CULL_OBJECT_Z_PLANE           0x0004

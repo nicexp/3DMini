@@ -38,7 +38,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -48,6 +51,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ddraw.lib;dxguid.lib;dinput8.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,6 +73,7 @@
   <ItemGroup>
     <ClCompile Include="3DCamera.cpp" />
     <ClCompile Include="3DLib1.cpp" />
+    <ClCompile Include="3DLib2.cpp" />
     <ClCompile Include="3DLight.cpp" />
     <ClCompile Include="3DLog.cpp" />
     <ClCompile Include="3DObject.cpp" />
@@ -81,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="3DCamera.h" />
     <ClInclude Include="3DLib1.h" />
+    <ClInclude Include="3DLib2.h" />
     <ClInclude Include="3DLight.h" />
     <ClInclude Include="3DLog.h" />
     <ClInclude Include="3DObject.h" />

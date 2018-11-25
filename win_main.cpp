@@ -6,21 +6,11 @@ using namespace std;
 #define WINDOW_CLASS_NAME "WIN3DCLASS"  // class name
 #define WINDOW_TITLE      "3DMini"
 
-#define CAMERA_DISTANCE 1750
-#define CAMERA_SPEED 20
+extern HWND main_window_handle; // save the window handle
+extern HINSTANCE main_instance; // save the instance
 
-static CAM4DV1 cam;
-static OBJECT4DV1 obj;
-static OBJECT4DV2 obj2;
-static RENDERLIST4DV1 renderlist;
-static LIGHTV1 lights[MAX_LIGHTS];
-
-static POINT4D cam_pos = { -600, 0, 0, 1 };
-static VECTOR4D cam_dir = { PI / 2, 0, 0, 1 };
-static VECTOR4D world_pos = { -125, 0, -125, 1 };
- 
-static float view_angle_x = 90;
-static float view_angle_y = 0;
+int GameInit();
+int GameShutdown();
 
 LRESULT CALLBACK WndProc(HWND hwnd,
 	UINT message,
@@ -43,13 +33,10 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 						 hdc = BeginPaint(hwnd, &ps);
 						 hPenSolid = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 						 hPenOld = (HPEN)SelectObject(hdc, hPenSolid);
-						 char buff[255] = {0};
-						 sprintf_s(buff, "cam_pos:（%f|%f|%f) cam_dir:（%f|%f|%f) (%f)\0", cam_pos.x, cam_pos.y, cam_pos.z, cam_dir.x, cam_dir.y, cam_dir.z, view_angle_y / 180 * PI);
-						 TextOutA(hdc, 0, 0, buff, strlen(buff));
 						 //物体1(线框)
-						 //ObjectView(&cam_pos, &cam_dir, &cam, &obj, &hdc);
+						 //ObjectView(&cam_pos, &cam_dir, &cam, &obj);
 						 //物体2(填充线)
-						 ObjectView2(&cam_pos, &cam_dir, &cam, &obj2, lights, &hdc);
+						 //ObjectView2(&cam_pos, &cam_dir, &cam, &obj2, lights, &hdc);
 						 //渲染列表
 						 //RenderlistView(&cam_pos, &cam_dir, &cam, &obj, &renderlist, &hdc);
 
@@ -119,9 +106,13 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 						   }
 						   break;
 		}
+		case WM_QUIT:
+		{
+						DEBUG_LOG("quit....");
+			break;
+		}
 		case WM_DESTROY:
 		{
-			LOG_CLOSE();
 			PostQuitMessage(0);
 			break;
 		}
@@ -139,7 +130,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	HWND hwnd;
 	MSG msg;
 	WNDCLASS wc;
-	wc.style = 0;
+	wc.style = CS_DBLCLKS | CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = WndProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
@@ -154,34 +145,95 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 	hwnd = CreateWindow(WINDOW_CLASS_NAME,
 		WINDOW_TITLE,
-		WS_OVERLAPPEDWINDOW,
+		(WINDOWED_APP ? (WS_OVERLAPPED | WS_SYSMENU | WS_CAPTION) : (WS_POPUP | WS_VISIBLE)),
 		0,0,WINDOW_WIDTH,WINDOW_HEIGHT,
 		NULL,
 		NULL,
 		hInstance,
 		NULL);
 
-	RECT window_rect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+	main_window_handle = hwnd;
+	main_instance = hInstance;
 
-	MoveWindow(hwnd,
-		0, // x position
-		0, // y position
-		window_rect.right - window_rect.left, // width
-		window_rect.bottom - window_rect.top, // height
-		FALSE);
-	 
-	LOG_INIT();
-
-	ShowWindow(hwnd, SW_SHOW);
-	UpdateWindow(hwnd);
-
-	while (GetMessage(&msg, NULL, 0, 0))
+	if (WINDOWED_APP)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		RECT window_rect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 
+		MoveWindow(hwnd,
+			0, // x position
+			0, // y position
+			window_rect.right - window_rect.left, // width
+			window_rect.bottom - window_rect.top, // height
+			FALSE);
 
+		ShowWindow(hwnd, SW_SHOW);
 	}
 
+	GameInit();
+
+	SystemParametersInfo(SPI_SCREENSAVERRUNNING, TRUE, NULL, 0);
+
+	while (1)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+				break;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		//RenderlistView(&cam_pos, &cam_dir, &cam, &obj, &renderlist);
+		ObjectView2(&cam_pos, &cam_dir, &cam, &obj2, lights);
+		//ObjectView(&cam_pos, &cam_dir, &cam, &obj);
+	}
+
+	GameShutdown();
+
+	SystemParametersInfo(SPI_SCREENSAVERRUNNING, FALSE, NULL, 0);
+
 	return msg.wParam;
+}
+
+int GameInit()
+{
+	//初始日志
+	LOG_INIT();
+	//初始ddraw
+	DDraw_Init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BPP, WINDOWED_APP);
+	//初始输入
+	DInput_Init();
+	//初始键盘
+	DInput_Init_Keyboard();
+
+	if (!WINDOWED_APP)
+		ShowCursor(FALSE);
+
+	//初始化相机
+	InitCamera(&cam,
+		CAMERA_UVN,
+		&cam_pos,
+		&cam_dir,
+		NULL,
+		20, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+	//初始化物体
+	InitObject(&obj2);
+
+	return 0;
+}
+
+int GameShutdown()
+{
+	//释放键盘
+	DInput_Release_Keyboard();
+	//释放输入
+	DInput_Shutdown();
+	//释放ddraw
+	DDraw_Shutdown();
+	DEBUG_LOG("game exit...");
+	//关闭日志
+	LOG_CLOSE();
+
+	return 0;
 }

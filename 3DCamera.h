@@ -38,7 +38,6 @@ typedef struct CAM4DV1_TYP
 	MATRIX4X4 mscr; //屏幕变换矩阵
 }CAM4DV1, *CAM4DV1_PTR;
 
-
 void InitCamera(CAM4DV1_PTR cam,
 	int cam_attr,//相机属性
 	POINT4D_PTR cam_pos,//相机位置

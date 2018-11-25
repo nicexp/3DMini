@@ -29,6 +29,7 @@ typedef struct RENDERLIST4DV2_TYP
 	int num_polys;
 }RENDERLIST4DV2, *RENDERLIST4DV2_PTR;
 
+
 //重置渲染列表
 void ResetRenderlist(RENDERLIST4DV1_PTR renderlist);
 //将多边形面插入渲染列表

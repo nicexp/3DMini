@@ -1,35 +1,34 @@
 ﻿#include "3DView.h"
 
-#define NUM_OBJECTS 2
+#define NUM_OBJECTS 16
 #define OBJECT_SPACING  250
 
 //渲染列表绘制
-void RenderlistView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj, RENDERLIST4DV1_PTR renderlist, HDC* hdc)
+void RenderlistView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj, RENDERLIST4DV1_PTR renderlist)
 {
-	//初始化相机
-	InitCamera(cam,
-		CAMERA_UVN,
-		cam_pos,
-		cam_dir,
-		NULL,
-		20, 8000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
+	DDraw_Fill_Surface(lpddsback, 0);
+	DInput_Read_Keyboard();
+
+	BuildCameraPosAndDir(cam, CAMERA_DISTANCE, view_angle_y);
+
+	if ((view_angle_y += 1) >= 360)
+		view_angle_y = 0;
+
 	//初始化变换矩阵
 	InitTransMatrix(cam);
 	//重置渲染列表
 	ResetRenderlist(renderlist);
-	//初始化物体
-	InitObject(obj);
 	//加入渲染列表
-	for (int x = -NUM_OBJECTS / 2; x < 0 / 2; x++)
+	for (int x = -NUM_OBJECTS / 2; x < NUM_OBJECTS / 2; x++)
 	{
-		for (int z = -NUM_OBJECTS / 2; z < 0 / 2; z++)
+		for (int z = -NUM_OBJECTS / 2; z < NUM_OBJECTS / 2; z++)
 		{
 			ResetObjState(obj);
 
 			obj->world_pos.x = x * OBJECT_SPACING + OBJECT_SPACING / 2;
 			obj->world_pos.y = 0;
 			obj->world_pos.z = z * OBJECT_SPACING + OBJECT_SPACING / 2;
-			DEBUG_LOG("obj.pos(%f, %f, %f)", obj->world_pos.x, obj->world_pos.y, obj->world_pos.z);
+			//DEBUG_LOG("obj.pos(%f, %f, %f)", obj->world_pos.x, obj->world_pos.y, obj->world_pos.z);
 
 			if (!(CullObj(obj, cam, CULL_OBJECT_XYZ_PLANES)))
 			{
@@ -40,6 +39,8 @@ void RenderlistView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, O
 	}
 	//构建3d流水线
 	Renderlist3DLine(renderlist, cam);
+
+	DDraw_Lock_Back_Surface();
 	//描绘
 	for (int poly = 0; poly < renderlist->num_polys; poly++)
 	{
@@ -49,31 +50,41 @@ void RenderlistView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, O
 			|| (cur_poly->state & POLY4DV1_STATE_CLIPPED))
 			continue;
 
-		MoveToEx(*hdc, cur_poly->tvlist[0].x, cur_poly->tvlist[0].y, NULL);
-		LineTo(*hdc, cur_poly->tvlist[1].x, cur_poly->tvlist[1].y);
-		LineTo(*hdc, cur_poly->tvlist[2].x, cur_poly->tvlist[2].y);
-		LineTo(*hdc, cur_poly->tvlist[0].x, cur_poly->tvlist[0].y);
+		Draw_Clip_Line16(cur_poly->tvlist[0].x, cur_poly->tvlist[0].y,
+			cur_poly->tvlist[1].x, cur_poly->tvlist[1].y, cur_poly->color,
+			back_buffer, back_lpitch);
+
+		Draw_Clip_Line16(cur_poly->tvlist[1].x, cur_poly->tvlist[1].y,
+			cur_poly->tvlist[2].x, cur_poly->tvlist[2].y, cur_poly->color,
+			back_buffer, back_lpitch);
+
+		Draw_Clip_Line16(cur_poly->tvlist[2].x, cur_poly->tvlist[2].y,
+			cur_poly->tvlist[0].x, cur_poly->tvlist[0].y, cur_poly->color,
+			back_buffer, back_lpitch);
+	}
+
+	DDraw_Unlock_Back_Surface();
+
+	DDraw_Flip();
+
+	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
+	{
+		PostMessage(main_window_handle, WM_DESTROY, 0, 0);
 	}
 }
 
 //物体绘制
-void ObjectView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj, HDC* hdc)
+void ObjectView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV1_PTR obj)
 {
-	//初始化相机
-	InitCamera(cam,
-		CAMERA_UVN,
-		cam_pos,
-		cam_dir,
-		NULL,
-		20, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
+	DDraw_Fill_Surface(lpddsback, 0);
+	DInput_Read_Keyboard();
+	
 	//初始化变换矩阵
 	InitTransMatrix(cam);
-	//初始化物体
-	InitObject(obj);
 
 	//剔除物体
-	if (CullObj(obj, cam, CULL_OBJECT_XYZ_PLANES))
-		return;
+	/*if (CullObj(obj, cam, CULL_OBJECT_XYZ_PLANES))
+		return;*/
 	//设置物体位置
 	//VECTOR4D_COPY(&obj->world_pos, &world_pos);
 	//重置物体状态
@@ -82,7 +93,8 @@ void ObjectView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJEC
 	Object3DLine(obj, cam);
 
 	//描绘
-	int v0, v1, v2 = 0;
+	DDraw_Lock_Back_Surface();
+	
 	for (int poly = 0; poly < obj->num_polys; poly++)
 	{
 		POLY4DV1_PTR cur_poly = &obj->plist[poly];
@@ -90,10 +102,26 @@ void ObjectView(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJEC
 		if (obj->plist[poly].state & POLY4DV1_STATE_BACKFACE)
 			continue;
 
-		MoveToEx(*hdc, cur_poly->vlist[cur_poly->vert[0]].x, cur_poly->vlist[cur_poly->vert[0]].y, NULL);
-		LineTo(*hdc, cur_poly->vlist[cur_poly->vert[1]].x, cur_poly->vlist[cur_poly->vert[1]].y);
-		LineTo(*hdc, cur_poly->vlist[cur_poly->vert[2]].x, cur_poly->vlist[cur_poly->vert[2]].y);
-		LineTo(*hdc, cur_poly->vlist[cur_poly->vert[0]].x, cur_poly->vlist[cur_poly->vert[0]].y);
+		Draw_Clip_Line16(cur_poly->vlist[cur_poly->vert[0]].x, cur_poly->vlist[cur_poly->vert[0]].y,
+			cur_poly->vlist[cur_poly->vert[1]].x, cur_poly->vlist[cur_poly->vert[1]].y, cur_poly->color,
+			back_buffer, back_lpitch);
+
+		Draw_Clip_Line16(cur_poly->vlist[cur_poly->vert[1]].x, cur_poly->vlist[cur_poly->vert[1]].y,
+			cur_poly->vlist[cur_poly->vert[2]].x, cur_poly->vlist[cur_poly->vert[2]].y, cur_poly->color,
+			back_buffer, back_lpitch);
+
+		Draw_Clip_Line16(cur_poly->vlist[cur_poly->vert[2]].x, cur_poly->vlist[cur_poly->vert[2]].y,
+			cur_poly->vlist[cur_poly->vert[0]].x, cur_poly->vlist[cur_poly->vert[0]].y, cur_poly->color,
+			back_buffer, back_lpitch);
+	}
+
+	DDraw_Unlock_Back_Surface();
+
+	DDraw_Flip();
+
+	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
+	{
+		PostMessage(main_window_handle, WM_DESTROY, 0, 0);
 	}
 }
 //设置相机位置
@@ -121,19 +149,21 @@ void SetCameraPos(POINT4D_PTR cam_pos, CAM4DV1_PTR cam, int direct, int speed)
 	}
 }
 //物体绘制2
-void ObjectView2(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV2_PTR obj,LIGHTV1_PTR lights, HDC* hdc)
+void ObjectView2(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJECT4DV2_PTR obj,LIGHTV1_PTR lights)
 {
-	//初始化相机
-	InitCamera(cam,
-		CAMERA_UVN,
-		cam_pos,
-		cam_dir,
-		NULL,
-		20, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
+	//开始时钟
+	Start_Clock();
+
+	DDraw_Fill_Surface(lpddsback, 0);
+	DInput_Read_Keyboard();
+
+	BuildCameraPosAndDir(cam, CAMERA_DISTANCE, view_angle_y);
+
+	if ((view_angle_y += 1) >= 360)
+		view_angle_y = 0;
+
 	//初始化变换矩阵
 	InitTransMatrix(cam);
-	//初始化物体
-	InitObject(obj);
 	//初始化光源
 	InitAllLight(lights);
 	//设置物体位置
@@ -147,7 +177,7 @@ void ObjectView2(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJE
 	Object3DLine(obj, cam, lights);
 
 	//描绘
-	int v0, v1, v2 = 0;
+	DDraw_Lock_Back_Surface();
 	for (int poly = 0; poly < obj->num_polys; poly++)
 	{
 		POLY4DV2_PTR cur_poly = &obj->plist[poly];
@@ -156,8 +186,19 @@ void ObjectView2(POINT4D_PTR cam_pos, POINT4D_PTR cam_dir, CAM4DV1_PTR cam, OBJE
 			continue;
 
 		//恒定着色
-		//ShaderFlat(cur_poly,1, *hdc);
+		//ShaderFlat(cur_poly,back_buffer, back_lpitch);
 		//高洛德着色
-		ShaderGouraud(cur_poly, *hdc);
+		ShaderGouraud(cur_poly, back_buffer, back_lpitch);
+	}
+
+	DDraw_Unlock_Back_Surface();
+
+	DDraw_Flip();
+
+	Wait_Clock(30); //帧率限制
+
+	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
+	{
+		PostMessage(main_window_handle, WM_DESTROY, 0, 0);
 	}
 }
