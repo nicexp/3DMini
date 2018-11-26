@@ -59,6 +59,7 @@ void BuildPerspectToScreenMatrix(CAM4DV1_PTR cam);
 //初始化相关矩阵
 void InitTransMatrix(CAM4DV1_PTR cam);
 //相机轨迹1
-void BuildCameraPosAndDir(CAM4DV1_PTR cam, float distance, float view_angle);
-
+void BuildCameraPosAndDir(CAM4DV1_PTR cam, float distance);
+//相机轨迹与朝向
+void UpdateCameraPosAndDir(CAM4DV1_PTR cam);
 #endif

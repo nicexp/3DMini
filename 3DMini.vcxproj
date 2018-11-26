@@ -42,6 +42,9 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -68,10 +71,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ddraw.lib;dxguid.lib;dinput8.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3DCamera.cpp" />
+    <ClCompile Include="3DDemo_1.cpp" />
+    <ClCompile Include="3DDemo_2.cpp" />
     <ClCompile Include="3DLib1.cpp" />
     <ClCompile Include="3DLib2.cpp" />
     <ClCompile Include="3DLight.cpp" />
@@ -81,11 +88,11 @@
     <ClCompile Include="3DRenderlist.cpp" />
     <ClCompile Include="3DShader.cpp" />
     <ClCompile Include="3DTool.cpp" />
-    <ClCompile Include="3DView.cpp" />
     <ClCompile Include="win_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DCamera.h" />
+    <ClInclude Include="3DDemo.h" />
     <ClInclude Include="3DLib1.h" />
     <ClInclude Include="3DLib2.h" />
     <ClInclude Include="3DLight.h" />
@@ -95,7 +102,6 @@
     <ClInclude Include="3DRenderlist.h" />
     <ClInclude Include="3DShader.h" />
     <ClInclude Include="3DTool.h" />
-    <ClInclude Include="3DView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

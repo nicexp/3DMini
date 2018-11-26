@@ -5,6 +5,18 @@
 #include <string.h>
 #include <math.h>
 
+#define WINDOW_WIDTH      800
+#define WINDOW_HEIGHT     600
+#define WINDOWED_APP      0 //是否窗口化(0:全屏，1:窗口)
+
+#define WINDDOW_BPP32 //是否32位位深 
+
+#ifdef WINDDOW_BPP32
+#define WINDOW_BPP        32 //位深
+#else
+#define WINDOW_BPP        16 //位深
+#endif
+
 #define SET_BIT(state, mask) ((state) = ((state) | (mask)))
 #define RESET_BIT(state, mask) ((state) = ((state) & (~mask)))
 
@@ -35,9 +47,19 @@
 #define SWAP(a,b,t) {t=a; a=b; b=t;}
 #define FCMP(a, b) (fabs((a)-(b)) < EPSILON_E3 ? 1 : 0)
 
-#define _RGB565FROM16BIT(RGB, r, g, b) {*r = (((RGB)>>11) & 0x1f);*g = (((RGB)>>5) & 0x3f);*b = ((RGB) & 0x1f);}
-#define _RGB16BIT565(r, g, b) ((b&0x1f) + ((g&0x3f)<<5) + ((r&0x1f)<<11))
-#define _RGBA32BIT(r, g, b ,a) (((r & 0xff) << 24) +((g & 0xff) << 16) + ((b & 0xff) << 8) + ((a & 0xff)))
+#define _RGB565FROM16BIT(RGB, r, g, b) {*r = ((((RGB)>>11) & 0x1f) << 3);*g = ((((RGB)>>5) & 0x3f) << 2);*b = (((RGB) & 0x1f)<<3);}
+#define _RGB888FROM32BIT(RGB, r, g, b) {*r = ((((RGB)>>16) & 0xff));*g = ((((RGB)>>8) & 0xff));*b = ((((RGB)) & 0xff));}
+#define _RGB16BIT565(r, g, b) (((b >> 3)&0x1f) + (((g >> 2)&0x3f)<<5) + (((r >> 3)&0x1f)<<11))
+#define _RGB32BIT888(r, g, b) (((r & 0xff) << 16) +((g & 0xff) << 8) + ((b & 0xff)) + 0xff000000)
+
+#ifdef WINDDOW_BPP32
+#define _RGBFROMINT(RGB, r, g, b) _RGB888FROM32BIT(RGB, r, g, b)
+#define _RGBTOINT(r, g, b) _RGB32BIT888(r, g, b)
+#else
+#define _RGBFROMINT(RGB, r, g, b) _RGB565FROM16BIT(RGB, r, g, b)
+#define _RGBTOINT(r, g, b) _RGB16BIT565(r, g, b)
+#endif
+
 //点和向量二维
 typedef struct VECTOR2D_TYP
 {
@@ -148,7 +170,7 @@ typedef struct POLY4DV2_TYP
 	int attr;//属性
 	int color;//颜色
 
-	int lit_color[3];//存储光处理后的颜色
+	unsigned int lit_color[3];//存储光处理后的颜色
 	int mati;//-1表示没有材质
 
 	VERTEX4DTV1_PTR vlist;//顶点列表
@@ -219,6 +241,8 @@ enum
 	DIRECT_AFTER,
 	DIRECT_LEFT,
 	DIRECT_RIGHT,
+	DIRECT_UP,
+	DIRECT_DOWN,
 };
 
 //函数
@@ -239,8 +263,6 @@ void Mat_Init_4X4(MATRIX4X4_PTR ma,
 	float m10, float m11, float m12, float m13,
 	float m20, float m21, float m22, float m23,
 	float m30, float m31, float m32, float m33);
-
-unsigned short RGB16BIT565(int r, int g, int b);
 
 //辅助函数
 inline void VERTEX4DTV1_COPY(VERTEX4DTV1_PTR vdst, VERTEX4DTV1_PTR vsrc)

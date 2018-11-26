@@ -47,7 +47,7 @@ void InitObject(OBJECT4DV2_PTR obj)
 		obj->vlist_local[i].z = temp_verts[i].z;
 		obj->vlist_local[i].w = 1;
 		//颜色
-		obj->vlist_local[i].i = RGB16BIT565(255, 255, 255);
+		obj->vlist_local[i].i = _RGBTOINT(255, 255, 255);
 	}
 	//多边形数量
 	obj->num_polys = 12;
@@ -66,7 +66,7 @@ void InitObject(OBJECT4DV2_PTR obj)
 	{
 		SET_BIT(obj->plist[tri].state, POLY4DV2_STATE_ACTIVE);
 		obj->plist[tri].attr = 0;
-		obj->plist[tri].color = RGB16BIT565(255, 255, 255);
+		obj->plist[tri].color = _RGBTOINT(255, 255, 255);
 		
 		obj->plist[tri].vlist = obj->vlist_trans;
 
@@ -376,11 +376,7 @@ void LightObject2ByFlat(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights,
 		//避免在渲染列表中重新进行光照处理
 		SET_BIT(cur_poly->state, POLY4DV2_STATE_LIT);
 		//提取颜色
-		_RGB565FROM16BIT(cur_poly->color, &rbase, &gbase, &bbase);
-		//拓展到8位
-		rbase <<= 3;
-		gbase <<= 2;
-		bbase <<= 3;
+		_RGBFROMINT(cur_poly->color, &rbase, &gbase, &bbase);
 
 		rsum = 0;
 		gsum = 0;
@@ -515,7 +511,7 @@ void LightObject2ByFlat(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights,
 			if (gsum > 255) gsum = 255;
 			if (bsum > 255) bsum = 255;
 			//存储光照后的面颜色
-			cur_poly->lit_color[0] = RGB16BIT565(rsum, gsum, bsum);
+			cur_poly->lit_color[0] = _RGBTOINT(rsum, gsum, bsum);
 		}
 	}
 }
@@ -548,11 +544,7 @@ void LightObject2ByGouraud(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR ligh
 		//避免在渲染列表中重新进行光照处理
 		SET_BIT(cur_poly->state, POLY4DV2_STATE_LIT);
 		//提取颜色
-		_RGB565FROM16BIT(cur_poly->color, &rbase, &gbase, &bbase);
-		//拓展到8位
-		rbase <<= 3;
-		gbase <<= 2;
-		bbase <<= 3;
+		_RGBFROMINT(cur_poly->color, &rbase, &gbase, &bbase);
 
 		for (int ver = 0; ver < 3; ver++)
 		{
@@ -680,8 +672,8 @@ void LightObject2ByGouraud(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR ligh
 			if (bsum[ver] > 255) bsum[ver] = 255;
 		}
 
-		cur_poly->lit_color[0] = RGB16BIT565(rsum[0], gsum[0], bsum[0]);
-		cur_poly->lit_color[1] = RGB16BIT565(rsum[1], gsum[1], bsum[1]);
-		cur_poly->lit_color[2] = RGB16BIT565(rsum[2], gsum[2], bsum[2]);
+		cur_poly->lit_color[0] = _RGBTOINT(rsum[0], gsum[0], bsum[0]);
+		cur_poly->lit_color[1] = _RGBTOINT(rsum[1], gsum[1], bsum[1]);
+		cur_poly->lit_color[2] = _RGBTOINT(rsum[2], gsum[2], bsum[2]);
 	}
 }

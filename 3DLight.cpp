@@ -1,5 +1,15 @@
 #include "3DLight.h"
 
+static RGBAV1 invalid_light = { 0, 0, 0, 0 }; //无效光
+static RGBAV1 ambient = { 80, 80, 80, 0 };	//环境光强度
+static RGBAV1 infinite_diffuse = { 0, 0, 255, 0 }; //直射光散射强度
+static RGBAV1 point_diffuse = { 255, 0, 0, 0 }; //点光源散射强度
+static RGBAV1 spot_diffuse = { 0, 255, 0, 0 }; //聚光灯散射强度
+static VECTOR4D infinite_dir = { -1, 1, -1, 1 }; //直射光方向
+static VECTOR4D point_pos = { -500, 500, 500, 1 }; //点光源位置
+static VECTOR4D spot_pos = { 500, 500, 500, 1 }; //聚光灯位置
+static VECTOR4D spot_dir = { 1, 1, 1, 1 }; //聚光灯方向
+
 void ResetLights(LIGHTV1_PTR lights)
 {
 	memset(lights, 0, MAX_LIGHTS * sizeof(LIGHTV1));
@@ -56,5 +66,5 @@ void InitAllLight(LIGHTV1_PTR lights)
 	//初始化点光源
 	InitLight(lights, 2, LIGHTV1_STATE_ON, LIGHTV1_ATTR_POINT, invalid_light, point_diffuse, invalid_light, &point_pos, NULL, 0, 0.001, 0, 0, 0, 0);
 	//初始化聚光灯
-	InitLight(lights, 3, LIGHTV1_STATE_ON, LIGHTV1_ATTR_SPOTLIGHT2, invalid_light, spot_diffuse, invalid_light,&spot_pos,&spot_dir, 0, 0.001, 0, 0, 0, 1);
+	InitLight(lights, 3, LIGHTV1_STATE_ON, LIGHTV1_ATTR_SPOTLIGHT2, invalid_light, spot_diffuse, invalid_light, &spot_pos, &spot_dir, 0, 0.001, 0, 0, 0, 1);
 }

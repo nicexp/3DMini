@@ -64,7 +64,7 @@ void InitObject(OBJECT4DV1_PTR obj)
 	{
 		SET_BIT(obj->plist[tri].state, POLY4DV1_STATE_ACTIVE);
 		obj->plist[tri].attr = 0;
-		obj->plist[tri].color = RGB16BIT565(255, 255, 255);
+		obj->plist[tri].color = _RGBTOINT(255, 255, 255);
 
 		obj->plist[tri].vlist = obj->vlist_trans;
 

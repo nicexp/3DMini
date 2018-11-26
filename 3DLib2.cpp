@@ -40,6 +40,7 @@ HWND main_window_handle = NULL;
 HINSTANCE main_instance = NULL;
 
 UCHAR keyboard_state[256];
+DIMOUSESTATE mouse_state;
 
 int min_clip_x = 0, min_clip_y = 0, max_clip_x = WINDOW_WIDTH - 1, max_clip_y = WINDOW_HEIGHT - 1;
 
@@ -266,6 +267,33 @@ int DInput_Init()
 
 }
 
+int DInput_Init_Mouse()
+{
+	if (lpdi->CreateDevice(GUID_SysMouse, &lpdimouse, NULL) != DI_OK)
+		return 0;
+
+	if (lpdimouse->SetCooperativeLevel(main_window_handle,
+		DISCL_NONEXCLUSIVE | DISCL_BACKGROUND) != DI_OK)
+		return 0;
+
+	if (lpdimouse->SetDataFormat(&c_dfDIMouse) != DI_OK)
+		return 0;
+
+	if (lpdimouse->Acquire() != DI_OK)
+		return 0;
+
+	return 1;
+}
+
+void DInput_Release_Mouse()
+{
+	if (lpdimouse)
+	{
+		lpdimouse->Unacquire();
+		lpdimouse->Release();
+	}
+}
+
 int DInput_Init_Keyboard()
 {
 	if (lpdi->CreateDevice(GUID_SysKeyboard, &lpdikey, NULL) != DI_OK)
@@ -409,7 +437,7 @@ int DDraw_Flip(void)
 	return 1;
 }
 
-int Draw_Clip_Line16(int x0, int y0, int x1, int y1, int color,
+int Draw_Clip_Line(int x0, int y0, int x1, int y1, int color,
 	UCHAR *dest_buffer, int lpitch)
 {
 	int cxs, cys,
@@ -421,7 +449,7 @@ int Draw_Clip_Line16(int x0, int y0, int x1, int y1, int color,
 	cye = y1;
 
 	if (Clip_Line(cxs, cys, cxe, cye))
-		Draw_Line16(cxs, cys, cxe, cye, color, dest_buffer, lpitch);
+		Draw_Line(cxs, cys, cxe, cye, color, dest_buffer, lpitch);
 
 	return 1;
 }
@@ -648,7 +676,7 @@ int Clip_Line(int &x1, int &y1, int &x2, int &y2)
 }
 
 //使用的是Bresenham画点法(使用加减法代替乘除法避免了浮点数占用cpu周期)
-int Draw_Line16(int x0, int y0,
+int Draw_Line(int x0, int y0,
 	int x1, int y1,
 	int color,
 	UCHAR *vb_start, int lpitch)
@@ -662,9 +690,13 @@ int Draw_Line16(int x0, int y0,
 		error,
 		index;
 
+#ifdef WINDDOW_BPP32
+	int lpitch_2 = lpitch >> 2;
+	UINT *vb_start2 = (UINT *)vb_start + x0 + y0*lpitch_2;
+#else
 	int lpitch_2 = lpitch >> 1;
-
 	USHORT *vb_start2 = (USHORT *)vb_start + x0 + y0*lpitch_2;
+#endif
 
 	dx = x1 - x0;
 	dy = y1 - y0;
@@ -699,7 +731,11 @@ int Draw_Line16(int x0, int y0,
 
 		for (index = 0; index <= dx; index++)
 		{
+#ifdef WINDDOW_BPP32
+			*vb_start2 = (UINT)color;
+#else
 			*vb_start2 = (USHORT)color;
+#endif
 
 			if (error >= 0)
 			{
@@ -719,7 +755,11 @@ int Draw_Line16(int x0, int y0,
 
 		for (index = 0; index <= dy; index++)
 		{
+#ifdef WINDDOW_BPP32
+			*vb_start2 = (UINT)color;
+#else
 			*vb_start2 = (USHORT)color;
+#endif
 			if (error >= 0)
 			{
 				error -= dy2;
@@ -735,7 +775,7 @@ int Draw_Line16(int x0, int y0,
 
 	return 1;
 }
-
+//读取键盘
 int DInput_Read_Keyboard()
 {
 	if (lpdikey)
@@ -749,6 +789,22 @@ int DInput_Read_Keyboard()
 
 		return 0;
 	}
+	return 1;
+}
+//读取鼠标
+int DInput_Read_Mouse(void)
+{
+	if (lpdimouse)
+	{
+		if (lpdimouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mouse_state) != DI_OK)
+			return(0);
+	}
+	else
+	{
+		memset(&mouse_state, 0, sizeof(mouse_state));
+		return 0;
+	}
+
 	return 1;
 }
 

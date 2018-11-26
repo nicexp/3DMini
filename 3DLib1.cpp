@@ -133,12 +133,6 @@ void Mat_Mul_4X4(MATRIX4X4_PTR ma, MATRIX4X4_PTR mb, MATRIX4X4_PTR mc)
 	}
 }
 
-unsigned short RGB16BIT565(int r, int g, int b)
-{
-	r >>= 3; g >>= 2; b >>= 3;
-	return _RGB16BIT565((r), (g), (b));
-}
-
 //相机欧拉角度转换
 void Eu_Dir_Transform(VECTOR4D_PTR dir)
 {

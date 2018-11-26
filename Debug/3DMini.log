@@ -1,62 +1,31 @@
-﻿生成启动时间为 2018/11/25 21:06:55。
+﻿生成启动时间为 2018/11/26 22:15:08。
      1>项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DLib2.cpp 3DShader.cpp 3DView.cpp win_main.cpp
-         3DLib2.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DCamera.cpp
+         3DCamera.cpp
          c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(476): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(481): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(487): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(493): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(499): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(504): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(512): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(517): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(525): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(530): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(538): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(543): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(582): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(587): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(595): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(600): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(608): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(613): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(621): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(626): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-         正在生成代码...
-         正在编译...
-         win_main.cpp
-         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3dview.h(29): warning C4305: “初始化”: 从“double”到“float”截断
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(55): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(62): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(69): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\win_main.cpp(76): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-         3DView.cpp
-         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3dview.h(29): warning C4305: “初始化”: 从“double”到“float”截断
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(28): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(30): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(55): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(59): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(63): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(107): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(111): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dview.cpp(115): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-         3DShader.cpp
-         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(48): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(56): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(79): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(86): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(132): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(144): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(167): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(173): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-         正在生成代码...
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(6): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(7): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(48): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(51): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(75): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(82): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(89): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(112): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(113): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(114): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(100): warning C4101: “mt_tmp”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(157): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(158): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(239): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(240): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(243): warning C4305: “+=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(263): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(264): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyProjects\3DMini\Debug\3DMini.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86" ddraw.lib dxguid.lib dinput8.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyProjects\3DMini\Debug\3DMini.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyProjects\3DMini\Debug\3DMini.lib" /MACHINE:X86 Debug\3DCamera.obj
+         Debug\3DDemo_1.obj
+         Debug\3DDemo_2.obj
          Debug\3DLib1.obj
          Debug\3DLib2.obj
          Debug\3DLight.obj
@@ -66,11 +35,10 @@
          Debug\3DRenderlist.obj
          Debug\3DShader.obj
          Debug\3DTool.obj
-         Debug\3DView.obj
          Debug\win_main.obj
          3DMini.vcxproj -> E:\MyProjects\3DMini\Debug\3DMini.exe
      1>已完成生成项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:02.72
+已用时间 00:00:00.88

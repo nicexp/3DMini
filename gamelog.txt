@@ -1,9 +1,9 @@
 open log file
-Sun Nov 25 21:07:03.266, 2018
+Mon Nov 26 22:15:12.103, 2018
 
-Function:DDraw_Init,Line:204, 32
-Function:DDraw_Init,Line:252, DDrawInit Sucess
-Function:DInput_Init,Line:264, DInput_Init Success
-Function:DInput_Init_Keyboard,Line:294, DInput_Init_Keyboard Success
-Function:GameShutdown,Line:234, game exit...
+Function:DDraw_Init,Line:205, 32
+Function:DDraw_Init,Line:253, DDrawInit Sucess
+Function:DInput_Init,Line:265, DInput_Init Success
+Function:DInput_Init_Keyboard,Line:322, DInput_Init_Keyboard Success
+Function:GameShutdown,Line:64, game exit...
 close the log

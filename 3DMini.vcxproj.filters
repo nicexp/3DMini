@@ -45,10 +45,13 @@
     <ClCompile Include="3DObject2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DView.cpp">
+    <ClCompile Include="3DLib2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DLib2.cpp">
+    <ClCompile Include="3DDemo_1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DDemo_2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,10 +83,10 @@
     <ClInclude Include="3DObject2.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="3DView.h">
+    <ClInclude Include="3DLib2.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="3DLib2.h">
+    <ClInclude Include="3DDemo.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

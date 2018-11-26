@@ -1,16 +1,15 @@
 #include <iostream>
 using namespace std;
 
-#include "3DView.h"
+#include <Windows.h>
+#include "3DLib2.h"
+#include "3DDemo.h"
 
 #define WINDOW_CLASS_NAME "WIN3DCLASS"  // class name
 #define WINDOW_TITLE      "3DMini"
 
 extern HWND main_window_handle; // save the window handle
 extern HINSTANCE main_instance; // save the instance
-
-int GameInit();
-int GameShutdown();
 
 LRESULT CALLBACK WndProc(HWND hwnd,
 	UINT message,
@@ -27,84 +26,9 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 		{
 						 HDC hdc;
 						 PAINTSTRUCT ps;
-						 HPEN hPenSolid;
-						 HPEN hPenOld;
-						 InvalidateRect(hwnd, NULL, TRUE);
 						 hdc = BeginPaint(hwnd, &ps);
-						 hPenSolid = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
-						 hPenOld = (HPEN)SelectObject(hdc, hPenSolid);
-						 //物体1(线框)
-						 //ObjectView(&cam_pos, &cam_dir, &cam, &obj);
-						 //物体2(填充线)
-						 //ObjectView2(&cam_pos, &cam_dir, &cam, &obj2, lights, &hdc);
-						 //渲染列表
-						 //RenderlistView(&cam_pos, &cam_dir, &cam, &obj, &renderlist, &hdc);
-
-						 SelectObject(hdc, hPenOld);
-						 DeleteObject(hPenSolid);
 						 EndPaint(hwnd, &ps);
 						 break;
-		}
-		case WM_KEYDOWN:
-		{
-						   switch (wParam)
-						   {
-						   case VK_RIGHT:
-							   if ((view_angle_y -= 1) <= 0)
-								   view_angle_y = 360;
-							   cam_dir.y = view_angle_y / 180 * PI;
-
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case VK_LEFT:
-							   if ((view_angle_y += 1) >= 360)
-								   view_angle_y = 0;
-							   cam_dir.y = view_angle_y / 180 * PI;
-
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case VK_UP:
-							   if ((view_angle_x -= 1) <= 10)
-								   view_angle_x = 10;
-							   cam_dir.x = view_angle_x / 180 * PI;
-
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case VK_DOWN:
-							   if ((view_angle_x += 1) >= 170)
-								   view_angle_x = 170;
-							   cam_dir.x = view_angle_x / 180 * PI;
-
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case 0x57:
-							   SetCameraPos(&cam_pos, &cam, DIRECT_FRONT, CAMERA_SPEED);
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case 0x41:
-							   SetCameraPos(&cam_pos, &cam, DIRECT_LEFT, CAMERA_SPEED);
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case 0x53:
-							   SetCameraPos(&cam_pos, &cam, DIRECT_AFTER, CAMERA_SPEED);
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case 0x44:
-							   SetCameraPos(&cam_pos, &cam, DIRECT_RIGHT, CAMERA_SPEED);
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case 0x45:
-							   cam_pos.y += CAMERA_SPEED;
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   case 0x51:
-							   cam_pos.y -= CAMERA_SPEED;
-							   SendMessage(hwnd, WM_PAINT, 0, 0);
-							   break;
-						   default:
-							   break;
-						   }
-						   break;
 		}
 		case WM_QUIT:
 		{
@@ -183,9 +107,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		//RenderlistView(&cam_pos, &cam_dir, &cam, &obj, &renderlist);
-		ObjectView2(&cam_pos, &cam_dir, &cam, &obj2, lights);
-		//ObjectView(&cam_pos, &cam_dir, &cam, &obj);
+
+		GameMain();
 	}
 
 	GameShutdown();
@@ -193,47 +116,4 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	SystemParametersInfo(SPI_SCREENSAVERRUNNING, FALSE, NULL, 0);
 
 	return msg.wParam;
-}
-
-int GameInit()
-{
-	//初始日志
-	LOG_INIT();
-	//初始ddraw
-	DDraw_Init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BPP, WINDOWED_APP);
-	//初始输入
-	DInput_Init();
-	//初始键盘
-	DInput_Init_Keyboard();
-
-	if (!WINDOWED_APP)
-		ShowCursor(FALSE);
-
-	//初始化相机
-	InitCamera(&cam,
-		CAMERA_UVN,
-		&cam_pos,
-		&cam_dir,
-		NULL,
-		20, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-	//初始化物体
-	InitObject(&obj2);
-
-	return 0;
-}
-
-int GameShutdown()
-{
-	//释放键盘
-	DInput_Release_Keyboard();
-	//释放输入
-	DInput_Shutdown();
-	//释放ddraw
-	DDraw_Shutdown();
-	DEBUG_LOG("game exit...");
-	//关闭日志
-	LOG_CLOSE();
-
-	return 0;
 }

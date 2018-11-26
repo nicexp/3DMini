@@ -1,4 +1,10 @@
 #include "3DCamera.h"
+#include "3DLib2.h"
+
+#define CAMERA_SPEED 20
+
+static float max_angle_y = PI * 170 / 180;
+static float min_angle_y = PI * 10 / 180;
 
 //初始化相机机构
 void InitCamera(CAM4DV1_PTR cam,
@@ -118,7 +124,7 @@ void BuildMatrixCamUVN(CAM4DV1_PTR cam, int mode)
 		VECTOR4D_SUB(&cam->target, &cam->pos, &cam->n);
 	}
 	//初始化v向量
-	VECTOR4D_INITXYZ(&cam->v, 0, 1, 0);
+	VECTOR4D_INITXYZ(&cam->v, 0, 1, 0); //当n和v重叠时会有问题,所以避免n和v重叠
 	//u向量
 	VECTOR4D_CROSS(&cam->v, &cam->n, &cam->u);
 	//反求v
@@ -162,15 +168,98 @@ void InitTransMatrix(CAM4DV1_PTR cam)
 	if (cam->attr == CAMERA_EULER)
 		BuildMatrixCamEuler(cam);
 	else
-		BuildMatrixCamUVN(cam,UVN_SIMPLE);
+		BuildMatrixCamUVN(cam, UVN_SPHERICAL);
 
 	BuildCameraToPerspectMatrix(cam);
 	BuildPerspectToScreenMatrix(cam);
 }
 
-//相机轨迹1
-void BuildCameraPosAndDir(CAM4DV1_PTR cam,float distance, float view_angle)
+//设置相机位置
+void SetCameraPos(CAM4DV1_PTR cam, int direct, int speed)
 {
+	if (direct == DIRECT_FRONT)
+	{
+		cam->pos.x += cam->n.x * speed;
+		cam->pos.z += cam->n.z * speed;
+	}
+	else if (direct == DIRECT_AFTER)
+	{
+		cam->pos.x += cam->n.x * -speed;
+		cam->pos.z += cam->n.z * -speed;
+	}
+	else if (direct == DIRECT_LEFT)
+	{
+		cam->pos.x += cam->u.x * -speed;
+		cam->pos.z += cam->u.z * -speed;
+	}
+	else if (direct == DIRECT_RIGHT)
+	{
+		cam->pos.x += cam->u.x * speed;
+		cam->pos.z += cam->u.z * speed;
+	}
+	else if (direct == DIRECT_UP)
+	{
+		cam->pos.y += speed;
+	}
+	else if (direct == DIRECT_DOWN)
+	{
+		cam->pos.y -= speed;
+	}
+}
+
+void UpdateCameraPosAndDir(CAM4DV1_PTR cam)
+{
+	if (KEY_DOWN(0x57) || keyboard_state[DIK_W])
+	{
+		SetCameraPos(cam, DIRECT_FRONT, CAMERA_SPEED);
+	}
+	if (KEY_DOWN(0x41) || keyboard_state[DIK_A])
+	{
+		SetCameraPos(cam, DIRECT_LEFT, CAMERA_SPEED);
+	}
+	if (KEY_DOWN(0x53) || keyboard_state[DIK_S])
+	{
+		SetCameraPos(cam, DIRECT_AFTER, CAMERA_SPEED);
+	}
+	if (KEY_DOWN(0x44) || keyboard_state[DIK_D])
+	{
+		SetCameraPos(cam, DIRECT_RIGHT, CAMERA_SPEED);
+	}
+	if (KEY_DOWN(0x45) || keyboard_state[DIK_E])
+	{
+		SetCameraPos(cam, DIRECT_UP, CAMERA_SPEED);
+	}
+	if (KEY_DOWN(0x51) || keyboard_state[DIK_Q])
+	{
+		SetCameraPos(cam, DIRECT_DOWN, CAMERA_SPEED);
+	}
+	if ((mouse_state.rgbButtons[0] & 0x80))
+	{
+		int lx = mouse_state.lX, ly = mouse_state.lY;
+		cam->dir.y -= (((float)(lx)) / 1800 * PI);
+		cam->dir.x += (((float)(ly)) / 1800 * PI);
+		if (cam->dir.y < 0)
+		{
+			cam->dir.y += PI*2;
+		}
+		if (cam->dir.x > max_angle_y)
+		{
+			cam->dir.x = max_angle_y;
+		}
+		if (cam->dir.x < min_angle_y)
+		{
+			cam->dir.x = min_angle_y;
+		}
+	}
+}
+
+//相机轨迹1
+void BuildCameraPosAndDir(CAM4DV1_PTR cam,float distance)
+{
+	static float view_angle = 0;
+	if ((view_angle += 1) >= 360)
+		view_angle = 0;
+
 	cam->pos.x = distance * cos(view_angle / 180 * PI);
 	cam->pos.y = distance * sin(view_angle / 180 * PI);
 	cam->pos.z = 2 * cam->pos.y;
