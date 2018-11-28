@@ -1,13 +1,14 @@
 #ifndef _3DLIB1_H
 #define _3DLIB1_H
 
+#include <Windows.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 
 #define WINDOW_WIDTH      800
 #define WINDOW_HEIGHT     600
-#define WINDOWED_APP      0 //是否窗口化(0:全屏，1:窗口)
+#define WINDOWED_APP      1 //是否窗口化(0:全屏，1:窗口)
 
 #define WINDDOW_BPP32 //是否32位位深 
 
@@ -21,6 +22,9 @@
 #define RESET_BIT(state, mask) ((state) = ((state) & (~mask)))
 
 #define PI 3.141592653598
+
+#define FIXP16_SHIFT 16
+#define FIXP16_ROUND_UP 0x00008000
 
 #define CULL_OBJECT_X_PLANE           0x0001
 #define CULL_OBJECT_Y_PLANE           0x0002
@@ -211,6 +215,15 @@ typedef struct RGBAV1_TYP
 		};
 	};
 }RGBAV1, *RGBAV1_PTR;
+
+//BITMAP结构
+typedef struct BITMAP_FILE_TYP
+{
+	BITMAPFILEHEADER bitmapfileheader;
+	BITMAPINFOHEADER bitmapinfoheader;
+	PALETTEENTRY palette[256];
+	UCHAR*	buffer;
+}BITMAP_FILE, *BITMAP_FILE_PTR;
 
 //物体矩阵转换类型
 enum

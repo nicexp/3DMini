@@ -1,25 +1,23 @@
 #include "3DDemo.h"
 
-#ifdef _3DDEMO_2
+#ifdef _3DDEMO_3
 
 #include "3DLib1.h"
 #include "3DLib2.h"
 #include "3DTool.h"
 #include "3DCamera.h"
-#include "3DObject.h"
 #include "3DObject2.h"
-#include "3DRenderlist.h"
 #include "3DShader.h"
+#include "3DTexture.h"
 #include "3DLight.h"
 #include "3DLog.h"
-
-#define CAMERA_DISTANCE 500
 
 static LIGHTV1 lights[MAX_LIGHTS]; //光源
 static OBJECT4DV2 obj2; //物体
 static CAM4DV1 cam;
 static POINT4D cam_pos = { -600, 0, 0, 1 };
-static VECTOR4D cam_dir = { PI/2, 0, 0, 1 };
+static VECTOR4D cam_dir = { PI / 2, 0, 0, 1 };
+static BITMAP_FILE bitmap;
 
 int GameInit()
 {
@@ -48,6 +46,8 @@ int GameInit()
 	//初始化光源
 	InitAllLight(lights);
 
+	Load_Bitmap_File(&bitmap, "test.bmp");
+
 	return 0;
 }
 
@@ -66,6 +66,29 @@ int GameShutdown()
 	LOG_CLOSE();
 
 	return 0;
+}
+
+void test_bitmap(BITMAP_FILE_PTR bitmap, UCHAR* destbuffer, int mempitch)
+{
+	int color;
+#ifdef WINDDOW_BPP32
+	int lpitch = mempitch >> 2;
+#else
+	int lpitch = mempitch >> 1;
+#endif
+
+	for (int xi = 0; xi < bitmap->bitmapinfoheader.biWidth; xi++)
+	{
+		for (int yi = 0; yi < bitmap->bitmapinfoheader.biHeight; yi++)
+		{
+#ifdef WINDDOW_BPP32
+			*((UINT*)destbuffer + (yi + 50) * lpitch + xi) = *((UINT*)bitmap->buffer + yi*bitmap->bitmapinfoheader.biWidth + xi);
+#else
+
+			*((USHORT*)destbuffer + (yi + 50 )* lpitch + xi) = *((USHORT*)bitmap->buffer + yi*bitmap->bitmapinfoheader.biWidth + xi);
+#endif
+		}
+	}
 }
 
 //渲染列表绘制
@@ -118,10 +141,9 @@ int GameMain()
 		if (cur_poly->state & POLY4DV1_STATE_BACKFACE)
 			continue;
 
-		//恒定着色
-		ShaderFlat(cur_poly,back_buffer, back_lpitch);
-		//高洛德着色
-		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
+		//DrawTextureConstant(cur_poly, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
+		DrawTextureFlat(cur_poly, &bitmap, back_buffer, back_lpitch);
 	}
 
 	DDraw_Unlock_Back_Surface();

@@ -54,6 +54,12 @@
     <ClCompile Include="3DDemo_2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="3DDemo_3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DTexture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLib1.h">
@@ -87,6 +93,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="3DDemo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTexture.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,5 @@
 open log file
-Mon Nov 26 22:15:12.103, 2018
+Wed Nov 28 16:24:11.375, 2018
 
 Function:DDraw_Init,Line:205, 32
 Function:DDraw_Init,Line:253, DDrawInit Sucess

@@ -61,6 +61,23 @@ void InitObject(OBJECT4DV2_PTR obj)
 		0, 5, 4, 0, 3, 5,
 		5, 6, 7, 4, 5, 7
 	};
+	//初始化纹理坐标
+	int text_width = 128 - 1;
+	POINT2D temp_poly_text[12*3] =
+	{
+		{ text_width, 0 }, { text_width, text_width }, { 0, text_width },
+		{ text_width, 0 }, { 0, text_width }, {0, 0},
+		{ text_width, 0 }, { 0, text_width }, {0, 0},
+		{ text_width, 0 }, { text_width, text_width }, { 0, text_width },
+		{ text_width, 0 }, { text_width, text_width }, { 0, text_width },
+		{ text_width, 0 }, { 0, text_width }, {0, 0},
+		{ text_width, 0 }, { text_width, text_width }, { 0, text_width },
+		{ text_width, 0 }, { 0, text_width }, { 0, 0 },
+		{ 0, 0 }, { text_width, text_width }, { 0, text_width },
+		{ 0, 0 }, { text_width, 0 }, { text_width, text_width },
+		{ text_width, 0 }, { text_width, text_width }, { 0, text_width },
+		{ 0, 0 }, { text_width, 0 }, { 0, text_width }
+	};
 	//初始化每个三角形
 	for (int tri = 0; tri < 12; tri++)
 	{
@@ -73,6 +90,16 @@ void InitObject(OBJECT4DV2_PTR obj)
 		obj->plist[tri].vert[0] = temp_poly_indices[3 * tri + 0];
 		obj->plist[tri].vert[1] = temp_poly_indices[3 * tri + 1];
 		obj->plist[tri].vert[2] = temp_poly_indices[3 * tri + 2];
+
+		obj->plist[tri].text[0] = tri * 3 + 0;
+		obj->plist[tri].text[1] = tri * 3 + 1;
+		obj->plist[tri].text[2] = tri * 3 + 2;
+
+		obj->tlist[3 * tri + 0] = temp_poly_text[3 * tri + 0];
+		obj->tlist[3 * tri + 1] = temp_poly_text[3 * tri + 1];
+		obj->tlist[3 * tri + 2] = temp_poly_text[3 * tri + 2];
+
+		obj->plist[tri].tlist = obj->tlist;
 	}
 }
 

@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-#include <Windows.h>
 #include "3DLib2.h"
 #include "3DDemo.h"
 
