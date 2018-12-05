@@ -77,6 +77,10 @@ void ShaderFlatTriTop(float x1, float y1, float x2, float y2, float x3, float y3
 		for (int yi = ys; yi <= ye; yi++, dest_addr += mempitch)
 		{
 			left = xs; right = xe;
+
+			xs += dx_left;
+			xe += dx_right;
+
 			if (left < min_clip_x)
 			{
 				left = min_clip_x;
@@ -96,8 +100,6 @@ void ShaderFlatTriTop(float x1, float y1, float x2, float y2, float x3, float y3
 #else
 			Mem_Set_WORD(dest_addr + (unsigned int)(left), color, ((unsigned int)(right)-(unsigned int)(left)+1));
 #endif
-			xs += dx_left;
-			xe += dx_right;
 		}
 	}
 }
@@ -178,6 +180,9 @@ void ShaderFlatTriBottom(float x1, float y1, float x2, float y2, float x3, float
 			left = xs;
 			right = xe;
 
+			xs += dx_left;
+			xe += dx_right;
+
 			if (left < min_clip_x)
 			{
 				left = min_clip_x;
@@ -196,14 +201,12 @@ void ShaderFlatTriBottom(float x1, float y1, float x2, float y2, float x3, float
 #else
 			Mem_Set_WORD(dest_addr + (unsigned int)(left), color, ((unsigned int)(right)-(unsigned int)(left)+1));
 #endif
-			xs += dx_left;
-			xe += dx_right;
 		}
 	}
 }
 
 //恒定着色
-void ShaderFlat(POLY4DV2_PTR face, UCHAR *_dest_buffer, int mempitch)
+void ShaderFlat(POLYF4DV2_PTR face, UCHAR *_dest_buffer, int mempitch)
 {
 	float temp_x, temp_y, new_x;
 
@@ -212,8 +215,8 @@ void ShaderFlat(POLY4DV2_PTR face, UCHAR *_dest_buffer, int mempitch)
 	float y[3] = { 0 };
 	for (int ver = 0; ver < 3; ver++)
 	{
-		x[ver] = face->vlist[face->vert[ver]].x;
-		y[ver] = face->vlist[face->vert[ver]].y;
+		x[ver] = face->tvlist[ver].x;
+		y[ver] = face->tvlist[ver].y;
 	}
 
 	//判断三角形是否退化为一条直线
@@ -273,13 +276,9 @@ void ShaderFlat(POLY4DV2_PTR face, UCHAR *_dest_buffer, int mempitch)
 }
 
 //高洛德着色
-void ShaderGouraud(POLY4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
+void ShaderGouraud(POLYF4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
 {
 	int ver0 = 0, ver1 = 1, ver2 = 2, temp;
-
-	int c0 = face->vert[0];
-	int c1 = face->vert[1];
-	int c2 = face->vert[2];
 
 	int irestart = TRI_LHS;
 	int tri_type = 0;
@@ -304,60 +303,55 @@ void ShaderGouraud(POLY4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
 	int ri2 = 0, gi2 = 0, bi2 = 0;
 
 	//裁剪不在屏幕内的三角形
-	if (((face->vlist[c0].y < min_clip_y) &&
-		(face->vlist[c1].y < min_clip_y) &&
-		(face->vlist[c2].y < min_clip_y)) ||
-		((face->vlist[c0].y > max_clip_y) &&
-		(face->vlist[c1].y > max_clip_y) &&
-		(face->vlist[c2].y > max_clip_y)) ||
-		((face->vlist[c0].x < min_clip_x) &&
-		(face->vlist[c1].x < min_clip_x) &&
-		(face->vlist[c2].x < min_clip_x)) ||
-		((face->vlist[c0].x > max_clip_x) &&
-		(face->vlist[c1].x > max_clip_x) &&
-		(face->vlist[c2].x > max_clip_x)))
+	if (((face->tvlist[ver0].y < min_clip_y) &&
+		(face->tvlist[ver1].y < min_clip_y) &&
+		(face->tvlist[ver2].y < min_clip_y)) ||
+		((face->tvlist[ver0].y > max_clip_y) &&
+		(face->tvlist[ver1].y > max_clip_y) &&
+		(face->tvlist[ver2].y > max_clip_y)) ||
+		((face->tvlist[ver0].x < min_clip_x) &&
+		(face->tvlist[ver1].x < min_clip_x) &&
+		(face->tvlist[ver2].x < min_clip_x)) ||
+		((face->tvlist[ver0].x > max_clip_x) &&
+		(face->tvlist[ver1].x > max_clip_x) &&
+		(face->tvlist[ver2].x > max_clip_x)))
 		return;
 	//三角形退化成直线
-	if (((int)(face->vlist[c0].y + 0.5) == (int)(face->vlist[c1].y + 0.5)) &&
-		((int)(face->vlist[c1].y + 0.5) == (int)(face->vlist[c2].y + 0.5)) ||
-		((int)(face->vlist[c0].x + 0.5) == (int)(face->vlist[c1].x + 0.5)) &&
-		((int)(face->vlist[c1].x + 0.5) == (int)(face->vlist[c2].x + 0.5)))
+	if (((int)(face->tvlist[ver0].y + 0.5) == (int)(face->tvlist[ver1].y + 0.5)) &&
+		((int)(face->tvlist[ver1].y + 0.5) == (int)(face->tvlist[ver2].y + 0.5)) ||
+		((int)(face->tvlist[ver0].x + 0.5) == (int)(face->tvlist[ver1].x + 0.5)) &&
+		((int)(face->tvlist[ver1].x + 0.5) == (int)(face->tvlist[ver2].x + 0.5)))
 		return;
 	//调整三角形顶点顺序v0到v2从上到下
-	if (face->vlist[c1].y < face->vlist[c0].y)
+	if (face->tvlist[ver1].y < face->tvlist[ver0].y)
 	{
 		SWAP(ver0, ver1, temp);
-		SWAP(c0, c1, temp);
 	}
-	if (face->vlist[c2].y < face->vlist[c0].y)
+	if (face->tvlist[ver2].y < face->tvlist[ver0].y)
 	{
 		SWAP(ver0, ver2, temp);
-		SWAP(c0, c2, temp);
 	}
-	if (face->vlist[c2].y < face->vlist[c1].y)
+	if (face->tvlist[ver2].y < face->tvlist[ver1].y)
 	{
 		SWAP(ver1, ver2, temp);
-		SWAP(c1, c2, temp);
 	}
 	//判断三角形类型
-	if ((int)(face->vlist[c0].y + 0.5) == (int)(face->vlist[c1].y + 0.5))
+	if ((int)(face->tvlist[ver0].y + 0.5) == (int)(face->tvlist[ver1].y + 0.5))
 	{
 		tri_type = TRIANGLE_TOP;
 		//顶点排序
-		if (face->vlist[c1].x < face->vlist[c0].x)
+		if (face->tvlist[ver1].x < face->tvlist[ver0].x)
 		{
-			SWAP(c0, c1, temp);
 			SWAP(ver0, ver1, temp);
 		}
 	}
 	//平底三角形
-	else if ((int)(face->vlist[c1].y + 0.5) == (int)(face->vlist[c2].y + 0.5))
+	else if ((int)(face->tvlist[ver1].y + 0.5) == (int)(face->tvlist[ver2].y + 0.5))
 	{
 		tri_type = TRIANGLE_BOTTOM;
 		//顶点排序
-		if (face->vlist[c2].x < face->vlist[c1].x)
+		if (face->tvlist[ver2].x < face->tvlist[ver1].x)
 		{
-			SWAP(c1, c2, temp);
 			SWAP(ver1, ver2, temp);
 		}
 	}
@@ -374,14 +368,14 @@ void ShaderGouraud(POLY4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
 	int x0, y0, x1, y1, x2, y2;
 	int u0, u1, u2, v0, v1, v2, w0, w1, w2;
 
-	x0 = int(face->vlist[c0].x + 0.5);
-	y0 = int(face->vlist[c0].y + 0.5);
+	x0 = int(face->tvlist[ver0].x + 0.5);
+	y0 = int(face->tvlist[ver0].y + 0.5);
 	u0 = r_base0; v0 = g_base0; w0 = b_base0;
-	x1 = int(face->vlist[c1].x + 0.5);
-	y1 = int(face->vlist[c1].y + 0.5);
+	x1 = int(face->tvlist[ver1].x + 0.5);
+	y1 = int(face->tvlist[ver1].y + 0.5);
 	u1 = r_base1; v1 = g_base1; w1 = b_base1;
-	x2 = int(face->vlist[c2].x + 0.5);
-	y2 = int(face->vlist[c2].y + 0.5);
+	x2 = int(face->tvlist[ver2].x + 0.5);
+	y2 = int(face->tvlist[ver2].y + 0.5);
 	u2 = r_base2; v2 = g_base2; w2 = b_base2;
 	//设置转折点
 	int yrestart = y1;

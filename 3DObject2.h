@@ -68,7 +68,7 @@ void ComputeObject2VertexNormals(OBJECT4DV2_PTR obj);
 //计算物体平面法线
 void ComputeObject2PolyNormals(OBJECT4DV2_PTR obj);
 //对恒定着色物体执行光照处理
-void LightObject2ByFlat(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights, int max_lights);
+void LightObject2ByFlat(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_lights);
 //对Gouraud着色光照处理
-void LightObject2ByGouraud(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights, int max_lights);
+void LightObject2ByGouraud(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_lights);
 #endif

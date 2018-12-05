@@ -1,22 +1,24 @@
-﻿生成启动时间为 2018/11/28 16:24:06。
+﻿生成启动时间为 2018/12/5 22:11:22。
      1>项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DShader.cpp
-         3DShader.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DDemo_1.cpp 3DDemo_2.cpp 3DDemo_3.cpp 3DDemo_4.cpp win_main.cpp
+         3DDemo_4.cpp
          c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(49): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(57): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(82): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(89): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(144): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(156): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(183): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(189): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3ddemo_4.cpp(26): warning C4305: “初始化”: 从“double”到“float”截断
+         正在生成代码...
+         正在编译...
+         win_main.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         3DDemo_3.cpp
+         3DDemo_2.cpp
+         3DDemo_1.cpp
+         正在生成代码...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyProjects\3DMini\Debug\3DMini.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86" ddraw.lib dxguid.lib dinput8.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyProjects\3DMini\Debug\3DMini.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyProjects\3DMini\Debug\3DMini.lib" /MACHINE:X86 Debug\3DCamera.obj
          Debug\3DDemo_1.obj
          Debug\3DDemo_2.obj
          Debug\3DDemo_3.obj
+         Debug\3DDemo_4.obj
          Debug\3DLib1.obj
          Debug\3DLib2.obj
          Debug\3DLight.obj
@@ -24,6 +26,7 @@
          Debug\3DObject.obj
          Debug\3DObject2.obj
          Debug\3DRenderlist.obj
+         Debug\3DRenderlist2.obj
          Debug\3DShader.obj
          Debug\3DTexture.obj
          Debug\3DTool.obj
@@ -33,4 +36,4 @@
 
 生成成功。
 
-已用时间 00:00:01.27
+已用时间 00:00:01.97

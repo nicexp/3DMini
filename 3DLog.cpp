@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include "3DLog.h"
 
+char _3dlog_buffer[1024];
 static FILE* fp = NULL;
 
 int LOG_INIT()

@@ -1,9 +1,10 @@
 open log file
-Wed Nov 28 16:24:11.375, 2018
+Wed Dec 05 22:11:37.119, 2018
 
 Function:DDraw_Init,Line:205, 32
 Function:DDraw_Init,Line:253, DDrawInit Sucess
 Function:DInput_Init,Line:265, DInput_Init Success
 Function:DInput_Init_Keyboard,Line:322, DInput_Init_Keyboard Success
-Function:GameShutdown,Line:64, game exit...
+Function:Load_Bitmap_File,Line:111, 24 bit bitmap
+Function:GameShutdown,Line:72, game exit...
 close the log

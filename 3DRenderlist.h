@@ -18,17 +18,6 @@ typedef struct RENDERLIST4DV1_TYP
 	int num_polys;
 }RENDERLIST4DV1, *RENDERLIST4DV1_PTR;
 
-typedef struct RENDERLIST4DV2_TYP
-{
-	int state;
-	int attr;
-
-	POLYF4DV2_PTR poly_ptrs[RENDERLIST_MAX_POLYS];
-	POLYF4DV2 poly_data[RENDERLIST_MAX_POLYS];
-
-	int num_polys;
-}RENDERLIST4DV2, *RENDERLIST4DV2_PTR;
-
 
 //÷ÿ÷√‰÷»æ¡–±Ì
 void ResetRenderlist(RENDERLIST4DV1_PTR renderlist);

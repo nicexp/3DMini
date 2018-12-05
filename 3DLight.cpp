@@ -56,6 +56,7 @@ int InitLight(LIGHTV1_PTR lights, //光源列表
 
 	return index;
 }
+
 //追加环境光
 void InitAllLight(LIGHTV1_PTR lights)
 {

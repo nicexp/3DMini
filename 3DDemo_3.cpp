@@ -124,14 +124,15 @@ int GameMain()
 	//构建3D流水线
 	ModelToWorldObj(&obj2);//世界坐标
 	RemoveObjBackface(&obj2, &cam.pos);//消除背面
-	ComputeObject2PolyNormals(&obj2);//计算面法线
-	LightObject2ByFlat(&obj2, &cam, lights, 4);//恒定着色光照处理
-	//ComputeObject2VertexNormals(&obj2);//计算顶点法线
-	//LightObject2ByGouraud(&obj2, &cam, lights, 4); //gouraud着色光照处理
+	//ComputeObject2PolyNormals(&obj2);//计算面法线
+	//LightObject2ByFlat(&obj2, lights, 4);//恒定着色光照处理
+	ComputeObject2VertexNormals(&obj2);//计算顶点法线
+	LightObject2ByGouraud(&obj2, lights, 4); //gouraud着色光照处理
 	WorldToCameraObj(&obj2, &cam.mcam);//相机坐标
 	CameraToPerspectObj(&obj2, &cam.mper);//透视坐标
 	PerspectToScreenObj(&obj2, &cam.mscr);//屏幕坐标
 
+	POLYF4DV2 shade_face;
 	//描绘
 	DDraw_Lock_Back_Surface();
 	for (int poly = 0; poly < obj2.num_polys; poly++)
@@ -141,9 +142,17 @@ int GameMain()
 		if (cur_poly->state & POLY4DV1_STATE_BACKFACE)
 			continue;
 
-		//DrawTextureConstant(cur_poly, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
-		DrawTextureFlat(cur_poly, &bitmap, back_buffer, back_lpitch);
+		shade_face.color = cur_poly->color;
+		for (int i = 0; i < 3; i++)
+		{
+			VECTOR4D_COPY(&shade_face.tvlist[i].v, &cur_poly->vlist[cur_poly->vert[i]].v);
+			shade_face.tvlist[i].u0 = cur_poly->tlist[cur_poly->text[i]].x;
+			shade_face.tvlist[i].v0 = cur_poly->tlist[cur_poly->text[i]].y;
+			shade_face.lit_color[i] = cur_poly->lit_color[i];
+		}
+		//DrawTextureConstant(&shade_face, &bitmap, back_buffer, back_lpitch);
+		DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureFlat(&shade_face, &bitmap, back_buffer, back_lpitch);
 	}
 
 	DDraw_Unlock_Back_Surface();

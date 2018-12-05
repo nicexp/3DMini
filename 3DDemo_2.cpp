@@ -102,15 +102,18 @@ int GameMain()
 	ModelToWorldObj(&obj2);//世界坐标
 	RemoveObjBackface(&obj2, &cam.pos);//消除背面
 	ComputeObject2PolyNormals(&obj2);//计算面法线
-	LightObject2ByFlat(&obj2, &cam, lights, 4);//恒定着色光照处理
+	LightObject2ByFlat(&obj2, lights, 4);//恒定着色光照处理
 	//ComputeObject2VertexNormals(&obj2);//计算顶点法线
-	//LightObject2ByGouraud(&obj2, &cam, lights, 4); //gouraud着色光照处理
+	//LightObject2ByGouraud(&obj2, lights, 4); //gouraud着色光照处理
 	WorldToCameraObj(&obj2, &cam.mcam);//相机坐标
 	CameraToPerspectObj(&obj2, &cam.mper);//透视坐标
 	PerspectToScreenObj(&obj2, &cam.mscr);//屏幕坐标
 
 	//描绘
 	DDraw_Lock_Back_Surface();
+
+	POLYF4DV2 shade_face;
+
 	for (int poly = 0; poly < obj2.num_polys; poly++)
 	{
 		POLY4DV2_PTR cur_poly = &obj2.plist[poly];
@@ -118,10 +121,16 @@ int GameMain()
 		if (cur_poly->state & POLY4DV1_STATE_BACKFACE)
 			continue;
 
+		shade_face.color = cur_poly->color;
+		for (int i = 0; i < 3; i++)
+		{
+			VECTOR4D_COPY(&shade_face.tvlist[i].v, &cur_poly->vlist[cur_poly->vert[i]].v);
+			shade_face.lit_color[i] = cur_poly->lit_color[i];
+		}
 		//恒定着色
-		ShaderFlat(cur_poly,back_buffer, back_lpitch);
+		ShaderFlat(&shade_face, back_buffer, back_lpitch);
 		//高洛德着色
-		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
+		//ShaderGouraud(&shade_face, back_buffer, back_lpitch);
 	}
 
 	DDraw_Unlock_Back_Surface();

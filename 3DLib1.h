@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include "3DLog.h"
 
 #define WINDOW_WIDTH      800
 #define WINDOW_HEIGHT     600
@@ -40,8 +41,9 @@
 #define POLY4DV2_STATE_BACKFACE           0x0004
 #define POLY4DV2_STATE_LIT                0x0008
 
-#define POLY4DV2_ATTR_SHAD_MODE_FLAT	0x0040
-#define POLY4DV2_ATTR_SHAD_MODE_GOURAUD	0x0080
+#define POLY4DV2_ATTR_SHAD_MODE_FLAT	0x0010
+#define POLY4DV2_ATTR_SHAD_MODE_GOURAUD	0x0020
+#define POLY4DV2_ATTR_SHAD_MODE_TEXTURE	0x0040
 
 #define EPSILON_E3 (float)(1E-3) 
 #define EPSILON_E4 (float)(1E-4) 

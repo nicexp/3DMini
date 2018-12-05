@@ -3,7 +3,7 @@
 
 #include "3DLib2.h"
 
-void DrawTextureConstant(POLY4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
-void DrawTextureGouraud(POLY4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
-void DrawTextureFlat(POLY4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
+void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
+void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
+void DrawTextureFlat(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
 #endif

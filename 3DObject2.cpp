@@ -81,9 +81,10 @@ void InitObject(OBJECT4DV2_PTR obj)
 	//初始化每个三角形
 	for (int tri = 0; tri < 12; tri++)
 	{
-		SET_BIT(obj->plist[tri].state, POLY4DV2_STATE_ACTIVE);
 		obj->plist[tri].attr = 0;
 		obj->plist[tri].color = _RGBTOINT(255, 255, 255);
+		SET_BIT(obj->plist[tri].state, POLY4DV2_STATE_ACTIVE);
+		SET_BIT(obj->plist[tri].attr, POLY4DV2_ATTR_SHAD_MODE_TEXTURE);
 		
 		obj->plist[tri].vlist = obj->vlist_trans;
 
@@ -292,12 +293,12 @@ void Object3DLine(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights)
 
 	//恒定着色光照处理start
 	//ComputeObject2PolyNormals(obj);
-	//LightObject2ByFlat(obj, cam, lights, 4);
+	//LightObject2ByFlat(obj, lights, 4);
 	//恒定着色光照处理end
 
 	//gouraud着色光照处理start
 	ComputeObject2VertexNormals(obj);
-	LightObject2ByGouraud(obj, cam, lights, 4);
+	LightObject2ByGouraud(obj, lights, 4);
 	//gouraud着色光照处理end
 
 	WorldToCameraObj(obj, &cam->mcam);//相机坐标
@@ -378,7 +379,7 @@ void ComputeObject2PolyNormals(OBJECT4DV2_PTR obj)
 }
 
 //对恒定着色物体执行光照处理
-void LightObject2ByFlat(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights, int max_lights)
+void LightObject2ByFlat(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_lights)
 {
 	unsigned int rbase, gbase, bbase = 0;
 	unsigned int rsum, gsum, bsum;
@@ -544,7 +545,7 @@ void LightObject2ByFlat(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights,
 }
 
 //对Gouraud着色光照处理
-void LightObject2ByGouraud(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights, int max_lights)
+void LightObject2ByGouraud(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_lights)
 {
 	unsigned int rbase, gbase, bbase = 0;
 	unsigned int ri, gi, bi;
