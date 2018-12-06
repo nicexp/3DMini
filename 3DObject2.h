@@ -55,7 +55,7 @@ void PerspectToScreenObj(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mscr);
 //物体齐次坐标转换
 void ConvertObjByW(OBJECT4DV2_PTR obj);
 //物体进行矩阵变换运算
-void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, int bTransformDir);
+void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, int bTransformDir, int bNormal);
 //物体渲染3D流水线
 void Object3DLine(OBJECT4DV2_PTR obj, CAM4DV1_PTR cam, LIGHTV1_PTR lights);
 //剔除物体
@@ -71,4 +71,6 @@ void ComputeObject2PolyNormals(OBJECT4DV2_PTR obj);
 void LightObject2ByFlat(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_lights);
 //对Gouraud着色光照处理
 void LightObject2ByGouraud(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_lights);
+//物体绕z轴自旋转
+void UpdateObjectPosAndDir(OBJECT4DV2_PTR obj);
 #endif

@@ -102,11 +102,18 @@ void InitObject(OBJECT4DV2_PTR obj)
 
 		obj->plist[tri].tlist = obj->tlist;
 	}
+
+	ComputeObject2PolyNormals(obj);//计算面法线
+	ComputeObject2VertexNormals(obj);//计算顶点法线
 }
 
 //物体进行矩阵变换运算
-void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, int bTransformDir)
+void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, int bTransformDir, int bNormal)
 {
+	MATRIX4X4 mr;//去除平移操作，用于法线向量
+	memcpy((void*)&mr, (void*)mt, sizeof(MATRIX4X4));
+	mr.M30 = mr.M31 = mr.M32 = 0;
+
 	switch (coord_select)
 	{
 	case TRANSFORM_LOCAL_ONLY:
@@ -116,6 +123,11 @@ void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, in
 									 POINT4D presult;
 									 Mat_Mul_VECTOR4D_4X4(&obj->vlist_local[vertex].v, mt, &presult);
 									 VECTOR4D_COPY(&obj->vlist_local[vertex].v, &presult);
+									 if (bNormal)
+									 {
+										 Mat_Mul_VECTOR4D_4X4(&obj->vlist_local[vertex].n, &mr, &presult);
+										 VECTOR4D_COPY(&obj->vlist_local[vertex].n, &presult);
+									 }
 								 }
 								 break;
 	}
@@ -126,6 +138,11 @@ void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, in
 									 POINT4D presult;
 									 Mat_Mul_VECTOR4D_4X4(&obj->vlist_trans[vertex].v, mt, &presult);
 									 VECTOR4D_COPY(&obj->vlist_trans[vertex].v, &presult);
+									 if (bNormal)
+									 {
+										 Mat_Mul_VECTOR4D_4X4(&obj->vlist_trans[vertex].n, &mr, &presult);
+										 VECTOR4D_COPY(&obj->vlist_trans[vertex].n, &presult);
+									 }
 								 }
 								 break;
 	}
@@ -136,6 +153,11 @@ void Transform_Object(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mt, int coord_select, in
 										 POINT4D presult;
 										 Mat_Mul_VECTOR4D_4X4(&obj->vlist_local[vertex].v, mt, &presult);
 										 VECTOR4D_COPY(&obj->vlist_trans[vertex].v, &presult);
+										 if (bNormal)
+										 {
+											 Mat_Mul_VECTOR4D_4X4(&obj->vlist_local[vertex].n, &mr, &presult);
+											 VECTOR4D_COPY(&obj->vlist_trans[vertex].n, &presult);
+										 }
 									 }
 									 break;
 	}
@@ -166,26 +188,26 @@ void ModelToWorldObj(OBJECT4DV2_PTR obj)
 		0, 0, 1, 0,
 		obj->world_pos.x, obj->world_pos.y, obj->world_pos.z, 1);
 
-	Transform_Object(obj, &matworld, TRANSFORM_LOCAL_TO_TRANS, 1);
+	Transform_Object(obj, &matworld, TRANSFORM_LOCAL_TO_TRANS, 1, 1);
 }
 
 //世界坐标转换相机坐标
 void WorldToCameraObj(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mcam)
 {
-	Transform_Object(obj, mcam, TRANSFORM_TRANS_ONLY, 1);
+	Transform_Object(obj, mcam, TRANSFORM_TRANS_ONLY, 1, 1);
 }
 
 //相机坐标转换为透视坐标
 void CameraToPerspectObj(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mper)
 {
-	Transform_Object(obj, mper, TRANSFORM_TRANS_ONLY, 1);
+	Transform_Object(obj, mper, TRANSFORM_TRANS_ONLY, 1, 0);
 	ConvertObjByW(obj);
 }
 
 //透视坐标转换成屏幕坐标
 void PerspectToScreenObj(OBJECT4DV2_PTR obj, MATRIX4X4_PTR mscr)
 {
-	Transform_Object(obj, mscr, TRANSFORM_TRANS_ONLY, 1);
+	Transform_Object(obj, mscr, TRANSFORM_TRANS_ONLY, 1, 0);
 }
 
 //物体背面消除
@@ -328,13 +350,13 @@ void ComputeObject2VertexNormals(OBJECT4DV2_PTR obj)
 		ver2 = cur_poly->vert[2];
 
 
-		VECTOR4D_SUB(&obj->vlist_trans[ver1].v, &obj->vlist_trans[ver0].v, &u);
-		VECTOR4D_SUB(&obj->vlist_trans[ver2].v, &obj->vlist_trans[ver0].v, &v);
+		VECTOR4D_SUB(&obj->vlist_local[ver1].v, &obj->vlist_local[ver0].v, &u);
+		VECTOR4D_SUB(&obj->vlist_local[ver2].v, &obj->vlist_local[ver0].v, &v);
 		VECTOR4D_CROSS(&u, &v, &n);
 
-		VECTOR4D_ADD(&obj->vlist_trans[ver0].n, &n, &obj->vlist_trans[ver0].n);
-		VECTOR4D_ADD(&obj->vlist_trans[ver1].n, &n, &obj->vlist_trans[ver1].n);
-		VECTOR4D_ADD(&obj->vlist_trans[ver2].n, &n, &obj->vlist_trans[ver2].n);
+		VECTOR4D_ADD(&obj->vlist_local[ver0].n, &n, &obj->vlist_local[ver0].n);
+		VECTOR4D_ADD(&obj->vlist_local[ver1].n, &n, &obj->vlist_local[ver1].n);
+		VECTOR4D_ADD(&obj->vlist_local[ver2].n, &n, &obj->vlist_local[ver2].n);
 
 		polys_touch_vertex[ver0]++;
 		polys_touch_vertex[ver1]++;
@@ -343,11 +365,11 @@ void ComputeObject2VertexNormals(OBJECT4DV2_PTR obj)
 
 	for (int vertex = 0; vertex < obj->num_polys; vertex++)
 	{
-		obj->vlist_trans[vertex].nx /= polys_touch_vertex[vertex];
-		obj->vlist_trans[vertex].ny /= polys_touch_vertex[vertex];
-		obj->vlist_trans[vertex].nz /= polys_touch_vertex[vertex];
+		obj->vlist_local[vertex].nx /= polys_touch_vertex[vertex];
+		obj->vlist_local[vertex].ny /= polys_touch_vertex[vertex];
+		obj->vlist_local[vertex].nz /= polys_touch_vertex[vertex];
 
-		VECTOR4D_Normalize(&obj->vlist_trans[vertex].n);
+		VECTOR4D_Normalize(&obj->vlist_local[vertex].n);
 	}
 }
 
@@ -704,4 +726,30 @@ void LightObject2ByGouraud(OBJECT4DV2_PTR obj, LIGHTV1_PTR lights, int max_light
 		cur_poly->lit_color[1] = _RGBTOINT(rsum[1], gsum[1], bsum[1]);
 		cur_poly->lit_color[2] = _RGBTOINT(rsum[2], gsum[2], bsum[2]);
 	}
+}
+
+void UpdateObjectPosAndDir(OBJECT4DV2_PTR obj)
+{
+	static float view_angle = 1;
+	MATRIX4X4 m_inv, m_inv2, m_inv3;
+
+	double theta = view_angle / 180 * PI;
+	double cos_theta = cos(theta);
+	double sin_theta = -sin(theta);
+
+	Mat_Init_4X4(&m_inv, 1, 0, 0, 0,
+		0, cos_theta, sin_theta, 0,
+		0, -sin_theta, cos_theta, 0,
+		0, 0, 0, 1);
+
+	cos_theta = cos(theta);
+	sin_theta = -sin(theta);
+	Mat_Init_4X4(&m_inv2, cos_theta, sin_theta, 0, 0,
+		-sin_theta, cos_theta, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1);
+
+	Mat_Mul_4X4(&m_inv, &m_inv2, &m_inv3);
+
+	Transform_Object(obj, &m_inv3, TRANSFORM_LOCAL_ONLY, 1, 1);
 }

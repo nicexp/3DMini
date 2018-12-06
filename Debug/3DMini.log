@@ -1,18 +1,34 @@
-﻿生成启动时间为 2018/12/5 22:11:22。
+﻿生成启动时间为 2018/12/6 19:27:04。
      1>项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DDemo_1.cpp 3DDemo_2.cpp 3DDemo_3.cpp 3DDemo_4.cpp win_main.cpp
-         3DDemo_4.cpp
-         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3ddemo_4.cpp(26): warning C4305: “初始化”: 从“double”到“float”截断
-         正在生成代码...
-         正在编译...
-         win_main.cpp
-         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         3DDemo_3.cpp
-         3DDemo_2.cpp
-         3DDemo_1.cpp
-         正在生成代码...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DRenderlist2.cpp
+         3DRenderlist2.cpp
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(232): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(233): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(498): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(499): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(500): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(525): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(526): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(527): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(552): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(553): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(554): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(587): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(588): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(589): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(662): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(663): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(664): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(684): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(685): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(686): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(707): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(708): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(709): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(737): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(738): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(739): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyProjects\3DMini\Debug\3DMini.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86" ddraw.lib dxguid.lib dinput8.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyProjects\3DMini\Debug\3DMini.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyProjects\3DMini\Debug\3DMini.lib" /MACHINE:X86 Debug\3DCamera.obj
          Debug\3DDemo_1.obj
@@ -36,4 +52,4 @@
 
 生成成功。
 
-已用时间 00:00:01.97
+已用时间 00:00:01.05

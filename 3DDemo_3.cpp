@@ -124,9 +124,7 @@ int GameMain()
 	//构建3D流水线
 	ModelToWorldObj(&obj2);//世界坐标
 	RemoveObjBackface(&obj2, &cam.pos);//消除背面
-	//ComputeObject2PolyNormals(&obj2);//计算面法线
 	//LightObject2ByFlat(&obj2, lights, 4);//恒定着色光照处理
-	ComputeObject2VertexNormals(&obj2);//计算顶点法线
 	LightObject2ByGouraud(&obj2, lights, 4); //gouraud着色光照处理
 	WorldToCameraObj(&obj2, &cam.mcam);//相机坐标
 	CameraToPerspectObj(&obj2, &cam.mper);//透视坐标
@@ -150,6 +148,7 @@ int GameMain()
 			shade_face.tvlist[i].v0 = cur_poly->tlist[cur_poly->text[i]].y;
 			shade_face.lit_color[i] = cur_poly->lit_color[i];
 		}
+
 		//DrawTextureConstant(&shade_face, &bitmap, back_buffer, back_lpitch);
 		DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
 		//DrawTextureFlat(&shade_face, &bitmap, back_buffer, back_lpitch);

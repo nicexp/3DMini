@@ -47,7 +47,7 @@ int GameInit()
 		&cam_pos,
 		&cam_dir,
 		NULL,
-		100, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
+		100, 1000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//初始化物体
 	InitObject(&obj2);
@@ -86,12 +86,9 @@ int GameMain()
 	DDraw_Fill_Surface(lpddsback, 0);
 	DInput_Read_Keyboard();
 	DInput_Read_Mouse();
-
+	//监听相机位置
 	UpdateCameraPosAndDir(&cam);
-	//test
-	char str_buffer[256] = "";
-	sprintf(str_buffer, "(campos:%f|%f|%f), (camdir:%f|%f|%f)", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z);
-	Draw_Text_GDI(str_buffer, 10, 100, RGB(255, 255, 255), lpddsback);
+	//UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
 	BuildCameraToPerspectMatrix(&cam);
@@ -113,21 +110,19 @@ int GameMain()
 	}
 	//世界坐标
 	ModelToWorldObj(&obj2);
-	//ComputeObject2PolyNormals(&obj2);//计算面法线
-	ComputeObject2VertexNormals(&obj2);//计算顶点法线
-	//LightObject2ByGouraud(&obj2, lights, 4); //gouraud着色光照处理
 	//插入到渲染列表
 	InsertObjToRenderlist(&renderlist, &obj2, 0);
 	//背面消除
 	RemoveRendlistBackface(&renderlist, &cam.pos);
-	//恒定着色光照处理
-	//LightRenderlistFlat(&renderlist, lights, 4);
-	//gouraud着色光照处理
-	LightRenderlistGouraud(&renderlist, lights, 4);
 	//相机坐标
 	WorldToCameraRenderlist(&renderlist, &cam.mcam);
 	//3D裁剪
 	ClipPolysRenderlist(&renderlist, &cam, CULL_OBJECT_XYZ_PLANES);
+	//光源转换为相机坐标空间
+	TransformLights(lights, LIGHT_COUNT, &cam.mcam, LIGHT_TRANSFORM_LOCAL_TO_TRANS);
+	//光照处理
+	LightRenderlistFlat(&renderlist, lights, LIGHT_COUNT);//恒定着色
+	//LightRenderlistGouraud(&renderlist, lights, LIGHT_COUNT);//gouraud着色
 	//透视坐标
 	CameraToPerspectRenderlist(&renderlist, &cam.mper);
 	//屏幕坐标
@@ -142,13 +137,12 @@ int GameMain()
 		if (cur_poly->state & POLY4DV2_STATE_BACKFACE ||
 			cur_poly->state & POLY4DV2_STATE_CLIPPED)
 			continue;
-
 		//恒定着色
-		//ShaderFlat(cur_poly, back_buffer, back_lpitch);
+		ShaderFlat(cur_poly, back_buffer, back_lpitch);
 		//高洛德着色
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
 
-		DrawTextureConstant(cur_poly, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureConstant(cur_poly, &bitmap, back_buffer, back_lpitch);
 		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
 		//DrawTextureFlat(cur_poly, &bitmap, back_buffer, back_lpitch);
 	}

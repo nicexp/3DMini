@@ -9,8 +9,15 @@
 #define LIGHTV1_ATTR_SPOTLIGHT1 0x0008	//聚光灯(简单)
 #define LIGHTV1_ATTR_SPOTLIGHT2 0x0010	//聚光灯(复杂)
 
+#define LIGHT_TRANSFORM_COPY_ONLY 1
+#define LIGHT_TRANSFORM_LOCAL_ONLY 2
+#define LIGHT_TRANSFORM_TRANS_ONLY 3
+#define LIGHT_TRANSFORM_LOCAL_TO_TRANS 4
+
 #define LIGHTV1_STATE_ON 1	//光源开启
 #define LIGHTV1_STATE_OFF 0 //光源关闭
+
+#define LIGHT_COUNT 4
 
 #define MAX_LIGHTS 8
 
@@ -24,7 +31,9 @@ typedef struct LIGHTV1_TYP
 	RGBAV1 c_diffuse;//散色光强度
 	RGBAV1 c_specular;//镜面反色光强度
 	POINT4D pos;//光源位置
+	POINT4D tpos;//变换后的光源位置
 	VECTOR4D dir;//光源方向
+	VECTOR4D tdir;//变换后的光源方向
 
 	float kc, kl, kq;//衰减因子
 	float spot_inner;//聚光灯内锥角
@@ -47,4 +56,17 @@ int InitLight(LIGHTV1_PTR lights, //光源列表
 
 //追加环境光
 void InitAllLight(LIGHTV1_PTR lights);
+void TransformLights(LIGHTV1_PTR lights, int max_lights, MATRIX4X4_PTR mt, int oper_type);
+int InitLight(LIGHTV1_PTR lights, //光源列表
+	int index,	//光源索引
+	int state,	//状态
+	int attr,
+	RGBAV1 c_ambient,//环境光强度
+	RGBAV1 c_diffuse,//散色光强度
+	RGBAV1 c_specular,//镜面反射光强度
+	POINT4D_PTR pos,
+	VECTOR4D_PTR dir,
+	float kc, float kl, float kq,
+	float spot_inner, float spot_outer,
+	float pf);
 #endif

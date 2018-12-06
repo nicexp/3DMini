@@ -101,8 +101,12 @@ void InsertObjToRenderlist(RENDERLIST4DV2_PTR renderlist, OBJECT4DV2_PTR obj, in
 }
 
 //渲染列表进行矩阵变换
-void Transform_Renderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mt, int coord_select)
+void Transform_Renderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mt, int coord_select, int bNormal)
 {
+	MATRIX4X4 mr;//去除平移操作，用于法线向量
+	memcpy((void*)&mr, (void*)mt, sizeof(MATRIX4X4));
+	mr.M30 = mr.M31 = mr.M32 = 0;
+
 	switch (coord_select)
 	{
 	case TRANSFORM_LOCAL_ONLY:
@@ -119,6 +123,12 @@ void Transform_Renderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mt, int c
 				VECTOR4D presult;
 				Mat_Mul_VECTOR4D_4X4(&cur_poly->vlist[vertex].v, mt, &presult);
 				VECTOR4D_COPY(&cur_poly->vlist[vertex].v, &presult);
+
+				if (bNormal)
+				{
+					Mat_Mul_VECTOR4D_4X4(&cur_poly->vlist[vertex].n, &mr, &presult);
+					VECTOR4D_COPY(&cur_poly->vlist[vertex].n, &presult);
+				}
 			}
 		}
 		break;
@@ -136,6 +146,12 @@ void Transform_Renderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mt, int c
 				VECTOR4D presult;
 				Mat_Mul_VECTOR4D_4X4(&cur_poly->tvlist[vertex].v, mt, &presult);
 				VECTOR4D_COPY(&cur_poly->tvlist[vertex].v, &presult);
+
+				if (bNormal)
+				{
+					Mat_Mul_VECTOR4D_4X4(&cur_poly->tvlist[vertex].n, &mr, &presult);
+					VECTOR4D_COPY(&cur_poly->tvlist[vertex].n, &presult);
+				}
 			}
 		}
 		break;
@@ -189,20 +205,20 @@ void RemoveRendlistBackface(RENDERLIST4DV2_PTR renderlist, POINT4D_PTR cam_pos)
 //渲染列表世界坐标转换为相机坐标
 void WorldToCameraRenderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mcam)
 {
-	Transform_Renderlist(renderlist, mcam, TRANSFORM_TRANS_ONLY);
+	Transform_Renderlist(renderlist, mcam, TRANSFORM_TRANS_ONLY, 1);
 }
 
 //渲染列表相机坐标转换为透视坐标
 void CameraToPerspectRenderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mper)
 {
-	Transform_Renderlist(renderlist, mper, TRANSFORM_TRANS_ONLY);
+	Transform_Renderlist(renderlist, mper, TRANSFORM_TRANS_ONLY, 0);
 	ConvertRenderlistByW(renderlist);
 }
 
 //渲染列表透视坐标转换成屏幕坐标
 void PerspectToScreenRenderlist(RENDERLIST4DV2_PTR renderlist, MATRIX4X4_PTR mscr)
 {
-	Transform_Renderlist(renderlist, mscr, TRANSFORM_TRANS_ONLY);
+	Transform_Renderlist(renderlist, mscr, TRANSFORM_TRANS_ONLY, 0);
 }
 
 /*相机坐标空间内3D裁剪
@@ -343,8 +359,8 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 				cur_poly->tvlist[v2].v0 = tv2;
 			}
 			//重新计算法线长度
-			VECTOR4D_SUB(&cur_poly->tvlist[v1].v, &cur_poly->tvlist[v0].v, &u);
-			VECTOR4D_SUB(&cur_poly->tvlist[v2].v, &cur_poly->tvlist[v0].v, &v);
+			VECTOR4D_SUB(&cur_poly->tvlist[1].v, &cur_poly->tvlist[0].v, &u);
+			VECTOR4D_SUB(&cur_poly->tvlist[2].v, &cur_poly->tvlist[0].v, &v);
 			VECTOR4D_CROSS(&u, &v, &n);
 			cur_poly->nlength = VECTOR4D_Length(&n);
 		}
@@ -408,13 +424,13 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 				temp_poly.tvlist[v0].v0 = tv2;
 			}
 			//重新计算法线长度
-			VECTOR4D_SUB(&cur_poly->tvlist[v1].v, &cur_poly->tvlist[v0].v, &u);
-			VECTOR4D_SUB(&cur_poly->tvlist[v2].v, &cur_poly->tvlist[v0].v, &v);
+			VECTOR4D_SUB(&cur_poly->tvlist[1].v, &cur_poly->tvlist[0].v, &u);
+			VECTOR4D_SUB(&cur_poly->tvlist[2].v, &cur_poly->tvlist[0].v, &v);
 			VECTOR4D_CROSS(&u, &v, &n);
 			cur_poly->nlength = VECTOR4D_Length(&n);
 
-			VECTOR4D_SUB(&temp_poly.tvlist[v1].v, &temp_poly.tvlist[v0].v, &u);
-			VECTOR4D_SUB(&temp_poly.tvlist[v2].v, &temp_poly.tvlist[v0].v, &v);
+			VECTOR4D_SUB(&temp_poly.tvlist[1].v, &temp_poly.tvlist[0].v, &u);
+			VECTOR4D_SUB(&temp_poly.tvlist[2].v, &temp_poly.tvlist[0].v, &v);
 			VECTOR4D_CROSS(&u, &v, &n);
 			temp_poly.nlength = VECTOR4D_Length(&n);
 
@@ -473,7 +489,7 @@ void LightRenderlistFlat(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int 
 
 				nl = cur_poly->nlength;
 
-				dp = VECTOR4D_DOT(&n, &lights[cur_light].dir);
+				dp = VECTOR4D_DOT(&n, &lights[cur_light].tdir);
 				if (dp > 0)
 				{
 					i = 128 * dp / nl;
@@ -492,12 +508,11 @@ void LightRenderlistFlat(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int 
 				//法线长度
 				nl = cur_poly->nlength;
 				//顶点到光源向量
-				VECTOR4D_SUB(&lights[cur_light].pos, &cur_poly->tvlist[ver1].v, &l);
+				VECTOR4D_SUB(&lights[cur_light].tpos, &cur_poly->tvlist[ver1].v, &l);
 				//顶点到光源距离
 				dist = VECTOR4D_Length(&l);
 				//点积
 				dp = VECTOR4D_DOT(&n, &l);
-
 				if (dp > 0)
 				{
 					//衰减因子
@@ -519,11 +534,11 @@ void LightRenderlistFlat(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int 
 				//法线长度
 				nl = cur_poly->nlength;
 				//顶点到光源向量
-				VECTOR4D_SUB(&lights[cur_light].pos, &cur_poly->tvlist[ver1].v, &l);
+				VECTOR4D_SUB(&lights[cur_light].tpos, &cur_poly->tvlist[ver1].v, &l);
 				//顶点到光源距离
 				dist = VECTOR4D_Length(&l);
 				//点积
-				dp = VECTOR4D_DOT(&n, &lights[cur_light].dir);
+				dp = VECTOR4D_DOT(&n, &lights[cur_light].tdir);
 
 				if (dp > 0)
 				{
@@ -546,15 +561,15 @@ void LightRenderlistFlat(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int 
 				//法线长度
 				nl = cur_poly->nlength;
 				//点积
-				dp = VECTOR4D_DOT(&n, &lights[cur_light].dir);
+				dp = VECTOR4D_DOT(&n, &lights[cur_light].tdir);
 				if (dp > 0)
 				{
 					//顶点到光源向量
-					VECTOR4D_SUB(&lights[cur_light].pos, &cur_poly->tvlist[ver1].v, &s);
+					VECTOR4D_SUB(&lights[cur_light].tpos, &cur_poly->tvlist[ver1].v, &s);
 					//顶点到光源距离
 					dists = VECTOR4D_Length(&s);
 
-					float dpsl = VECTOR4D_DOT(&lights[cur_light].dir, &s) / dists;
+					float dpsl = VECTOR4D_DOT(&lights[cur_light].tdir, &s) / dists;
 					if (dpsl > 0)
 					{
 						//衰减因子
@@ -637,7 +652,7 @@ void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, i
 			{
 				for (int ver = 0; ver < 3; ver++)
 				{
-					dp = VECTOR4D_DOT(&cur_poly->tvlist[ver].n, &lights[cur_light].dir);
+					dp = VECTOR4D_DOT(&cur_poly->tvlist[ver].n, &lights[cur_light].tdir);
 					if (dp > 0)
 					{
 						i = 128 * dp;
@@ -653,7 +668,7 @@ void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, i
 				for (int ver = 0; ver < 3; ver++)
 				{
 					//顶点到光源向量
-					VECTOR4D_SUB(&lights[cur_light].pos, &cur_poly->tvlist[ver].v, &l);
+					VECTOR4D_SUB(&lights[cur_light].tpos, &cur_poly->tvlist[ver].v, &l);
 					//光源到面距离
 					dist = VECTOR4D_Length(&l);
 
@@ -674,13 +689,13 @@ void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, i
 			else if (lights[cur_light].attr & LIGHTV1_ATTR_SPOTLIGHT1)
 			{
 				//顶点到光源向量
-				VECTOR4D_SUB(&lights[cur_light].pos, &cur_poly->tvlist[0].v, &l);
+				VECTOR4D_SUB(&lights[cur_light].tpos, &cur_poly->tvlist[0].v, &l);
 				//光源到面距离
 				dist = VECTOR4D_Length(&l);
 
 				for (int ver = 0; ver < 3; ver++)
 				{
-					dp = VECTOR4D_DOT(&cur_poly->tvlist[ver].n, &lights[cur_light].dir);
+					dp = VECTOR4D_DOT(&cur_poly->tvlist[ver].n, &lights[cur_light].tdir);
 					if (dp > 0)
 					{
 						atten = (lights[cur_light].kc + lights[cur_light].kl * dist + lights[cur_light].kq*dist*dist);
@@ -698,15 +713,15 @@ void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, i
 			{
 				for (int ver = 0; ver < 3; ver++)
 				{
-					dp = VECTOR4D_DOT(&cur_poly->tvlist[ver].n, &lights[cur_light].dir);
+					dp = VECTOR4D_DOT(&cur_poly->tvlist[ver].n, &lights[cur_light].tdir);
 					if (dp>0)
 					{
 						//顶点到光源向量
-						VECTOR4D_SUB(&lights[cur_light].pos, &cur_poly->tvlist[ver].v, &s);
+						VECTOR4D_SUB(&lights[cur_light].tpos, &cur_poly->tvlist[ver].v, &s);
 						//光源到顶点距离
 						dists = VECTOR4D_Length(&s);
 
-						float dpsp = VECTOR4D_DOT(&lights[cur_light].dir, &s) / dists;
+						float dpsp = VECTOR4D_DOT(&lights[cur_light].tdir, &s) / dists;
 						if (dpsp > 0)
 						{
 							atten = (lights[cur_light].kc + lights[cur_light].kl * dists + lights[cur_light].kq*dists*dists);
