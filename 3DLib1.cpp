@@ -53,11 +53,12 @@ float VECTOR4D_Length(VECTOR4D_PTR va)
 }
 
 //向量其次坐标
+//(注:这个接口是透视矩阵运算后用，因为z缓存与透视矫正原因所以不修改z)
 void VECTOR4D_DIV_BY_W(VECTOR4D_PTR va)
 {
 	va->x = va->x / va->w;
 	va->y = va->y / va->w;
-	va->z = va->z / va->w;
+	//va->z = va->z / va->w;//注释掉，因为追加了z缓存和透视矫正
 	va->w = 1;
 }
 

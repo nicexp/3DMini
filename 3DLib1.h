@@ -9,9 +9,9 @@
 
 #define WINDOW_WIDTH      800
 #define WINDOW_HEIGHT     600
-#define WINDOWED_APP      1 //是否窗口化(0:全屏，1:窗口)
+#define WINDOWED_APP      0 //是否窗口化(0:全屏，1:窗口)
 
-#define WINDDOW_BPP32 //是否32位位深 
+//#define WINDDOW_BPP32 //是否32位位深 
 
 #ifdef WINDDOW_BPP32
 #define WINDOW_BPP        32 //位深
@@ -26,6 +26,9 @@
 
 #define FIXP16_SHIFT 16
 #define FIXP16_ROUND_UP 0x00008000
+
+#define ZCORRECT_SHIFT 20
+#define ZBUFFER_SHIFT 28
 
 #define CULL_OBJECT_X_PLANE           0x0001
 #define CULL_OBJECT_Y_PLANE           0x0002

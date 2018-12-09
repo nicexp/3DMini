@@ -1,4 +1,5 @@
-﻿#include "3DShader.h"
+﻿/*恒定着色，gouraud着色*/
+#include "3DShader.h"
 #include "3DLib2.h"
 
 #define TRI_LHS	0 //左转折

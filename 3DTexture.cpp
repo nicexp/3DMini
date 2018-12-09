@@ -1,4 +1,5 @@
-﻿#include "3DTexture.h"
+﻿/*仿射纹理变换，包括固定着色，恒定着色，gouraud着色*/
+#include "3DTexture.h"
 
 #define TRI_LHS	0 //左转折
 #define TRI_RHS 1 //右转折

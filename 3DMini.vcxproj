@@ -81,6 +81,7 @@
     <ClCompile Include="3DDemo_2.cpp" />
     <ClCompile Include="3DDemo_3.cpp" />
     <ClCompile Include="3DDemo_4.cpp" />
+    <ClCompile Include="3DDemo_5.cpp" />
     <ClCompile Include="3DLib1.cpp" />
     <ClCompile Include="3DLib2.cpp" />
     <ClCompile Include="3DLight.cpp" />
@@ -91,7 +92,9 @@
     <ClCompile Include="3DRenderlist2.cpp" />
     <ClCompile Include="3DShader.cpp" />
     <ClCompile Include="3DTexture.cpp" />
+    <ClCompile Include="3DTexture2.cpp" />
     <ClCompile Include="3DTool.cpp" />
+    <ClCompile Include="3DZbuffer.cpp" />
     <ClCompile Include="win_main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -107,7 +110,9 @@
     <ClInclude Include="3DRenderlist2.h" />
     <ClInclude Include="3DShader.h" />
     <ClInclude Include="3DTexture.h" />
+    <ClInclude Include="3DTexture2.h" />
     <ClInclude Include="3DTool.h" />
+    <ClInclude Include="3DZbuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

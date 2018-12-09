@@ -107,9 +107,9 @@ void InitAllLight(LIGHTV1_PTR lights)
 	//初始化环境光
 	InitLight(lights, 0, LIGHTV1_STATE_ON, LIGHTV1_ATTR_AMBIENT, ambient, invalid_light, invalid_light, NULL, NULL, 0, 0, 0, 0, 0, 0);
 	//初始化直射光
-	InitLight(lights, 1, LIGHTV1_STATE_OFF, LIGHTV1_ATTR_INFINITE, invalid_light, infinite_diffuse, invalid_light, NULL, &infinite_dir, 0, 0, 0, 0, 0, 0);
+	InitLight(lights, 1, LIGHTV1_STATE_ON, LIGHTV1_ATTR_INFINITE, invalid_light, infinite_diffuse, invalid_light, NULL, &infinite_dir, 0, 0, 0, 0, 0, 0);
 	//初始化点光源
 	InitLight(lights, 2, LIGHTV1_STATE_ON, LIGHTV1_ATTR_POINT, invalid_light, point_diffuse, invalid_light, &point_pos, NULL, 0, 0.001, 0, 0, 0, 0);
 	//初始化聚光灯
-	InitLight(lights, 3, LIGHTV1_STATE_OFF, LIGHTV1_ATTR_SPOTLIGHT2, invalid_light, spot_diffuse, invalid_light, &spot_pos, &spot_dir, 0, 0.001, 0, 0, 0, 1);
+	InitLight(lights, 3, LIGHTV1_STATE_ON, LIGHTV1_ATTR_SPOTLIGHT2, invalid_light, spot_diffuse, invalid_light, &spot_pos, &spot_dir, 0, 0.001, 0, 0, 0, 1);
 }

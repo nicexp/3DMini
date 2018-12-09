@@ -1,6 +1,6 @@
 #include "3DDemo.h"
-//追加了3D裁剪
-#ifdef _3DDEMO_4
+
+#ifdef _3DDEMO_5
 
 #include "3DLib1.h"
 #include "3DLib2.h"
@@ -9,11 +9,13 @@
 #include "3DObject2.h"
 #include "3DRenderlist2.h"
 #include "3DShader.h"
-#include "3DTexture.h"
+#include "3DTexture2.h"
 #include "3DLight.h"
+#include "3DZbuffer.h"
 #include "3DLog.h"
 
-
+#define NUM_OBJECTS 16
+#define OBJECT_SPACING  250
 #define CAMERA_DISTANCE 1750
 
 
@@ -21,10 +23,11 @@ static LIGHTV1 lights[MAX_LIGHTS]; //光源
 
 static OBJECT4DV2 obj2; //物体2
 static RENDERLIST4DV2 renderlist; //渲染列表
-static CAM4DV1 cam;
-static POINT4D cam_pos = { -123, 180, 134, 1 };
-static VECTOR4D cam_dir = { 2.84, 5.62, 0, 1 };
+static CAM4DV1 cam;//相机
+static POINT4D cam_pos = { -600, 0, 0, 1 };
+static VECTOR4D cam_dir = { PI/2, 0, 0, 1 };
 static BITMAP_FILE bitmap;
+static ZBUFFER zbuffer;
 
 int GameInit()
 {
@@ -47,20 +50,24 @@ int GameInit()
 		&cam_pos,
 		&cam_dir,
 		NULL,
-		100, 1000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
+		100, 8000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//初始化物体
 	InitObject(&obj2);
 	//初始化光源
 	InitAllLight(lights);
-
+	//加载位图
 	Load_Bitmap_File(&bitmap, "test.bmp");
+	//创建1/z缓存
+	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
 	return 0;
 }
 
 int GameShutdown()
 {
+	//释放zbuffer
+	DeleteZbuffer(&zbuffer);
 	//释放鼠标
 	DInput_Release_Mouse();
 	//释放键盘
@@ -81,37 +88,42 @@ int GameMain()
 {
 	//开始时钟
 	Start_Clock();
-
-
+	//清理面
 	DDraw_Fill_Surface(lpddsback, 0);
+	//读取键盘缓存数据
 	DInput_Read_Keyboard();
+	//读取鼠标缓存数据
 	DInput_Read_Mouse();
+	//重置Zbuffer
+	UpdateZbuffer(&zbuffer, 0);
 	//监听相机位置
 	UpdateCameraPosAndDir(&cam);
-	//UpdateObjectPosAndDir(&obj2);
+	UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
 	BuildCameraToPerspectMatrix(&cam);
 	BuildPerspectToScreenMatrix(&cam);
 	//重置渲染列表
 	ResetRenderlist(&renderlist);
-	//重置物体
-	ResetObjState(&obj2);
 	//加入渲染列表
-	if ((CullObj(&obj2, &cam, CULL_OBJECT_XYZ_PLANES)))
+	for (int x = -NUM_OBJECTS / 2; x < NUM_OBJECTS / 2; x++)
 	{
-		DDraw_Flip();
-		Wait_Clock(30); //帧率限制
-		if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
+		for (int z = -NUM_OBJECTS / 2; z < NUM_OBJECTS / 2; z++)
 		{
-			PostMessage(main_window_handle, WM_DESTROY, 0, 0);
+			//重置物体
+			ResetObjState(&obj2);
+
+			obj2.world_pos.x = x * OBJECT_SPACING + OBJECT_SPACING / 2;
+			obj2.world_pos.y = 0;
+			obj2.world_pos.z = z * OBJECT_SPACING + OBJECT_SPACING / 2;
+
+			if (!(CullObj(&obj2, &cam, CULL_OBJECT_XYZ_PLANES)))
+			{
+				ModelToWorldObj(&obj2);
+				InsertObjToRenderlist(&renderlist, &obj2, 0);
+			}
 		}
-		return 0;
 	}
-	//世界坐标
-	ModelToWorldObj(&obj2);
-	//插入到渲染列表
-	InsertObjToRenderlist(&renderlist, &obj2, 0);
 	//背面消除
 	RemoveRendlistBackface(&renderlist, &cam.pos);
 	//相机坐标
@@ -129,7 +141,7 @@ int GameMain()
 	PerspectToScreenRenderlist(&renderlist, &cam.mscr);
 
 	DDraw_Lock_Back_Surface();
-	
+
 	for (int poly = 0; poly < renderlist.num_polys; poly++)
 	{
 		POLYF4DV2_PTR cur_poly = &renderlist.poly_data[poly];
@@ -142,9 +154,9 @@ int GameMain()
 		//高洛德着色
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
 
-		//DrawTextureConstant(cur_poly, &bitmap, back_buffer, back_lpitch);
-		DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureFlat(cur_poly, &bitmap, back_buffer, back_lpitch);
+		DrawTextureConstant2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureGouraud2(cur_poly, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureFlat2(cur_poly, &bitmap, back_buffer, back_lpitch);
 	}
 
 	DDraw_Unlock_Back_Surface();

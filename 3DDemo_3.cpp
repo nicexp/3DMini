@@ -9,6 +9,8 @@
 #include "3DObject2.h"
 #include "3DShader.h"
 #include "3DTexture.h"
+#include "3DTexture2.h"
+#include "3DZbuffer.h"
 #include "3DLight.h"
 #include "3DLog.h"
 
@@ -18,6 +20,7 @@ static CAM4DV1 cam;
 static POINT4D cam_pos = { -600, 0, 0, 1 };
 static VECTOR4D cam_dir = { PI / 2, 0, 0, 1 };
 static BITMAP_FILE bitmap;
+static ZBUFFER zbuffer;
 
 int GameInit()
 {
@@ -47,12 +50,16 @@ int GameInit()
 	InitAllLight(lights);
 
 	Load_Bitmap_File(&bitmap, "test.bmp");
+	//创建1/z缓存
+	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
 	return 0;
 }
 
 int GameShutdown()
 {
+	//释放zbuffer
+	DeleteZbuffer(&zbuffer);
 	//释放鼠标
 	DInput_Release_Mouse();
 	//释放键盘
@@ -96,6 +103,8 @@ int GameMain()
 {
 	//开始时钟
 	Start_Clock();
+	//重置Zbuffer
+	UpdateZbuffer(&zbuffer, 0);
 	//初始化后备缓冲区
 	DDraw_Fill_Surface(lpddsback, 0);
 	//读取键盘和鼠标数据
@@ -149,15 +158,14 @@ int GameMain()
 			shade_face.lit_color[i] = cur_poly->lit_color[i];
 		}
 
-		//DrawTextureConstant(&shade_face, &bitmap, back_buffer, back_lpitch);
-		DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
+		DrawTextureConstant2(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
 		//DrawTextureFlat(&shade_face, &bitmap, back_buffer, back_lpitch);
 	}
-
 	DDraw_Unlock_Back_Surface();
 
 	DDraw_Flip();
-
+	
 	Wait_Clock(30); //帧率限制
 
 	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
