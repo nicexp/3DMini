@@ -9,6 +9,7 @@
 #include "3DObject2.h"
 #include "3DRenderlist2.h"
 #include "3DShader.h"
+#include "3DTexture.h"
 #include "3DTexture2.h"
 #include "3DLight.h"
 #include "3DZbuffer.h"
@@ -24,8 +25,8 @@ static LIGHTV1 lights[MAX_LIGHTS]; //光源
 static OBJECT4DV2 obj2; //物体2
 static RENDERLIST4DV2 renderlist; //渲染列表
 static CAM4DV1 cam;//相机
-static POINT4D cam_pos = { -600, 0, 0, 1 };
-static VECTOR4D cam_dir = { PI/2, 0, 0, 1 };
+static POINT4D cam_pos = { -600, 1500, 0, 1 };
+static VECTOR4D cam_dir = { 2.88, 6.26, 0, 1 };
 static BITMAP_FILE bitmap;
 static ZBUFFER zbuffer;
 
@@ -57,7 +58,7 @@ int GameInit()
 	//初始化光源
 	InitAllLight(lights);
 	//加载位图
-	Load_Bitmap_File(&bitmap, "test.bmp");
+	Load_Bitmap_File(&bitmap, "Resouce/3d6.bmp");
 	//创建1/z缓存
 	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 
@@ -98,6 +99,11 @@ int GameMain()
 	UpdateZbuffer(&zbuffer, 0);
 	//监听相机位置
 	UpdateCameraPosAndDir(&cam);
+	//test
+	char buffer[1024];
+	sprintf(buffer, "campos:%f,%f,%f, camdir:%f,%f,%f", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z);
+	Draw_Text_GDI(buffer, 10, 30, RGB(255,255,255), lpddsback);
+	//
 	UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
@@ -153,17 +159,15 @@ int GameMain()
 		//ShaderFlat(cur_poly, back_buffer, back_lpitch);
 		//高洛德着色
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
-
-		DrawTextureConstant2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		//DrawTextureGouraud2(cur_poly, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureFlat2(cur_poly, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureConstant2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		DrawTextureGouraud2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureFlat2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 	}
-
 	DDraw_Unlock_Back_Surface();
 
 	DDraw_Flip();
-
-	Wait_Clock(30); //帧率限制
+	//Wait_Clock(30); //帧率限制
 
 	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
 	{

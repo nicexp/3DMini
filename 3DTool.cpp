@@ -55,7 +55,7 @@ int Load_Bitmap_File(BITMAP_FILE_PTR bitmap, char* filename)
 {
 	FILE* fp;
 	UCHAR* temp_buffer = NULL;
-	UINT red, green, blue;
+	UINT red, green, blue, alpha;
 	int index;
 
 
@@ -77,6 +77,7 @@ int Load_Bitmap_File(BITMAP_FILE_PTR bitmap, char* filename)
 	}
 	//读取信息头部
 	fread(&bitmap->bitmapinfoheader, sizeof(BITMAPINFOHEADER), 1, fp);
+	DEBUG_LOG("bitcount:%d", bitmap->bitmapinfoheader.biBitCount);
 	//判断是否读取调色板,8位模式下有调色板数据
 	if (bitmap->bitmapinfoheader.biBitCount == 8)
 	{
@@ -137,6 +138,48 @@ int Load_Bitmap_File(BITMAP_FILE_PTR bitmap, char* filename)
 			blue = (int)temp_buffer[index * 3 + 0];
 			green = (int)temp_buffer[index * 3 + 1];
 			red = (int)temp_buffer[index * 3 + 2];
+#ifdef WINDDOW_BPP32
+			((UINT*)bitmap->buffer)[index] = _RGBTOINT(red, green, blue);
+#else
+			((USHORT*)bitmap->buffer)[index] = _RGBTOINT(red, green, blue);
+#endif
+		}
+		bitmap->bitmapinfoheader.biBitCount = 16;
+		free(temp_buffer);
+	}
+	if (bitmap->bitmapinfoheader.biBitCount == 32)
+	{
+		DEBUG_LOG("32 bit bitmap");
+		DEBUG_LOG("%d", bitmap->bitmapinfoheader.biSizeImage);
+		if (!(temp_buffer = (UCHAR*)malloc(bitmap->bitmapinfoheader.biSizeImage)))
+		{
+			fclose(fp);
+			return 0;
+		}
+#ifdef WINDDOW_BPP32
+		if (!(bitmap->buffer = (UCHAR*)malloc(4 * bitmap->bitmapinfoheader.biWidth * bitmap->bitmapinfoheader.biHeight)))
+		{
+			fclose(fp);
+			return 0;
+		}
+#else
+		if (!(bitmap->buffer = (UCHAR*)malloc(2 * bitmap->bitmapinfoheader.biWidth * bitmap->bitmapinfoheader.biHeight)))
+		{
+			fclose(fp);
+			free(temp_buffer);
+			return 0;
+		}
+#endif
+
+		fread(temp_buffer, bitmap->bitmapinfoheader.biSizeImage, 1, fp);
+
+		for (index = 0; index < bitmap->bitmapinfoheader.biWidth*bitmap->bitmapinfoheader.biHeight; index++)
+		{
+			//读取像素
+			blue = (int)temp_buffer[index * 4 + 0];
+			green = (int)temp_buffer[index * 4 + 1];
+			red = (int)temp_buffer[index * 4 + 2];
+			alpha = (int)temp_buffer[index * 4 + 3];
 #ifdef WINDDOW_BPP32
 			((UINT*)bitmap->buffer)[index] = _RGBTOINT(red, green, blue);
 #else

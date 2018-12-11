@@ -113,6 +113,7 @@ int GameMain()
 
 	//更新相机位置与朝向
 	UpdateCameraPosAndDir(&cam);
+	UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
 	BuildCameraToPerspectMatrix(&cam);
@@ -158,8 +159,10 @@ int GameMain()
 			shade_face.lit_color[i] = cur_poly->lit_color[i];
 		}
 
-		DrawTextureConstant2(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		//DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureConstant2(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureGouraud2(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstant(&shade_face, &bitmap, back_buffer, back_lpitch);
+		DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
 		//DrawTextureFlat(&shade_face, &bitmap, back_buffer, back_lpitch);
 	}
 	DDraw_Unlock_Back_Surface();

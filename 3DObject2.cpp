@@ -62,7 +62,7 @@ void InitObject(OBJECT4DV2_PTR obj)
 		5, 6, 7, 4, 5, 7
 	};
 	//初始化纹理坐标
-	int text_width = 128 - 1;
+	int text_width = BMP_SIZE - 1;
 	POINT2D temp_poly_text[12*3] =
 	{
 		{ text_width, 0 }, { text_width, text_width }, { 0, text_width },
