@@ -43,5 +43,6 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 //π‚’’¥¶¿Ì
 void LightRenderlistFlat(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int max_lights);
 void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int max_lights);
-
+//z≈≈–Ú
+void RenderlistSortByZ(RENDERLIST4DV2_PTR renderlist);
 #endif

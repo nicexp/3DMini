@@ -75,6 +75,9 @@
     <ClCompile Include="3DZbuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="3DTexture3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLib1.h">
@@ -120,6 +123,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="3DZbuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTexture3.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

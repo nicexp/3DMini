@@ -47,14 +47,14 @@ int GameInit()
 		&cam_pos,
 		&cam_dir,
 		NULL,
-		100, 1000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
+		20, 1000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//初始化物体
 	InitObject(&obj2);
 	//初始化光源
 	InitAllLight(lights);
 
-	Load_Bitmap_File(&bitmap, "test.bmp");
+	Load_Bitmap_File(&bitmap, "Resouce/3d6.bmp");
 
 	return 0;
 }

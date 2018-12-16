@@ -11,12 +11,13 @@
 #include "3DShader.h"
 #include "3DTexture.h"
 #include "3DTexture2.h"
+#include "3DTexture3.h"
 #include "3DLight.h"
 #include "3DZbuffer.h"
 #include "3DLog.h"
 
 #define NUM_OBJECTS 16
-#define OBJECT_SPACING  250
+#define OBJECT_SPACING  100
 #define CAMERA_DISTANCE 1750
 
 
@@ -51,7 +52,7 @@ int GameInit()
 		&cam_pos,
 		&cam_dir,
 		NULL,
-		100, 8000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
+		10, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//初始化物体
 	InitObject(&obj2);
@@ -61,12 +62,15 @@ int GameInit()
 	Load_Bitmap_File(&bitmap, "Resouce/3d6.bmp");
 	//创建1/z缓存
 	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
-
+	//创建alpha缓存
+	CreateAlphaBuffer();
 	return 0;
 }
 
 int GameShutdown()
 {
+	//释放alphaebuffer
+	DeleteAlphabuffer();
 	//释放zbuffer
 	DeleteZbuffer(&zbuffer);
 	//释放鼠标
@@ -103,7 +107,6 @@ int GameMain()
 	char buffer[1024];
 	sprintf(buffer, "campos:%f,%f,%f, camdir:%f,%f,%f", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z);
 	Draw_Text_GDI(buffer, 10, 30, RGB(255,255,255), lpddsback);
-	//
 	UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
@@ -120,8 +123,8 @@ int GameMain()
 			ResetObjState(&obj2);
 
 			obj2.world_pos.x = x * OBJECT_SPACING + OBJECT_SPACING / 2;
-			obj2.world_pos.y = 0;
-			obj2.world_pos.z = z * OBJECT_SPACING + OBJECT_SPACING / 2;
+			obj2.world_pos.y = z * OBJECT_SPACING + OBJECT_SPACING / 2;
+			obj2.world_pos.z = 0;
 
 			if (!(CullObj(&obj2, &cam, CULL_OBJECT_XYZ_PLANES)))
 			{
@@ -141,34 +144,36 @@ int GameMain()
 	//光照处理
 	//LightRenderlistFlat(&renderlist, lights, LIGHT_COUNT);//恒定着色
 	LightRenderlistGouraud(&renderlist, lights, LIGHT_COUNT);//gouraud着色
+	//z排序
+	RenderlistSortByZ(&renderlist);
 	//透视坐标
 	CameraToPerspectRenderlist(&renderlist, &cam.mper);
 	//屏幕坐标
 	PerspectToScreenRenderlist(&renderlist, &cam.mscr);
 
 	DDraw_Lock_Back_Surface();
-
 	for (int poly = 0; poly < renderlist.num_polys; poly++)
 	{
-		POLYF4DV2_PTR cur_poly = &renderlist.poly_data[poly];
+		POLYF4DV2_PTR cur_poly = renderlist.poly_ptrs[poly];
 
 		if (cur_poly->state & POLY4DV2_STATE_BACKFACE ||
 			cur_poly->state & POLY4DV2_STATE_CLIPPED)
 			continue;
-		//恒定着色
+
 		//ShaderFlat(cur_poly, back_buffer, back_lpitch);
-		//高洛德着色
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
-		//DrawTextureConstant2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		DrawTextureGouraud2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureFlat2(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvz(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		DrawTextureGouraudWithPerInvz(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureFlatWithPerInvz(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvzAlpha(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvzBinfilter(cur_poly, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 	}
 	DDraw_Unlock_Back_Surface();
 
 	DDraw_Flip();
 	//Wait_Clock(30); //帧率限制
-
+	DEBUG_LOG("FPS:%f", GetFPS());
 	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])
 	{
 		PostMessage(main_window_handle, WM_DESTROY, 0, 0);

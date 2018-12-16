@@ -6,7 +6,7 @@ static RGBAV1 infinite_diffuse = { 255, 255, 255, 0 }; //直射光散射强度
 static RGBAV1 point_diffuse = { 255, 0, 0, 0 }; //点光源散射强度
 static RGBAV1 spot_diffuse = { 0, 255, 0, 0 }; //聚光灯散射强度
 static VECTOR4D infinite_dir = { -1, 1, -1, 1 }; //直射光方向
-static VECTOR4D point_pos = { -500, 500, 500, 1 }; //点光源位置
+static VECTOR4D point_pos = { 0, 0, 500, 1 }; //点光源位置
 static VECTOR4D spot_pos = { 500, 500, 500, 1 }; //聚光灯位置
 static VECTOR4D spot_dir = { 1, 1, 1, 1 }; //聚光灯方向
 
@@ -107,7 +107,7 @@ void InitAllLight(LIGHTV1_PTR lights)
 	//初始化环境光
 	InitLight(lights, 0, LIGHTV1_STATE_ON, LIGHTV1_ATTR_AMBIENT, ambient, invalid_light, invalid_light, NULL, NULL, 0, 0, 0, 0, 0, 0);
 	//初始化直射光
-	InitLight(lights, 1, LIGHTV1_STATE_ON, LIGHTV1_ATTR_INFINITE, invalid_light, infinite_diffuse, invalid_light, NULL, &infinite_dir, 0, 0, 0, 0, 0, 0);
+	InitLight(lights, 1, LIGHTV1_STATE_OFF, LIGHTV1_ATTR_INFINITE, invalid_light, infinite_diffuse, invalid_light, NULL, &infinite_dir, 0, 0, 0, 0, 0, 0);
 	//初始化点光源
 	InitLight(lights, 2, LIGHTV1_STATE_ON, LIGHTV1_ATTR_POINT, invalid_light, point_diffuse, invalid_light, &point_pos, NULL, 0, 0.001, 0, 0, 0, 0);
 	//初始化聚光灯

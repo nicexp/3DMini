@@ -233,6 +233,22 @@ void UpdateCameraPosAndDir(CAM4DV1_PTR cam)
 	{
 		SetCameraPos(cam, DIRECT_DOWN, CAMERA_SPEED);
 	}
+	if (KEY_DOWN(0xCB) || keyboard_state[DIK_LEFT])
+	{
+		cam->dir.y += (15.0 / 360.0 * PI);
+		if (cam->dir.y < 0)
+		{
+			cam->dir.y += PI * 2;
+		}
+	}
+	if (KEY_DOWN(0xCD) || keyboard_state[DIK_RIGHT])
+	{
+		cam->dir.y -= (15.0 / 360.0 * PI);
+		if (cam->dir.y < 0)
+		{
+			cam->dir.y += PI * 2;
+		}
+	}
 	if ((mouse_state.rgbButtons[0] & 0x80))
 	{
 		int lx = mouse_state.lX, ly = mouse_state.lY;

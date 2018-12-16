@@ -2,6 +2,9 @@
 #include "3DLib2.h"
 #include "3DZbuffer.h"
 
+unsigned int(*afbuffer)[256];
+
+//Zbuffer和alpha buffer在这里实现
 int CreateZbuffer(ZBUFFER_PTR zb, int width, int height, int attr)
 {
 	if (!zb)
@@ -39,4 +42,40 @@ int DeleteZbuffer(ZBUFFER_PTR zb)
 	{
 		return 0;
 	}
+
+	return 1;
+}
+
+int CreateAlphaBuffer()
+{
+	if (afbuffer)
+		free(afbuffer);
+
+	if (!(afbuffer = (unsigned int(*)[256])malloc(256 * 256 * sizeof(unsigned int))))
+		return 0;
+	
+
+	for (int alpha = 0; alpha < 256; alpha++)
+	{
+		for (int cl = 0; cl < 256; cl++)
+		{
+			afbuffer[alpha][cl] = (alpha * cl) >> 8;
+		}
+	}
+
+	return 1;
+}
+
+int DeleteAlphabuffer()
+{
+	if (afbuffer)
+	{
+		free(afbuffer);
+	}
+	else
+	{
+		return 0;
+	}
+
+	return 1;
 }

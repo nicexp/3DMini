@@ -10,6 +10,7 @@
 #include "3DShader.h"
 #include "3DTexture.h"
 #include "3DTexture2.h"
+#include "3DTexture3.h"
 #include "3DZbuffer.h"
 #include "3DLight.h"
 #include "3DLog.h"
@@ -17,10 +18,11 @@
 static LIGHTV1 lights[MAX_LIGHTS]; //光源
 static OBJECT4DV2 obj2; //物体
 static CAM4DV1 cam;
-static POINT4D cam_pos = { -600, 0, 0, 1 };
-static VECTOR4D cam_dir = { PI / 2, 0, 0, 1 };
+static POINT4D cam_pos = { -80, 0, 0, 1 };
+static VECTOR4D cam_dir = { 1.626647, 6.209884, 0, 1 };
 static BITMAP_FILE bitmap;
 static ZBUFFER zbuffer;
+static int binfilter = 1;
 
 int GameInit()
 {
@@ -43,21 +45,24 @@ int GameInit()
 		&cam_pos,
 		&cam_dir,
 		NULL,
-		20, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
+		10, 8000, 120, WINDOW_WIDTH, WINDOW_HEIGHT);
 	//初始化物体
 	InitObject(&obj2);
 	//初始化光源
 	InitAllLight(lights);
 
-	Load_Bitmap_File(&bitmap, "test.bmp");
+	Load_Bitmap_File(&bitmap, "Resouce/3d9.bmp");
 	//创建1/z缓存
 	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
-
+	//创建alpha缓存
+	CreateAlphaBuffer();
 	return 0;
 }
 
 int GameShutdown()
 {
+	//释放alphaebuffer
+	DeleteAlphabuffer();
 	//释放zbuffer
 	DeleteZbuffer(&zbuffer);
 	//释放鼠标
@@ -111,9 +116,21 @@ int GameMain()
 	DInput_Read_Keyboard();
 	DInput_Read_Mouse();
 
+	if (keyboard_state[DIK_Z])
+	{
+		binfilter = -binfilter;
+	}
+
+	char textbuf[128];
+	sprintf(textbuf, "campos:%f, %f, %f", cam.pos.x, cam.pos.y, cam.pos.z);
+	Draw_Text_GDI(textbuf, 10, 50, RGB(255, 255, 255), lpddsback);
+	char buffer[1024];
+	sprintf(buffer, "campos:%f,%f,%f, camdir:%f,%f,%f", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z);
+	Draw_Text_GDI(buffer, 10, 30, RGB(255, 255, 255), lpddsback);
+	DEBUG_LOG("%s", buffer);
 	//更新相机位置与朝向
 	UpdateCameraPosAndDir(&cam);
-	UpdateObjectPosAndDir(&obj2);
+	//UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
 	BuildCameraToPerspectMatrix(&cam);
@@ -159,16 +176,26 @@ int GameMain()
 			shade_face.lit_color[i] = cur_poly->lit_color[i];
 		}
 
-		//DrawTextureConstant2(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		//DrawTextureGouraud2(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvz(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureFlatWithPerInvz(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvzAlpha(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 		//DrawTextureConstant(&shade_face, &bitmap, back_buffer, back_lpitch);
-		DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
 		//DrawTextureFlat(&shade_face, &bitmap, back_buffer, back_lpitch);
+		//DrawTextureConstantWithPerInvzBinfilter(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		if (binfilter == 1)
+		{
+			DrawTextureConstantWithPerInvzBinfilter(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		}
+		else
+		{
+			DrawTextureConstantBinfilter(&shade_face, &bitmap, back_buffer, back_lpitch);
+		}
 	}
 	DDraw_Unlock_Back_Surface();
 
 	DDraw_Flip();
-	
+
 	Wait_Clock(30); //帧率限制
 
 	if (KEY_DOWN(VK_ESCAPE) || keyboard_state[DIK_ESCAPE])

@@ -13,5 +13,6 @@ typedef struct ZBUFFER_TYP
 int CreateZbuffer(ZBUFFER_PTR zb, int width, int height, int attr);
 void UpdateZbuffer(ZBUFFER_PTR zb, unsigned int data);
 int DeleteZbuffer(ZBUFFER_PTR zb);
-
+int CreateAlphaBuffer();
+int DeleteAlphabuffer();
 #endif

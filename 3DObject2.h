@@ -5,8 +5,7 @@
 #include "3DCamera.h"
 #include "3DLight.h"
 
-#define BORDER_LENGTH 100
-#define BMP_SIZE 128
+#define BORDER_LENGTH 50
 
 #define OBJECT4DV2_STATE_ACTIVE           0x0001
 #define OBJECT4DV2_STATE_VISIBLE          0x0002 

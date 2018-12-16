@@ -30,6 +30,8 @@
 #define ZCORRECT_SHIFT 20
 #define ZBUFFER_SHIFT 28
 
+#define BMP_SIZE 128
+
 #define CULL_OBJECT_X_PLANE           0x0001
 #define CULL_OBJECT_Y_PLANE           0x0002
 #define CULL_OBJECT_Z_PLANE           0x0004
@@ -58,6 +60,7 @@
 
 #define _RGB565FROM16BIT(RGB, r, g, b) {*r = ((((RGB)>>11) & 0x1f) << 3);*g = ((((RGB)>>5) & 0x3f) << 2);*b = (((RGB) & 0x1f)<<3);}
 #define _RGB888FROM32BIT(RGB, r, g, b) {*r = ((((RGB)>>16) & 0xff));*g = ((((RGB)>>8) & 0xff));*b = ((((RGB)) & 0xff));}
+#define _RGBAFROM32BIT(RGBA, r, g, b, a) {*a = ((((RGB)>>24) & 0xff));*r = ((((RGB)>>16) & 0xff));*g = ((((RGB)>>8) & 0xff));*b = ((((RGB)) & 0xff));}
 #define _RGB16BIT565(r, g, b) (((b >> 3)&0x1f) + (((g >> 2)&0x3f)<<5) + (((r >> 3)&0x1f)<<11))
 #define _RGB32BIT888(r, g, b) (((r & 0xff) << 16) +((g & 0xff) << 8) + ((b & 0xff)) + 0xff000000)
 

@@ -235,6 +235,7 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 	float t_param1 = 0, t_param2 = 0;//参数化
 	float x1, y1, x2, y2;//交点
 	float tu1, tv1, tu2, tv2;//纹理坐标
+	float nx1, ny1, nz1, nx2, ny2, nz2;//顶点法线
 	int nums_in = 0;
 	int index = 0;//循环索引
 	int v0 = 0, v1 = 1, v2 = 2; //三角形顶点索引
@@ -332,7 +333,13 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 			cur_poly->tvlist[v1].x = x1;
 			cur_poly->tvlist[v1].y = y1;
 			cur_poly->tvlist[v1].z = cam->near_clip_z;
-
+			//重新计算顶点法线
+			nx1 = cur_poly->tvlist[v0].nx + (cur_poly->tvlist[v1].nx - cur_poly->tvlist[v0].nx) * t_param1;
+			ny1 = cur_poly->tvlist[v0].ny + (cur_poly->tvlist[v1].ny - cur_poly->tvlist[v0].ny) * t_param1;
+			nz1 = cur_poly->tvlist[v0].nz + (cur_poly->tvlist[v1].nz - cur_poly->tvlist[v0].nz) * t_param1;
+			cur_poly->tvlist[v1].nx = nx1;
+			cur_poly->tvlist[v1].ny = ny1;
+			cur_poly->tvlist[v1].nz = nz1;
 			//v0->v2求得参数t
 			t_param2 = (cam->near_clip_z - cur_poly->tvlist[v0].z) / (cur_poly->tvlist[v2].z - cur_poly->tvlist[v0].z);
 			//交点
@@ -342,6 +349,13 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 			cur_poly->tvlist[v2].x = x2;
 			cur_poly->tvlist[v2].y = y2;
 			cur_poly->tvlist[v2].z = cam->near_clip_z;
+			//法线
+			nx2 = cur_poly->tvlist[v0].nx + (cur_poly->tvlist[v2].nx - cur_poly->tvlist[v0].nx) * t_param2;
+			ny2 = cur_poly->tvlist[v0].ny + (cur_poly->tvlist[v2].ny - cur_poly->tvlist[v0].ny) * t_param2;
+			nz2 = cur_poly->tvlist[v0].nz + (cur_poly->tvlist[v2].nz - cur_poly->tvlist[v0].nz) * t_param2;
+			cur_poly->tvlist[v2].nx = nx2;
+			cur_poly->tvlist[v2].ny = ny2;
+			cur_poly->tvlist[v2].nz = nz2;
 			//判断纹理
 			if (cur_poly->attr & POLY4DV2_ATTR_SHAD_MODE_TEXTURE)
 			{
@@ -391,20 +405,37 @@ void ClipPolysRenderlist(RENDERLIST4DV2_PTR renderlist, CAM4DV1_PTR cam, int cul
 			//v0->v2交点
 			x2 = cur_poly->tvlist[v0].x + t_param2 *(cur_poly->tvlist[v2].x - cur_poly->tvlist[v0].x);
 			y2 = cur_poly->tvlist[v0].y + t_param2 *(cur_poly->tvlist[v2].y - cur_poly->tvlist[v0].y);
+			//v0->v1法线
+			nx1 = cur_poly->tvlist[v0].nx + (cur_poly->tvlist[v1].nx - cur_poly->tvlist[v0].nx) * t_param1;
+			ny1 = cur_poly->tvlist[v0].ny + (cur_poly->tvlist[v1].ny - cur_poly->tvlist[v0].ny) * t_param1;
+			nz1 = cur_poly->tvlist[v0].nz + (cur_poly->tvlist[v1].nz - cur_poly->tvlist[v0].nz) * t_param1;
+			//v0->v2法线
+			nx2 = cur_poly->tvlist[v0].nx + (cur_poly->tvlist[v2].nx - cur_poly->tvlist[v0].nx) * t_param2;
+			ny2 = cur_poly->tvlist[v0].ny + (cur_poly->tvlist[v2].ny - cur_poly->tvlist[v0].ny) * t_param2;
+			nz2 = cur_poly->tvlist[v0].nz + (cur_poly->tvlist[v2].nz - cur_poly->tvlist[v0].nz) * t_param2;
 			
-			//v0->v1交点覆盖v0
+			//v0->v1交点与法线覆盖v0
 			cur_poly->tvlist[v0].x = x1;
 			cur_poly->tvlist[v0].y = y1;
 			cur_poly->tvlist[v0].z = cam->near_clip_z;
+			cur_poly->tvlist[v0].nx = nx1;
+			cur_poly->tvlist[v0].ny = ny1;
+			cur_poly->tvlist[v0].nz = nz1;
 
 			//v0->v1交点覆盖新面的v1
 			temp_poly.tvlist[v1].x = x1;
 			temp_poly.tvlist[v1].y = y1;
 			temp_poly.tvlist[v1].z = cam->near_clip_z;
+			temp_poly.tvlist[v1].nx = nx1;
+			temp_poly.tvlist[v1].ny = ny1;
+			temp_poly.tvlist[v1].nz = nz1;
 			//v0->v2交点覆盖新面的v0
 			temp_poly.tvlist[v0].x = x2;
 			temp_poly.tvlist[v0].y = y2;
 			temp_poly.tvlist[v0].z = cam->near_clip_z;
+			temp_poly.tvlist[v0].nx = nx2;
+			temp_poly.tvlist[v0].ny = ny2;
+			temp_poly.tvlist[v0].nz = nz2;
 
 			if (cur_poly->attr & POLY4DV2_ATTR_SHAD_MODE_TEXTURE)
 			{
@@ -751,4 +782,30 @@ void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, i
 		cur_poly->lit_color[1] = _RGBTOINT(rsum[1], gsum[1], bsum[1]);
 		cur_poly->lit_color[2] = _RGBTOINT(rsum[2], gsum[2], bsum[2]);
 	}
+}
+
+//z排序，用于alpha混合时渲染
+int compare(const void* a, const void* b)
+{
+	float z1, z2;
+
+	POLYF4DV2_PTR poly1, poly2;
+
+	poly1 = *((POLYF4DV2_PTR*)a);
+	poly2 = *((POLYF4DV2_PTR*)b);
+
+	z1 = 0.3333333 * (poly1->tvlist[0].z + poly1->tvlist[1].z + poly1->tvlist[2].z);
+	z2 = 0.3333333 * (poly2->tvlist[0].z + poly1->tvlist[1].z + poly1->tvlist[2].z);
+
+	if (z1 > z2)
+		return -1;
+	else if (z1 < z2)
+		return 1;
+	else
+		return 0; 
+}
+
+void RenderlistSortByZ(RENDERLIST4DV2_PTR renderlist)
+{
+	qsort((void*)(renderlist->poly_ptrs), renderlist->num_polys, sizeof(POLYF4DV2_PTR), compare);
 }
