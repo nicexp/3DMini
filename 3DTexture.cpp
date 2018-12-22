@@ -8,8 +8,9 @@
 #define TRIANGLE_BOTTOM 1 //平底三角形
 #define TRIANGLE_GENERAL 2 //一般三角形
 
-void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch)
+void DrawTextureConstant(POLYF4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
 {
+	BITMAP_IMG_PTR bitmap = face->texture;
 	int ver0 = 0, ver1 = 1, ver2 = 2, temp;
 
 	int irestart = TRI_LHS;
@@ -244,9 +245,9 @@ void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned ch
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					ti += dtdx;
 					si += dsdx;
@@ -285,9 +286,9 @@ void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned ch
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					ti += dtdx;
 					si += dsdx;
@@ -460,9 +461,9 @@ void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned ch
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					ti += dtdx;
 					si += dsdx;
@@ -537,9 +538,9 @@ void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned ch
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					*(dest_addr + xi) = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					ti += dtdx;
 					si += dsdx;
@@ -593,8 +594,9 @@ void DrawTextureConstant(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned ch
 	}
 }
 
-void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch)
+void DrawTextureGouraud(POLYF4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
 {
+	BITMAP_IMG_PTR bitmap = face->texture;
 	int ver0 = 0, ver1 = 1, ver2 = 2, temp;
 
 	int irestart = TRI_LHS;
@@ -887,9 +889,9 @@ void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned cha
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textel, &ri, &gi, &bi);
 					ri *= ui;
@@ -958,9 +960,9 @@ void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned cha
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textel, &ri, &gi, &bi);
 					ri *= ui;
@@ -1218,9 +1220,9 @@ void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned cha
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textel, &ri, &gi, &bi);
 					ri *= ui;
@@ -1341,9 +1343,9 @@ void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned cha
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textel, &ri, &gi, &bi);
 					ri *= ui;
@@ -1434,8 +1436,9 @@ void DrawTextureGouraud(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned cha
 	}
 }
 
-void DrawTextureFlat(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch)
+void DrawTextureFlat(POLYF4DV2_PTR face, unsigned char *_dest_buffer, int mempitch)
 {
+	BITMAP_IMG_PTR bitmap = face->texture;
 	int ver0 = 0, ver1 = 1, ver2 = 2, temp;
 
 	int irestart = TRI_LHS;
@@ -1668,9 +1671,9 @@ void DrawTextureFlat(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textiel, &rbase, &gbase, &bbase);
 					rbase *= ri;
@@ -1719,9 +1722,9 @@ void DrawTextureFlat(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textiel, &rbase, &gbase, &bbase);
 					rbase *= ri;
@@ -1904,9 +1907,9 @@ void DrawTextureFlat(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textiel, &rbase, &gbase, &bbase);
 					rbase *= ri;
@@ -1991,9 +1994,9 @@ void DrawTextureFlat(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *
 				for (int xi = xs; xi <= xe; xi++)
 				{
 #ifdef WINDDOW_BPP32
-					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((UINT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #else
-					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->bitmapinfoheader.biWidth + (ti >> FIXP16_SHIFT)];
+					textiel = ((USHORT*)bitmap->buffer)[(si >> FIXP16_SHIFT) * bitmap->width + (ti >> FIXP16_SHIFT)];
 #endif
 					_RGBFROMINT(textiel, &rbase, &gbase, &bbase);
 					rbase *= ri;

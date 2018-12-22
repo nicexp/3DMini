@@ -50,8 +50,6 @@ int GameInit()
 	InitObject(&obj2);
 	//初始化光源
 	InitAllLight(lights);
-
-	Load_Bitmap_File(&bitmap, "Resouce/3d9.bmp");
 	//创建1/z缓存
 	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 	//创建alpha缓存
@@ -168,6 +166,7 @@ int GameMain()
 			continue;
 
 		shade_face.color = cur_poly->color;
+		shade_face.texture = cur_poly->texture;
 		for (int i = 0; i < 3; i++)
 		{
 			VECTOR4D_COPY(&shade_face.tvlist[i].v, &cur_poly->vlist[cur_poly->vert[i]].v);
@@ -176,21 +175,14 @@ int GameMain()
 			shade_face.lit_color[i] = cur_poly->lit_color[i];
 		}
 
-		//DrawTextureConstantWithPerInvz(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		//DrawTextureFlatWithPerInvz(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		//DrawTextureConstantWithPerInvzAlpha(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		//DrawTextureConstant(&shade_face, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureGouraud(&shade_face, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureFlat(&shade_face, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureConstantWithPerInvzBinfilter(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		if (binfilter == 1)
-		{
-			DrawTextureConstantWithPerInvzBinfilter(&shade_face, &bitmap, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
-		}
-		else
-		{
-			DrawTextureConstantBinfilter(&shade_face, &bitmap, back_buffer, back_lpitch);
-		}
+		//DrawTextureConstantWithPerInvz(&shade_face,  back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureFlatWithPerInvz(&shade_face,  back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvzAlpha(&shade_face,  back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstant(&shade_face, back_buffer, back_lpitch);
+		DrawTextureGouraud(&shade_face,  back_buffer, back_lpitch);
+		//DrawTextureFlat(&shade_face, back_buffer, back_lpitch);
+		//DrawTextureConstantWithPerInvzBinfilter(&shade_face, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvzBinfilter(&shade_face, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 	}
 	DDraw_Unlock_Back_Surface();
 

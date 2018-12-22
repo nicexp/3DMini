@@ -3,6 +3,6 @@
 
 #include "3DLib2.h"
 
-void DrawTextureConstantWithPerInvzBinfilter(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch, UCHAR* zbuffer, int zpitch);
-void DrawTextureConstantBinfilter(POLYF4DV2_PTR face, BITMAP_FILE_PTR bitmap, unsigned char *_dest_buffer, int mempitch);
+void DrawTextureConstantWithPerInvzBinfilter(POLYF4DV2_PTR face, unsigned char *_dest_buffer, int mempitch, UCHAR* zbuffer, int zpitch);
+void DrawTextureConstantWithPerInvzAlpha(POLYF4DV2_PTR face, unsigned char *_dest_buffer, int mempitch, UCHAR* zbuffer, int zpitch);
 #endif

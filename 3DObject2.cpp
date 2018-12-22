@@ -1,4 +1,5 @@
 #include "3DObject2.h"
+#include "3DMipmap.h"
 
 void InitObject(OBJECT4DV2_PTR obj)
 {
@@ -61,6 +62,12 @@ void InitObject(OBJECT4DV2_PTR obj)
 		0, 5, 4, 0, 3, 5,
 		5, 6, 7, 4, 5, 7
 	};
+
+	//加载纹理
+	obj->texture = (BITMAP_IMG_PTR)malloc(sizeof(BITMAP_IMG));
+	Load_Bitmap_File(obj->texture, "Resouce/3d9.bmp");
+	//创建MipMap
+	CreateMipmap(obj->texture, &obj->texture, 1);
 	//初始化纹理坐标
 	int text_width = BMP_SIZE - 1;
 	POINT2D temp_poly_text[12*3] =
@@ -95,6 +102,8 @@ void InitObject(OBJECT4DV2_PTR obj)
 		obj->plist[tri].text[0] = tri * 3 + 0;
 		obj->plist[tri].text[1] = tri * 3 + 1;
 		obj->plist[tri].text[2] = tri * 3 + 2;
+
+		obj->plist[tri].texture = obj->texture;
 
 		obj->tlist[3 * tri + 0] = temp_poly_text[3 * tri + 0];
 		obj->tlist[3 * tri + 1] = temp_poly_text[3 * tri + 1];

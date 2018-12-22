@@ -4,6 +4,7 @@
 #include "3DLib1.h"
 #include "3DCamera.h"
 #include "3DLight.h"
+#include "3DBitmap.h"
 
 #define BORDER_LENGTH 50
 
@@ -35,6 +36,8 @@ typedef struct OBJECT4DV2_TYP
 	//指向顶点列表的开头
 	VERTEX4DTV1_PTR head_vlist_local;
 	VERTEX4DTV1_PTR head_vlist_trans;
+	//纹理
+	BITMAP_IMG_PTR texture;
 	//纹理坐标
 	POINT2D tlist[3 * 12];
 	int num_polys;//多边形面数

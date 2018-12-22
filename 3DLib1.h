@@ -152,6 +152,29 @@ typedef struct MATRIX4X4_TYP
 	};
 } MATRIX4X4, *MATRIX4X4_PTR;
 
+//BITMAP结构
+typedef struct BITMAP_FILE_TYP
+{
+	BITMAPFILEHEADER bitmapfileheader;
+	BITMAPINFOHEADER bitmapinfoheader;
+	PALETTEENTRY palette[256];
+	UCHAR*	buffer;
+}BITMAP_FILE, *BITMAP_FILE_PTR;
+
+//纹理位图数据
+typedef struct BITMAP_IMG_TYP
+{
+	int attr;
+	int state;
+
+	int width;
+	int height;
+
+	int num_bytes;
+
+	UCHAR* buffer;
+}BITMAP_IMG, *BITMAP_IMG_PTR;
+
 //多边形结构
 typedef struct POLY4DV1_TYP
 {
@@ -187,6 +210,7 @@ typedef struct POLY4DV2_TYP
 
 	VERTEX4DTV1_PTR vlist;//顶点列表
 	POINT2D_PTR tlist;//纹理坐标列表
+	BITMAP_IMG_PTR texture;//纹理
 	int vert[3];//顶点索引
 	int text[3];//纹理坐标索引
 	float nlength;//法线长度
@@ -206,7 +230,7 @@ typedef struct POLYF4DV2_TYP
 	float avg_z;//平均z值用于简单排序
 	VERTEX4DTV1 vlist[3];//顶点
 	VERTEX4DTV1 tvlist[3];//变换后的顶点
-
+	BITMAP_IMG_PTR texture;//纹理
 	POLYF4DV2_TYP* next;//下一个多边形指针
 	POLYF4DV2_TYP* pre;//前一个多边形指针
 }POLYF4DV2, *POLYF4DV2_PTR;
@@ -223,15 +247,6 @@ typedef struct RGBAV1_TYP
 		};
 	};
 }RGBAV1, *RGBAV1_PTR;
-
-//BITMAP结构
-typedef struct BITMAP_FILE_TYP
-{
-	BITMAPFILEHEADER bitmapfileheader;
-	BITMAPINFOHEADER bitmapinfoheader;
-	PALETTEENTRY palette[256];
-	UCHAR*	buffer;
-}BITMAP_FILE, *BITMAP_FILE_PTR;
 
 //物体矩阵转换类型
 enum

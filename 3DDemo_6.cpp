@@ -1,6 +1,6 @@
 #include "3DDemo.h"
 
-#ifdef _3DDEMO_5
+#ifdef _3DDEMO_6
 
 #include "3DLib1.h"
 #include "3DLib2.h"
@@ -14,10 +14,11 @@
 #include "3DTexture3.h"
 #include "3DLight.h"
 #include "3DZbuffer.h"
+#include "3DMipmap.h"
 #include "3DLog.h"
 
 #define NUM_OBJECTS 16
-#define OBJECT_SPACING  100
+#define OBJECT_SPACING  125
 #define CAMERA_DISTANCE 1750
 
 
@@ -51,7 +52,7 @@ int GameInit()
 		&cam_pos,
 		&cam_dir,
 		NULL,
-		10, 8000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
+		10, 12000, 90, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	//初始化物体
 	InitObject(&obj2);
@@ -61,6 +62,7 @@ int GameInit()
 	CreateZbuffer(&zbuffer, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 	//创建alpha缓存
 	CreateAlphaBuffer();
+
 	return 0;
 }
 
@@ -85,6 +87,26 @@ int GameShutdown()
 	return 0;
 }
 
+void test_bitmap(OBJECT4DV2_PTR obj, UCHAR* destbuffer, int mempitch)
+{
+	int lpitch = mempitch >> 2;
+	BITMAP_IMG_PTR* mipmap = (BITMAP_IMG_PTR*)obj->texture;
+
+	for (int i = 0; i < 8; i++)
+	{
+		BITMAP_IMG_PTR bitmap = mipmap[i];
+
+
+		for (int xi = 0; xi < bitmap->width; xi++)
+		{
+			for (int yi = 0; yi < bitmap->height; yi++)
+			{
+				*((UINT*)destbuffer + (yi + 50 * (i + 1)) * lpitch + xi + 50 * (i + 1)) = *((UINT*)bitmap->buffer + yi*bitmap->width + xi);
+			}
+		}
+	}
+}
+
 //渲染列表绘制
 int GameMain()
 {
@@ -103,7 +125,7 @@ int GameMain()
 	//test
 	char buffer[1024];
 	sprintf(buffer, "campos:%f,%f,%f, camdir:%f,%f,%f", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z);
-	Draw_Text_GDI(buffer, 10, 30, RGB(255,255,255), lpddsback);
+	Draw_Text_GDI(buffer, 10, 30, RGB(255, 255, 255), lpddsback);
 	UpdateObjectPosAndDir(&obj2);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
@@ -156,7 +178,7 @@ int GameMain()
 		if (cur_poly->state & POLY4DV2_STATE_BACKFACE ||
 			cur_poly->state & POLY4DV2_STATE_CLIPPED)
 			continue;
-
+		OperWithMipmap(cur_poly);
 		//ShaderFlat(cur_poly, back_buffer, back_lpitch);
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
 		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);

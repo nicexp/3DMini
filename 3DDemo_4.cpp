@@ -24,7 +24,6 @@ static RENDERLIST4DV2 renderlist; //渲染列表
 static CAM4DV1 cam;
 static POINT4D cam_pos = { -123, 180, 134, 1 };
 static VECTOR4D cam_dir = { 2.84, 5.62, 0, 1 };
-static BITMAP_FILE bitmap;
 
 int GameInit()
 {
@@ -53,8 +52,6 @@ int GameInit()
 	InitObject(&obj2);
 	//初始化光源
 	InitAllLight(lights);
-
-	Load_Bitmap_File(&bitmap, "Resouce/3d6.bmp");
 
 	return 0;
 }
@@ -142,9 +139,9 @@ int GameMain()
 		//高洛德着色
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
 
-		//DrawTextureConstant(cur_poly, &bitmap, back_buffer, back_lpitch);
-		DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
-		//DrawTextureFlat(cur_poly, &bitmap, back_buffer, back_lpitch);
+		DrawTextureConstant(cur_poly, back_buffer, back_lpitch);
+		//DrawTextureGouraud(cur_poly, back_buffer, back_lpitch);
+		//DrawTextureFlat(cur_poly, back_buffer, back_lpitch);
 	}
 
 	DDraw_Unlock_Back_Surface();

@@ -19,6 +19,7 @@ void InsertPolyToRenderlist(RENDERLIST4DV2_PTR renderlist, POLY4DV2_PTR poly)
 	renderlist->poly_data[renderlist->num_polys].attr = poly->attr;
 	renderlist->poly_data[renderlist->num_polys].color = poly->color;
 	renderlist->poly_data[renderlist->num_polys].nlength = poly->nlength;
+	renderlist->poly_data[renderlist->num_polys].texture = poly->texture;
 
 	for (int vertex = 0; vertex < 3; vertex++)
 	{

@@ -78,6 +78,15 @@
     <ClCompile Include="3DTexture3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="3DMipmap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DBitmap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DDemo_6.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DLib1.h">
@@ -126,6 +135,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="3DTexture3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMipmap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DBitmap.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

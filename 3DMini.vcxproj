@@ -76,16 +76,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="3DBitmap.cpp" />
     <ClCompile Include="3DCamera.cpp" />
     <ClCompile Include="3DDemo_1.cpp" />
     <ClCompile Include="3DDemo_2.cpp" />
     <ClCompile Include="3DDemo_3.cpp" />
     <ClCompile Include="3DDemo_4.cpp" />
     <ClCompile Include="3DDemo_5.cpp" />
+    <ClCompile Include="3DDemo_6.cpp" />
     <ClCompile Include="3DLib1.cpp" />
     <ClCompile Include="3DLib2.cpp" />
     <ClCompile Include="3DLight.cpp" />
     <ClCompile Include="3DLog.cpp" />
+    <ClCompile Include="3DMipmap.cpp" />
     <ClCompile Include="3DObject.cpp" />
     <ClCompile Include="3DObject2.cpp" />
     <ClCompile Include="3DRenderlist.cpp" />
@@ -99,12 +102,14 @@
     <ClCompile Include="win_main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3DBitmap.h" />
     <ClInclude Include="3DCamera.h" />
     <ClInclude Include="3DDemo.h" />
     <ClInclude Include="3DLib1.h" />
     <ClInclude Include="3DLib2.h" />
     <ClInclude Include="3DLight.h" />
     <ClInclude Include="3DLog.h" />
+    <ClInclude Include="3DMipmap.h" />
     <ClInclude Include="3DObject.h" />
     <ClInclude Include="3DObject2.h" />
     <ClInclude Include="3DRenderlist.h" />
