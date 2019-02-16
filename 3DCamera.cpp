@@ -175,7 +175,7 @@ void InitTransMatrix(CAM4DV1_PTR cam)
 }
 
 //设置相机位置
-void SetCameraPos(CAM4DV1_PTR cam, int direct, int speed)
+void SetCameraPos(CAM4DV1_PTR cam, int direct, float speed)
 {
 	if (direct == DIRECT_FRONT)
 	{
@@ -252,8 +252,8 @@ void UpdateCameraPosAndDir(CAM4DV1_PTR cam)
 	if ((mouse_state.rgbButtons[0] & 0x80))
 	{
 		int lx = mouse_state.lX, ly = mouse_state.lY;
-		cam->dir.y -= (((float)(lx)) / 1800 * PI);
-		cam->dir.x += (((float)(ly)) / 1800 * PI);
+		cam->dir.y -= (((float)(lx)) / (180 * MOUSE_TO_EULER_UNIT) * PI);
+		cam->dir.x += (((float)(ly)) / (180 * MOUSE_TO_EULER_UNIT) * PI);
 		if (cam->dir.y < 0)
 		{
 			cam->dir.y += PI*2;
@@ -269,6 +269,44 @@ void UpdateCameraPosAndDir(CAM4DV1_PTR cam)
 	}
 }
 
+void UpdateCameraPosAndDirSimple(CAM4DV1_PTR cam)
+{
+	static float view_angle_x = 0;
+	static float view_angle_y = 90;
+	static int distance = 2000;
+	
+	int lx = mouse_state.lX, ly = mouse_state.lY, lz = mouse_state.lZ;
+
+	distance += lz / MOUSE_TO_EULER_UNIT;
+	if (distance > 1500)
+		distance = 1500;
+	if (distance < 500)
+		distance = 500;
+
+	if ((mouse_state.rgbButtons[0] & 0x80))
+	{
+		view_angle_x -= ((float)(lx)) / MOUSE_TO_EULER_UNIT;
+		view_angle_y -= ((float)(ly)) / MOUSE_TO_EULER_UNIT;
+		if (view_angle_x < 0)
+			view_angle_x += 360;
+
+		if (view_angle_y >= 170)
+			view_angle_y = 170;
+		if (view_angle_y <= 10)
+			view_angle_y = 10;
+	}
+
+	float phi = view_angle_y / 180 * PI; //仰角(绕x轴旋转的角度,与正y轴重合时为0,范围是0-180)
+	float theta = view_angle_x / 180 * PI; //方位角(绕y轴旋转,与正x轴重合时为0)
+
+	cam->pos.x = cam->target.x + distance * sin(phi) * cos(theta);
+	cam->pos.y = cam->target.y + distance * cos(phi);
+	cam->pos.z = cam->target.z + distance * sin(phi) * sin(theta);
+
+	if (cam->pos.y <= 20)
+		cam->pos.y = 20;
+}
+
 //相机轨迹1
 void BuildCameraPosAndDir(CAM4DV1_PTR cam,float distance)
 {
@@ -279,4 +317,9 @@ void BuildCameraPosAndDir(CAM4DV1_PTR cam,float distance)
 	cam->pos.x = distance * cos(view_angle / 180 * PI);
 	cam->pos.y = distance * sin(view_angle / 180 * PI);
 	cam->pos.z = 2 * cam->pos.y;
+}
+
+void SetCameraTargetPos(CAM4DV1_PTR cam, VECTOR4D_PTR pos)
+{
+	VECTOR4D_COPY(&cam->target, pos);
 }

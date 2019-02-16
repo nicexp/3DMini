@@ -65,7 +65,7 @@ void InitObject(OBJECT4DV2_PTR obj)
 
 	//加载纹理
 	obj->texture = (BITMAP_IMG_PTR)malloc(sizeof(BITMAP_IMG));
-	Load_Bitmap_File(obj->texture, "Resouce/3d9.bmp");
+	Load_Bitmap_File(obj->texture, "Resouce/3d14.bmp");
 	//创建MipMap
 	CreateMipmap(obj->texture, &obj->texture, 1);
 	//初始化纹理坐标
@@ -372,7 +372,7 @@ void ComputeObject2VertexNormals(OBJECT4DV2_PTR obj)
 		polys_touch_vertex[ver2]++;
 	}
 
-	for (int vertex = 0; vertex < obj->num_polys; vertex++)
+	for (int vertex = 0; vertex < obj->num_vertices; vertex++)
 	{
 		obj->vlist_local[vertex].nx /= polys_touch_vertex[vertex];
 		obj->vlist_local[vertex].ny /= polys_touch_vertex[vertex];

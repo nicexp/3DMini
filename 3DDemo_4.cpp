@@ -1,7 +1,7 @@
 #include "3DDemo.h"
-//追加了3D裁剪
-#ifdef _3DDEMO_4
 
+#ifdef _3DDEMO_4
+//追加了3D裁剪
 #include "3DLib1.h"
 #include "3DLib2.h"
 #include "3DTool.h"
@@ -86,6 +86,9 @@ int GameMain()
 	//监听相机位置
 	UpdateCameraPosAndDir(&cam);
 	//UpdateObjectPosAndDir(&obj2);
+	char buffer[1024];
+	sprintf(buffer, "campos:%f,%f,%f, camdir:%f,%f,%f", cam.pos.x, cam.pos.y, cam.pos.z, cam.dir.x, cam.dir.y, cam.dir.z);
+	Draw_Text_GDI(buffer, 10, 30, RGB(255, 255, 255), lpddsback);
 	//初始化变换矩阵
 	BuildMatrixCamUVN(&cam, UVN_SPHERICAL);
 	BuildCameraToPerspectMatrix(&cam);

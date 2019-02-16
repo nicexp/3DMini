@@ -15,37 +15,81 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="win_main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DLib1.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DTool.cpp">
+    <ClInclude Include="3DBitmap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DCamera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DDemo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLib1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLib2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLight.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMipmap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DObject2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DRenderlist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DRenderlist2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DShader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTexture.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTexture2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTexture3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DZbuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMd2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DUIPanel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3DTerrain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3DBitmap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="3DCamera.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DObject.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DRenderlist.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DLight.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DShader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DLog.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DObject2.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DLib2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="3DDemo_1.cpp">
@@ -57,91 +101,86 @@
     <ClCompile Include="3DDemo_3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DTexture.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3DRenderlist2.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="3DDemo_4.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="3DDemo_5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DTexture2.cpp">
+    <ClCompile Include="3DDemo_6.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DZbuffer.cpp">
+    <ClCompile Include="3DDemo_7.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DTexture3.cpp">
+    <ClCompile Include="3DLib1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLib2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="3DMipmap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DBitmap.cpp">
+    <ClCompile Include="3DModel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="3DDemo_6.cpp">
+    <ClCompile Include="3DObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="3DLib1.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DTool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DCamera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DObject.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DRenderlist.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLight.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DShader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLog.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DObject2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLib2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DDemo.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DTexture.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DRenderlist2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DTexture2.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DZbuffer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DTexture3.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DMipmap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="3DBitmap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="3DObject2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DRenderlist.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DRenderlist2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DTexture.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DTexture2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DTexture3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DZbuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMd2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DDemo_8.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DUIPanel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DTerrain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3DDemo_9.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

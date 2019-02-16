@@ -6,11 +6,11 @@
 #include "3DLog.h"
 
 char _3dlog_buffer[1024];
-static FILE* fp = NULL;
+static FILE* logfp = NULL;
 
 int LOG_INIT()
 {
-	if ((fp = fopen("gamelog.txt", "w")) == NULL)
+	if ((logfp = fopen("gamelog.txt", "w")) == NULL)
 		return -1;
 
 	struct _timeb timebuffer;
@@ -28,12 +28,12 @@ int LOG_INIT()
 
 int LOG_CLOSE()
 {
-	if (fp)
+	if (logfp)
 	{
 		LOG_OUT("close the log");
 		
-		fclose(fp);
-		fp = NULL;
+		fclose(logfp);
+		logfp = NULL;
 		return 0;
 	}
 
@@ -46,17 +46,17 @@ int LOG_OUT(char* fmt_str, ...)
 
 	va_list arglist;
 
-	if (!fmt_str || !fp)
+	if (!fmt_str || !logfp)
 		return -1;
 
 	va_start(arglist, fmt_str);
 	vsprintf(buffer, fmt_str, arglist);
 	va_end(arglist);
 
-	fprintf(fp, buffer);
-	fprintf(fp, "\n");
+	fprintf(logfp, buffer);
+	fprintf(logfp, "\n");
 
-	fflush(fp);
+	fflush(logfp);
 
 	return 0;
 }

@@ -4,6 +4,7 @@
 #include "3DLib1.h"
 #include "3DObject2.h"
 #include "3DLight.h"
+#include "3DModel.h"
 
 #define RENDERLIST_MAX_POLYS 32768
 
@@ -26,6 +27,8 @@ void InsertPolyToRenderlist(RENDERLIST4DV2_PTR renderlist, POLY4DV2_PTR poly);
 void InsertPolyToRenderlist(RENDERLIST4DV2_PTR renderlist, POLYF4DV2_PTR poly);
 //物体插入渲染列表
 void InsertObjToRenderlist(RENDERLIST4DV2_PTR renderlist, OBJECT4DV2_PTR obj, int islocal);
+//将网格插入到渲染列表中
+void InsertMeshToRenderlist(RENDERLIST4DV2_PTR renderlist, MESH_PTR mesh);
 //渲染列表背面消除
 void RemoveRendlistBackface(RENDERLIST4DV2_PTR renderlist, POINT4D_PTR cam_pos);
 //渲染列表世界坐标转换为相机坐标
@@ -45,4 +48,6 @@ void LightRenderlistFlat(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int 
 void LightRenderlistGouraud(RENDERLIST4DV2_PTR renderlist, LIGHTV1_PTR lights, int max_lights);
 //z排序
 void RenderlistSortByZ(RENDERLIST4DV2_PTR renderlist);
+//线框描绘
+void DrawRenderlistLine(POLYF4DV2_PTR face, unsigned char *back_buffer, int back_lpitch);
 #endif

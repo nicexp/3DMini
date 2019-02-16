@@ -1,14 +1,358 @@
-﻿生成启动时间为 2018/12/22 19:35:18。
+﻿生成启动时间为 2019/2/16 20:15:34。
      1>项目“E:\MyProjects\3DMini\3DMini\3DMini.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DDemo_6.cpp
-         3DDemo_6.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 3DBitmap.cpp 3DCamera.cpp 3DDemo_9.cpp 3DLib1.cpp 3DLib2.cpp 3DLight.cpp 3DMd2.cpp 3DMesh.cpp 3DMipmap.cpp 3DModel.cpp 3DObject.cpp 3DObject2.cpp 3DRenderlist.cpp 3DRenderlist2.cpp 3DShader.cpp 3DTerrain.cpp 3DTexture.cpp 3DTexture2.cpp 3DTexture3.cpp 3DTool.cpp 3DUIPanel.cpp 3DZbuffer.cpp win_main.cpp
+         win_main.cpp
          c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>e:\myprojects\3dmini\3dmini\3ddemo_6.cpp(31): warning C4305: “初始化”: 从“double”到“float”截断
-     1>e:\myprojects\3dmini\3dmini\3ddemo_6.cpp(144): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-     1>e:\myprojects\3dmini\3dmini\3ddemo_6.cpp(146): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\win_main.cpp(34): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+         3DModel.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(73): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(94): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 参见“fopen”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(107): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 参见“strcpy”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(108): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 参见“strcpy”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(109): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 参见“strcpy”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(110): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 参见“strcpy”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(112): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(113): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(114): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(115): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(116): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(117): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(118): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(119): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(120): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(121): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(122): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(124): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(125): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(126): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(128): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(230) : 参见“fscanf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(147): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(149): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 参见“strcpy”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmodel.cpp(150): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+         3DMesh.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dmesh.cpp(259): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmesh.cpp(377): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+         3DLight.cpp
+     1>e:\myprojects\3dmini\3dmini\3dlight.cpp(112): warning C4305: “参数”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dlight.cpp(114): warning C4305: “参数”: 从“double”到“float”截断
+         3DDemo_9.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(31): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(93): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(112): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(219): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(221): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(223): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(225): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(227): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3ddemo_9.cpp(229): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+         正在生成代码...
+         正在编译...
+         3DZbuffer.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         3DUIPanel.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3duipanel.cpp(18): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3duipanel.cpp(27): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+         3DTool.cpp
+     1>e:\myprojects\3dmini\3dmini\3dtool.cpp(23): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dtool.cpp(24): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dtool.cpp(26): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dtool.cpp(31): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+         3DTexture3.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(285): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(377): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(622): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(755): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(1136): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(1195): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(1407): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(1507): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture3.cpp(995): warning C4101: “z_temp”: 未引用的局部变量
+         3DTexture2.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(282): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(335): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(541): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(635): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(141): warning C4101: “z_temp”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1041): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1122): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1413): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1553): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(851): warning C4101: “z_temp”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1927): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1990): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(2206): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(2310): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dtexture2.cpp(1783): warning C4101: “z_temp”: 未引用的局部变量
+         3DTexture.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         3DTerrain.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dterrain.cpp(8): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(112) : 参见“strcpy”的声明
+     1>e:\myprojects\3dmini\3dmini\3dterrain.cpp(9): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3dterrain.cpp(10): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\string.h(118) : 参见“strcat”的声明
+     1>e:\myprojects\3dmini\3dmini\3dterrain.cpp(16): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+         3DShader.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(50): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(58): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(87): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(94): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(147): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(159): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(189): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dshader.cpp(195): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+         3DRenderlist2.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(115): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(282): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(283): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(577): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(578): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(579): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(603): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(604): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(605): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(630): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(631): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(632): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(665): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(666): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(667): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(740): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(741): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(742): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(762): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(763): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(764): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(785): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(786): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(787): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(815): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(816): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(817): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(847): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(848): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(867): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(871): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3drenderlist2.cpp(875): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+         3DRenderlist.cpp
+         3DObject2.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(14): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(15): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(42): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(51): warning C4305: “=”: 从“unsigned int”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(87): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(474): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(475): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(476): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(501): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(502): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(503): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(528): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(529): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(530): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(563): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(564): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(565): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(643): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(644): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(645): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(665): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(666): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(667): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(688): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(689): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(690): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(718): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(719): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(720): warning C4244: “+=”: 从“float”转换到“unsigned int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(752): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dobject2.cpp(759): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+         3DObject.cpp
+     1>e:\myprojects\3dmini\3dmini\3dobject.cpp(13): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dobject.cpp(14): warning C4305: “=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dobject.cpp(41): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+         3DMipmap.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dmipmap.cpp(18): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmipmap.cpp(19): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmipmap.cpp(68): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmipmap.cpp(85): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dmipmap.cpp(89): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+         3DMd2.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dmd2.cpp(21): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 参见“fopen”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmd2.cpp(23): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmd2.cpp(42): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmd2.cpp(136): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dmd2.cpp(158): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+         3DLib2.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(155): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(162): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(171): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(176): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(205): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(212): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(238): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(243): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(248): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(253): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(261): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(265): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(308): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(313): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(318): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(322): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(363): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(398): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(414): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(504): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(509): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(515): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(521): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(527): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(532): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(540): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(545): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(553): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(558): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(566): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(571): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(610): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(615): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(623): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(628): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(636): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(641): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(649): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib2.cpp(654): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+         3DLib1.cpp
+     1>e:\myprojects\3dmini\3dmini\3dlib1.cpp(42): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib1.cpp(140): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib1.cpp(141): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dlib1.cpp(142): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+         3DCamera.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(6): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(7): warning C4305: “初始化”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(48): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(51): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(75): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(82): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(89): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(112): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(113): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(114): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(100): warning C4101: “mt_tmp”: 未引用的局部变量
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(157): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(158): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(238): warning C4305: “+=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(241): warning C4305: “+=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(246): warning C4305: “-=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(249): warning C4305: “+=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(255): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(256): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(259): warning C4305: “+=”: 从“double”到“float”截断
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(299): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(300): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(317): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>e:\myprojects\3dmini\3dmini\3dcamera.cpp(318): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+         3DBitmap.cpp
+         c:\program files (x86)\microsoft directx sdk (august 2009)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>e:\myprojects\3dmini\3dmini\include\jpeg\jmorecfg.h(215): warning C4005: “FAR”: 宏重定义
+                 c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(150) : 参见“FAR”的前一个定义
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(47): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 参见“fopen”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(50): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(58): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(65): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(85): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(109): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(135): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(173): warning C4390: “;”: 找到空的受控语句；这是否是有意的?
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(183): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(229): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : 参见“fopen”的声明
+     1>e:\myprojects\3dmini\3dmini\3dbitmap.cpp(230): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : 参见“sprintf”的声明
+         正在生成代码...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyProjects\3DMini\Debug\3DMini.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86" ddraw.lib dxguid.lib dinput8.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyProjects\3DMini\Debug\3DMini.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyProjects\3DMini\Debug\3DMini.lib" /MACHINE:X86 Debug\3DBitmap.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\MyProjects\3DMini\Debug\3DMini.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft DirectX SDK (August 2009)\Lib\x86" /LIBPATH:E:\MyProjects\3DMini\3DMini\lib ddraw.lib dxguid.lib dinput8.lib winmm.lib "assimp-vc120-mt.lib" zlib.lib libpng16.lib libjpeg.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\MyProjects\3DMini\Debug\3DMini.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\MyProjects\3DMini\Debug\3DMini.lib" /MACHINE:X86 Debug\3DBitmap.obj
          Debug\3DCamera.obj
          Debug\3DDemo_1.obj
          Debug\3DDemo_2.obj
@@ -16,20 +360,28 @@
          Debug\3DDemo_4.obj
          Debug\3DDemo_5.obj
          Debug\3DDemo_6.obj
+         Debug\3DDemo_7.obj
+         Debug\3DDemo_8.obj
+         Debug\3DDemo_9.obj
          Debug\3DLib1.obj
          Debug\3DLib2.obj
          Debug\3DLight.obj
          Debug\3DLog.obj
+         Debug\3DMd2.obj
+         Debug\3DMesh.obj
          Debug\3DMipmap.obj
+         Debug\3DModel.obj
          Debug\3DObject.obj
          Debug\3DObject2.obj
          Debug\3DRenderlist.obj
          Debug\3DRenderlist2.obj
          Debug\3DShader.obj
+         Debug\3DTerrain.obj
          Debug\3DTexture.obj
          Debug\3DTexture2.obj
          Debug\3DTexture3.obj
          Debug\3DTool.obj
+         Debug\3DUIPanel.obj
          Debug\3DZbuffer.obj
          Debug\win_main.obj
          3DMini.vcxproj -> E:\MyProjects\3DMini\Debug\3DMini.exe
@@ -37,4 +389,4 @@
 
 生成成功。
 
-已用时间 00:00:01.06
+已用时间 00:00:19.14

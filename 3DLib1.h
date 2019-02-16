@@ -72,6 +72,54 @@
 #define _RGBTOINT(r, g, b) _RGB16BIT565(r, g, b)
 #endif
 
+#define ANIM_STATE_NONE			    -1 //无动画
+#define ANIM_STATE_STANDING_IDLE	0 //站立
+#define ANIM_STATE_RUN				1 //奔跑
+#define ANIM_STATE_ATTACK			2 //攻击
+#define ANIM_STATE_PAIN_1			3 //被攻击
+#define ANIM_STATE_PAIN_2			4 //被攻击2
+#define ANIM_STATE_PAIN_3			5 //被攻击3
+#define ANIM_STATE_JUMP				6 //跳跃
+#define ANIM_STATE_FLIP				7 //做手势
+#define ANIM_STATE_SALUTE			8 //敬礼
+#define ANIM_STATE_TAUNT			9 //嘲笑
+#define ANIM_STATE_WAVE				10 //挥手致意
+#define ANIM_STATE_POINT			11 //指向别人
+#define ANIM_STATE_CROUCH_STAND		12 //不动时蹲下
+#define ANIM_STATE_CROUCH_WALK		13 //行走时蹲下
+#define ANIM_STATE_CROUCH_ATTACK	14 //蹲下时攻击
+#define ANIM_STATE_CROUCH_PAIN		15 //蹲下时被攻击
+#define ANIM_STATE_CROUCH_DEATH		16 //蹲下时死亡
+#define ANIM_STATE_DEATH_BACK		18 //后倒死亡
+#define ANIM_STATE_DEATH_FORWARD	19 //前倒死亡
+#define ANIM_STATE_DEATH_SLOW		20 //缓慢死亡
+#define ANIM_STATE_NUM				21 //动画数量
+
+#define ANIM_MODE_SINGLE	0 //单次播放动画
+#define ANIM_MODE_LOOP		1 //循环播放动画
+
+#define ANIM_MAX_FRAME		198 //动画最大帧
+
+#define MOUSE_TO_EULER_UNIT 10 //鼠标转换角度单位
+
+#define HOST_PLAYER_SPEED 10 //主角移动速度单位
+
+
+#define TERRAIN_WIDTH         16000
+#define TERRAIN_LENGTH        16000
+#define TERRAIN_MAXHEIGHT     1500
+
+#define MODEL_POS_UP		  240
+
+//灯光索引
+#define LIGHT_AMBIENT	0
+#define LIGHT_INFINITE	1
+#define LIGHT_POINT		2
+#define LIGHT_SPOT		3
+
+//assimp支持
+//#define ASSIMP_SUPPORT
+
 //点和向量二维
 typedef struct VECTOR2D_TYP
 {
@@ -248,6 +296,13 @@ typedef struct RGBAV1_TYP
 	};
 }RGBAV1, *RGBAV1_PTR;
 
+typedef struct ANIMATION_TYP
+{
+	int startframe; //开始帧
+	int endframe; //结束帧
+	int interpolation; //
+}ANIMATION, *ANIMATION_PTR;
+
 //物体矩阵转换类型
 enum
 {
@@ -310,4 +365,6 @@ inline void VERTEX4DTV1_INIT(VERTEX4DTV1_PTR vdst, VERTEX4DTV1_PTR vsrc)
 {
 	*vdst = *vsrc;
 }
+
+void ComputePolyNormals(POLY4DV2_PTR face);
 #endif

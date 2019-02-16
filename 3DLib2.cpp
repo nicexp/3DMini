@@ -367,7 +367,7 @@ int Draw_Text_GDI(char *text, int x, int y, COLORREF color, LPDIRECTDRAWSURFACE7
 	SetTextColor(xdc, color);
 	SetBkMode(xdc, TRANSPARENT);
 
-	TextOut(xdc, x, y, text, strlen(text));
+	TextOut(xdc, x, y, text, strlen(text)); //×¢Òâ´Ë´¦
 
 	lpdds->ReleaseDC(xdc);
 

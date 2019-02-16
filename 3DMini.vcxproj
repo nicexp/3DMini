@@ -11,7 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ABED7E7C-331B-4D05-9066-8BE5EA65FF8A}</ProjectGuid>
+    <ProjectGuid>{FAB2B597-AE53-490D-A125-71F9ABC6C7DB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
     <RootNamespace>My3DMini</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -19,14 +20,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -39,42 +40,69 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;$(IncludePath)</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;E:\MyProjects\3DMini\3DMini\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Include;$(IncludePath)</IncludePath>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ddraw.lib;dxguid.lib;dinput8.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Lib\x86;E:\MyProjects\3DMini\3DMini\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ddraw.lib;dxguid.lib;dinput8.lib;winmm.lib;assimp-vc120-mt.lib;zlib.lib;libpng16.lib;libjpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Microsoft DirectX SDK %28August 2009%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ddraw.lib;dxguid.lib;dinput8.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="3DBitmap.h" />
+    <ClInclude Include="3DCamera.h" />
+    <ClInclude Include="3DDemo.h" />
+    <ClInclude Include="3DLib1.h" />
+    <ClInclude Include="3DLib2.h" />
+    <ClInclude Include="3DLight.h" />
+    <ClInclude Include="3DLog.h" />
+    <ClInclude Include="3DMd2.h" />
+    <ClInclude Include="3DMesh.h" />
+    <ClInclude Include="3DMipmap.h" />
+    <ClInclude Include="3DModel.h" />
+    <ClInclude Include="3DObject.h" />
+    <ClInclude Include="3DObject2.h" />
+    <ClInclude Include="3DRenderlist.h" />
+    <ClInclude Include="3DRenderlist2.h" />
+    <ClInclude Include="3DShader.h" />
+    <ClInclude Include="3DTerrain.h" />
+    <ClInclude Include="3DTexture.h" />
+    <ClInclude Include="3DTexture2.h" />
+    <ClInclude Include="3DTexture3.h" />
+    <ClInclude Include="3DTool.h" />
+    <ClInclude Include="3DUIPanel.h" />
+    <ClInclude Include="3DZbuffer.h" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DBitmap.cpp" />
     <ClCompile Include="3DCamera.cpp" />
@@ -84,42 +112,30 @@
     <ClCompile Include="3DDemo_4.cpp" />
     <ClCompile Include="3DDemo_5.cpp" />
     <ClCompile Include="3DDemo_6.cpp" />
+    <ClCompile Include="3DDemo_7.cpp" />
+    <ClCompile Include="3DDemo_8.cpp" />
+    <ClCompile Include="3DDemo_9.cpp" />
     <ClCompile Include="3DLib1.cpp" />
     <ClCompile Include="3DLib2.cpp" />
     <ClCompile Include="3DLight.cpp" />
     <ClCompile Include="3DLog.cpp" />
+    <ClCompile Include="3DMd2.cpp" />
+    <ClCompile Include="3DMesh.cpp" />
     <ClCompile Include="3DMipmap.cpp" />
+    <ClCompile Include="3DModel.cpp" />
     <ClCompile Include="3DObject.cpp" />
     <ClCompile Include="3DObject2.cpp" />
     <ClCompile Include="3DRenderlist.cpp" />
     <ClCompile Include="3DRenderlist2.cpp" />
     <ClCompile Include="3DShader.cpp" />
+    <ClCompile Include="3DTerrain.cpp" />
     <ClCompile Include="3DTexture.cpp" />
     <ClCompile Include="3DTexture2.cpp" />
     <ClCompile Include="3DTexture3.cpp" />
     <ClCompile Include="3DTool.cpp" />
+    <ClCompile Include="3DUIPanel.cpp" />
     <ClCompile Include="3DZbuffer.cpp" />
     <ClCompile Include="win_main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="3DBitmap.h" />
-    <ClInclude Include="3DCamera.h" />
-    <ClInclude Include="3DDemo.h" />
-    <ClInclude Include="3DLib1.h" />
-    <ClInclude Include="3DLib2.h" />
-    <ClInclude Include="3DLight.h" />
-    <ClInclude Include="3DLog.h" />
-    <ClInclude Include="3DMipmap.h" />
-    <ClInclude Include="3DObject.h" />
-    <ClInclude Include="3DObject2.h" />
-    <ClInclude Include="3DRenderlist.h" />
-    <ClInclude Include="3DRenderlist2.h" />
-    <ClInclude Include="3DShader.h" />
-    <ClInclude Include="3DTexture.h" />
-    <ClInclude Include="3DTexture2.h" />
-    <ClInclude Include="3DTexture3.h" />
-    <ClInclude Include="3DTool.h" />
-    <ClInclude Include="3DZbuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

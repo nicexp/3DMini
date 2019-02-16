@@ -23,10 +23,10 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 		}
 		case WM_PAINT:
 		{
-						 HDC hdc;
+						 /*HDC hdc;
 						 PAINTSTRUCT ps;
 						 hdc = BeginPaint(hwnd, &ps);
-						 EndPaint(hwnd, &ps);
+						 EndPaint(hwnd, &ps);*/
 						 break;
 		}
 		case WM_QUIT:
@@ -82,9 +82,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	{
 		RECT window_rect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 
+		int  cx = GetSystemMetrics(SM_CXFULLSCREEN);
+		int  cy = GetSystemMetrics(SM_CYFULLSCREEN);
+
 		MoveWindow(hwnd,
-			0, // x position
-			0, // y position
+			cx/2-WINDOW_WIDTH/2, // x position
+			cy/2-WINDOW_HEIGHT/2, // y position
 			window_rect.right - window_rect.left, // width
 			window_rect.bottom - window_rect.top, // height
 			FALSE);
@@ -92,9 +95,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 		ShowWindow(hwnd, SW_SHOW);
 	}
 
-	GameInit();
-
 	SystemParametersInfo(SPI_SCREENSAVERRUNNING, TRUE, NULL, 0);
+
+	GameInit();
 
 	while (1)
 	{

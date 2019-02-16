@@ -1,7 +1,7 @@
 #include "3DDemo.h"
 
 #ifdef _3DDEMO_5
-
+//alpha混合，双线性纹理滤波
 #include "3DLib1.h"
 #include "3DLib2.h"
 #include "3DTool.h"

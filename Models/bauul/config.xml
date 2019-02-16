@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--如果是md2文件，一定要指定文件名，其它无所谓，除非有很多皮肤，指定用那一张-->
+<ID>bauul.md2</ID>
+<IMG>bauul.jpg</IMG>
+<SIMG>a1.jpg</SIMG>	<!--- 供显示用的大头像 --->
+<TXT>aa.txt</TXT>	<!--- 详细说明文字,作者,版本 --->
+<POS>0,0,0</POS> <!---在编辑器里的离地位置 ----->
+<ANGLE>0</ANGLE>
+<SCALE>1<SCALE>	<!-- 武器方面无需设置 ----->
+<WEAPON>bauul_weapon</WEAPON> <!--- 只能选用一种武器 --->

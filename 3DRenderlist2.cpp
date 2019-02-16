@@ -1,6 +1,6 @@
 #include "3DRenderlist2.h"
 #include "3DCamera.h"
-#
+#include "3DLib2.h"
 //重置渲染列表
 void ResetRenderlist(RENDERLIST4DV2_PTR renderlist)
 {
@@ -98,6 +98,55 @@ void InsertObjToRenderlist(RENDERLIST4DV2_PTR renderlist, OBJECT4DV2_PTR obj, in
 		InsertPolyToRenderlist(renderlist, cur_poly);
 
 		cur_poly->vlist = vlist_old;
+	}
+}
+
+//将模型插入到渲染列表中
+void InsertMeshToRenderlist(RENDERLIST4DV2_PTR renderlist, MESH_PTR mesh)
+{
+	if (!(mesh->state & MESH_STATE_ACTIVE)
+		|| (mesh->state & MESH_STATE_CULLED)
+		|| !(mesh->state & MESH_STATE_VISIBLE))
+		return;
+	for (int k = 0; k < mesh->num_polys; k++)
+	{
+		if (renderlist->num_polys >= RENDERLIST_MAX_POLYS)
+		{
+			DEBUG_LOG("ERROR:poly num too many");
+			return;
+		}
+		POLY4DV2_PTR poly = &mesh->plist[k];
+
+		renderlist->poly_ptrs[renderlist->num_polys] = &renderlist->poly_data[renderlist->num_polys];
+
+		renderlist->poly_data[renderlist->num_polys].state = poly->state;
+		renderlist->poly_data[renderlist->num_polys].attr = poly->attr;
+		renderlist->poly_data[renderlist->num_polys].color = poly->color;
+		renderlist->poly_data[renderlist->num_polys].nlength = poly->nlength;
+		renderlist->poly_data[renderlist->num_polys].texture = poly->texture;
+
+		for (int vertex = 0; vertex < 3; vertex++)
+		{
+			VERTEX4DTV1_COPY(&renderlist->poly_data[renderlist->num_polys].vlist[vertex], &mesh->vlist_trans[poly->vert[vertex]]);
+			VERTEX4DTV1_COPY(&renderlist->poly_data[renderlist->num_polys].tvlist[vertex], &mesh->vlist_trans[poly->vert[vertex]]);
+			renderlist->poly_data[renderlist->num_polys].tvlist[vertex].t = poly->tlist[poly->text[vertex]];
+			renderlist->poly_data[renderlist->num_polys].vlist[vertex].t = poly->tlist[poly->text[vertex]];
+			renderlist->poly_data[renderlist->num_polys].lit_color[vertex] = poly->lit_color[vertex];
+		}
+
+		if (renderlist->num_polys == 0)
+		{
+			renderlist->poly_data[renderlist->num_polys].pre = NULL;
+			renderlist->poly_data[renderlist->num_polys].next = NULL;
+		}
+		else
+		{
+			renderlist->poly_data[renderlist->num_polys].next = NULL;
+			renderlist->poly_data[renderlist->num_polys].pre = &renderlist->poly_data[renderlist->num_polys - 1];
+			renderlist->poly_data[renderlist->num_polys - 1].next = &renderlist->poly_data[renderlist->num_polys];
+		}
+
+		renderlist->num_polys++;
 	}
 }
 
@@ -809,4 +858,19 @@ int compare(const void* a, const void* b)
 void RenderlistSortByZ(RENDERLIST4DV2_PTR renderlist)
 {
 	qsort((void*)(renderlist->poly_ptrs), renderlist->num_polys, sizeof(POLYF4DV2_PTR), compare);
+}
+
+void DrawRenderlistLine(POLYF4DV2_PTR face, unsigned char *back_buffer, int back_lpitch)
+{
+	Draw_Clip_Line(face->tvlist[0].x, face->tvlist[0].y,
+		face->tvlist[1].x, face->tvlist[1].y, face->color,
+	back_buffer, back_lpitch);
+
+	Draw_Clip_Line(face->tvlist[1].x, face->tvlist[1].y,
+		face->tvlist[2].x, face->tvlist[2].y, face->color,
+	back_buffer, back_lpitch);
+
+	Draw_Clip_Line(face->tvlist[2].x, face->tvlist[2].y,
+		face->tvlist[0].x, face->tvlist[0].y, face->color,
+	back_buffer, back_lpitch);
 }

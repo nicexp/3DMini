@@ -1,7 +1,7 @@
 #include "3DDemo.h"
 
 #ifdef _3DDEMO_6
-
+//mipmap
 #include "3DLib1.h"
 #include "3DLib2.h"
 #include "3DTool.h"
@@ -182,12 +182,13 @@ int GameMain()
 		//ShaderFlat(cur_poly, back_buffer, back_lpitch);
 		//ShaderGouraud(cur_poly, back_buffer, back_lpitch);
 		//DrawTextureGouraud(cur_poly, &bitmap, back_buffer, back_lpitch);
-		DrawTextureConstantWithPerInvz(cur_poly, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
+		//DrawTextureConstantWithPerInvz(cur_poly, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 		//DrawTextureGouraudWithPerInvz(cur_poly, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 		//DrawTextureFlatWithPerInvz(cur_poly, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 		//DrawTextureConstantWithPerInvzAlpha(cur_poly, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 		//DrawTextureConstantWithPerInvzBinfilter(cur_poly, back_buffer, back_lpitch, zbuffer.zbuffer, zbuffer.width);
 	}
+	test_bitmap(&obj2, back_buffer, back_lpitch);
 	DDraw_Unlock_Back_Surface();
 
 	DDraw_Flip();

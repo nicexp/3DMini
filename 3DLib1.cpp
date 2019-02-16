@@ -142,3 +142,27 @@ void Eu_Dir_Transform(VECTOR4D_PTR dir)
 	dir->z = (dir->z / 180)*PI;
 	dir->w = 1;
 }
+
+//计算物体平面法线
+void ComputePolyNormals(POLY4DV2_PTR face)
+{
+	if (!face)
+		return;
+
+	int ver0, ver1, ver2;
+	VECTOR4D u, v, n;
+	POLY4DV2_PTR cur_poly;
+
+	cur_poly = face;
+
+	ver0 = cur_poly->vert[0];
+	ver1 = cur_poly->vert[1];
+	ver2 = cur_poly->vert[2];
+
+
+	VECTOR4D_SUB(&cur_poly->vlist[ver1].v, &cur_poly->vlist[ver0].v, &u);
+	VECTOR4D_SUB(&cur_poly->vlist[ver2].v, &cur_poly->vlist[ver0].v, &v);
+	VECTOR4D_CROSS(&u, &v, &n);
+
+	cur_poly->nlength = VECTOR4D_Length(&n);
+}

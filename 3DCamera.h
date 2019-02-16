@@ -62,4 +62,6 @@ void InitTransMatrix(CAM4DV1_PTR cam);
 void BuildCameraPosAndDir(CAM4DV1_PTR cam, float distance);
 //相机轨迹与朝向
 void UpdateCameraPosAndDir(CAM4DV1_PTR cam);
+void UpdateCameraPosAndDirSimple(CAM4DV1_PTR cam);
+void SetCameraTargetPos(CAM4DV1_PTR cam, VECTOR4D_PTR pos);
 #endif
