@@ -323,6 +323,8 @@ void ScrollBitmap(BITMAP_IMG_PTR image, int dx)
 			dx, image->height);
 
 	}
+
+	DestroyBitmap(&temp_image);
 }
 
 //¿½±´Î»Í¼
