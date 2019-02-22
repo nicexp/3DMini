@@ -241,7 +241,7 @@ void LoadMd2FileToMesh(MODEL_PTR model, const char* modelpath, const char* skinp
 			max_z = max(max_z, vlistptr[vindex].z);
 		}
 		
-		*(mesh->max_radius + findex) = sqrtf(((max_x - min_x)*(max_x - min_x)) + ((max_y - min_y)*(max_y - min_y)) + ((max_z - min_z)*(max_z - min_z)));
+		*(mesh->max_radius + findex) = sqrtf(((max_x - min_x)*(max_x - min_x)) + ((max_y - min_y)*(max_y - min_y)) + ((max_z - min_z)*(max_z - min_z))) / 2;
 		VECTOR4D_INITXYZ(&mesh->center_pos[findex], (min_x + max_x) / 2, (min_y + max_y) / 2, (min_z + max_z) / 2);
 	}
 	//填充纹理坐标列表
